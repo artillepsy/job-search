@@ -1,0 +1,12 @@
+<div class="main-container">
+    <h3>Login</h3>
+    <div>
+        <input type="text" placeholder="Username..."  [ngModel]="startUsername" (ngModelChange)="onLoginChange($event)" />
+    </div>
+    <div>
+        <input type="password" placeholder="Password..." [(ngModel)]="password" />
+    </div>
+    <div>
+        <p-button label="Submit" (onClick)="submitData()" />
+    </div>
+</div>

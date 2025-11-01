@@ -1,0 +1,16 @@
+:host {
+    background-color: rgb(176, 176, 176);
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .main-container {
+        display: flex;
+        direction: unset;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
