@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "AWW75lcJLkk=",
+  "success": true,
+  "projectFilePath": "F:\\visual_studio_projects\\JobSearch\\JobSearch.Server\\JobSearch.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\artil\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0-rc.2.25502.107\\microsoft.aspnetcore.openapi.10.0.0-rc.2.25502.107.nupkg.sha512",
+    "C:\\Users\\artil\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

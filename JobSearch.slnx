@@ -1,7 +1,0 @@
-<Solution>
-  <Project Path="jobsearch.client/jobsearch.client.esproj">
-    <Build />
-    <Deploy />
-  </Project>
-  <Project Path="JobSearch.Server/JobSearch.Server.csproj" />
-</Solution>
