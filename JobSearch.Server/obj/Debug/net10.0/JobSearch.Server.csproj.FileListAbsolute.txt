@@ -32,3 +32,11 @@ F:\visual_studio_projects\JobSearch\JobSearch.Server\obj\Debug\net10.0\refint\Jo
 F:\visual_studio_projects\JobSearch\JobSearch.Server\obj\Debug\net10.0\JobSearch.Server.pdb
 F:\visual_studio_projects\JobSearch\JobSearch.Server\obj\Debug\net10.0\JobSearch.Server.genruntimeconfig.cache
 F:\visual_studio_projects\JobSearch\JobSearch.Server\obj\Debug\net10.0\ref\JobSearch.Server.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.Design.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Npgsql.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll
+F:\visual_studio_projects\JobSearch\JobSearch.Server\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
