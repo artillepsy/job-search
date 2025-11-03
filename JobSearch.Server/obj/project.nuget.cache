@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "p+oa/UvLcEk=",
+  "dgSpecHash": "BwVEfIBo4e8=",
   "success": true,
   "projectFilePath": "F:\\visual_studio_projects\\JobSearch\\JobSearch.Server\\JobSearch.Server.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\artil\\.nuget\\packages\\efcore.namingconventions\\9.0.0\\efcore.namingconventions.9.0.0.nupkg.sha512",
     "C:\\Users\\artil\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0-rc.2.25502.107\\microsoft.aspnetcore.openapi.10.0.0-rc.2.25502.107.nupkg.sha512",
     "C:\\Users\\artil\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.10\\microsoft.entityframeworkcore.9.0.10.nupkg.sha512",
     "C:\\Users\\artil\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.10\\microsoft.entityframeworkcore.abstractions.9.0.10.nupkg.sha512",

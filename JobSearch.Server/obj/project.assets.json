@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net10.0": {
+      "EFCore.NamingConventions/9.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "[9.0.0, 10.0.0)",
+          "Microsoft.EntityFrameworkCore.Relational": "[9.0.0, 10.0.0)"
+        },
+        "compile": {
+          "lib/net8.0/EFCore.NamingConventions.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/EFCore.NamingConventions.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.OpenApi/10.0.0-rc.2.25502.107": {
         "type": "package",
         "dependencies": {
@@ -187,6 +200,18 @@
     }
   },
   "libraries": {
+    "EFCore.NamingConventions/9.0.0": {
+      "sha512": "heKIYzPdEWx+Ba4xuG6jfEssW9rEi7I0lX38eoN7wo7qgg9uw7nn8UEmDQfwGEYPzSDpetCVANnDr5tqt2Asjg==",
+      "type": "package",
+      "path": "efcore.namingconventions/9.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "efcore.namingconventions.9.0.0.nupkg.sha512",
+        "efcore.namingconventions.nuspec",
+        "lib/net8.0/EFCore.NamingConventions.dll"
+      ]
+    },
     "Microsoft.AspNetCore.OpenApi/10.0.0-rc.2.25502.107": {
       "sha512": "50Egznb0tgVvITuuQQhhQ2fCQqKsy+I7Cy2QopLZziDw/IRhvM+L5ZKA7AdsEr4x/lmuB0HnZPKjD8eRjkbVog==",
       "type": "package",
@@ -392,6 +417,7 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "EFCore.NamingConventions >= 9.0.0",
       "Microsoft.AspNetCore.OpenApi >= 10.0.0-rc.2.25502.107",
       "Microsoft.EntityFrameworkCore >= 9.0.10",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.4",
@@ -449,6 +475,10 @@
       "net10.0": {
         "targetAlias": "net10.0",
         "dependencies": {
+          "EFCore.NamingConventions": {
+            "target": "Package",
+            "version": "[9.0.0, )"
+          },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[10.0.0-rc.2.25502.107, )"
