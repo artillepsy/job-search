@@ -2,12 +2,14 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    providePrimeNG({ /* options */ })
+    providePrimeNG({ /* options */ }),
+    provideHttpClient(),
   ]
 };
