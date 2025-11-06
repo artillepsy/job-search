@@ -1,4 +1,5 @@
 using JobSearch.Server.Models;
+using JobSearch.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,16 @@ public class UsersController : ControllerBase
 {
 	private readonly AppDbContext _db;
 	private readonly IPasswordHasher<UserModel> _hasher;
+	private readonly ITokenService _tokenService;
 
 	public record RegisterDto(string Username, string Password);
 	public record LoginDto(string Username, string Password);
 
-	public UsersController(AppDbContext db, IPasswordHasher<UserModel> hasher)
+	public UsersController(AppDbContext db, IPasswordHasher<UserModel> hasher, ITokenService tokenService)
 	{
 		_db = db;
 		_hasher = hasher;
+		_tokenService = tokenService;
 	}
 
 	[AllowAnonymous]
@@ -55,27 +58,40 @@ public class UsersController : ControllerBase
 
 	}
 	
+	//??
 	[HttpGet("{username}")]
 	public async Task<IActionResult> GetByUsername(string username) 
 		=> Ok($"User {username} has been successfully created");
 
 	[AllowAnonymous]
-	[HttpGet("login")]
-	public async Task<ActionResult<object>> Login([FromQuery] LoginDto dto)
+	[HttpPost("login")]
+	public async Task<ActionResult<object>> Login([FromBody] LoginDto dto)
 	{
-		if (string.IsNullOrWhiteSpace(dto.Username.ToLower()))
-			return BadRequest("Username is required");
+		if (string.IsNullOrWhiteSpace(dto.Username) || string.IsNullOrWhiteSpace(dto.Password))
+			return BadRequest("Username and password are required");
 
-		if (string.IsNullOrWhiteSpace(dto.Password))
-			return BadRequest("Password is required");
-
-		var user = await _db.Users.FindAsync(dto.Username.ToLower());
-
+		var username = dto.Username.Trim().ToLowerInvariant();
+		
+		var user = await _db.Users.SingleOrDefaultAsync(u => u.Username == username);
 		if (user is null)
-			return Ok(new { Error = "wrong password" });
+			return Unauthorized(new { error = "Username not found" });
 
-		var isSamePassword = user.PasswordHash.Equals(dto.Password);
+		var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+		if (result == PasswordVerificationResult.Failed)
+			return Unauthorized(new { error = "Wrong password" });
 
-		return Ok(new { isSamePassword });
+		if (result == PasswordVerificationResult.SuccessRehashNeeded)
+		{
+			user.PasswordHash = _hasher.HashPassword(user, dto.Password);
+			await _db.SaveChangesAsync();
+		}
+
+		return Ok(new
+		{
+			ok = true,
+			userId = user.Id,
+			username = user.Username,
+			token = _tokenService.GenerateDevToken(user.Username),
+		});
 	}
 }

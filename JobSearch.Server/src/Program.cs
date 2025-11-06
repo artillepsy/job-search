@@ -1,31 +1,32 @@
 using JobSearch.Server;
 using JobSearch.Server.Models;
+using JobSearch.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//db + ef setup
 builder.Services.AddDbContext<AppDbContext>(opt =>
 	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 		.UseSnakeCaseNamingConvention());
 
+// mvc + swagger
 builder.Services.AddControllers(); 
-
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+
+// misc
 builder.Services.AddRouting(o => o.LowercaseUrls = true);
-
-// add scoped services
-
 builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
+builder.Services.AddSingleton<ITokenService, DevTokenService>();
 
 var app = builder.Build();
 
-app.MapControllers();
 
-// Configure the HTTP request pipeline.
+app.UseHttpsRedirection();
+
+// swagger + openApi
 if (app.Environment.IsDevelopment())
 {
 	app.MapOpenApi();
@@ -36,11 +37,37 @@ if (app.Environment.IsDevelopment())
 	});
 }
 
-using (var scope = app.Services.CreateScope())
+// map api endpoints
+app.MapControllers();
+
+// spa proxy, exclude swagger, api and openapi
+app.MapWhen(ctx =>
+		!ctx.Request.Path.StartsWithSegments("/api", StringComparison.OrdinalIgnoreCase) &&
+		!ctx.Request.Path.StartsWithSegments("/swagger", StringComparison.OrdinalIgnoreCase) &&
+		!ctx.Request.Path.StartsWithSegments("/openapi", StringComparison.OrdinalIgnoreCase),
+	spaApp =>
+	{
+		spaApp.UseSpa(spa =>
+		{
+			if (app.Environment.IsDevelopment())
+				spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+		});
+	});
+
+// Migrate DB (dev only or guarded)
+if (app.Environment.IsDevelopment())
 {
+	using var scope = app.Services.CreateScope();
 	var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-	await db.Database.MigrateAsync();          // or: await db.Database.CanConnectAsync();
+	
+	try
+	{
+		await db.Database.MigrateAsync();
+	}
+	catch (Exception ex)
+	{
+		app.Logger.LogError(ex, "Database migration failed");
+	}
 }
 
-app.UseHttpsRedirection();
 app.Run();
