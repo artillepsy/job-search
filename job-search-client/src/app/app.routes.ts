@@ -1,21 +1,30 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './core/auth/components/login/login.component';
-import { DummyComponent } from './features/dummy/components/dummy/dummy.component';
 import { authGuard } from './core/auth/guards/auth-guard';
+import { JobsListComponent } from './features/jobs/pages/jobs-list/jobs-list.component';
+import { LoginComponent } from './core/auth/components/login/login.component';
 
-export const routes: Routes = [{
+export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'jobs',
+    pathMatch: 'full',
+  },
+  {
     path: 'login',
     component: LoginComponent,
-},
-{
+  },
+  /*{
     path: 'welcome',
     component: DummyComponent,
     canActivate: [authGuard]
-},
+},*/
+  {
+    path: 'jobs',
+    component: JobsListComponent,
+  },
 
-
-{
+  {
     path: '**', // declare at the very bottom
-    redirectTo: '/login'
-},
+    redirectTo: '/login',
+  },
 ];

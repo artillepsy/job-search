@@ -6,10 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    ButtonModule,
-    FormsModule,
-],
+  imports: [ButtonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -29,13 +26,14 @@ export class LoginComponent {
   submitData() {
     console.log(`submit. Username: ${this.username}, password: ${this.password}`);
 
-
     if (!this.password) {
-      console.error("null password!");
-      return;  
+      console.error('null password!');
+      return;
     }
     if (this.loginService.logIn(this.username, this.password)) {
       this.router.navigate(['/welcome']);
+    } else {
+      alert('Invalid username or password');
     }
   }
 }
