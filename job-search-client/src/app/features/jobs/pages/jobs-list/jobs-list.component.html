@@ -1,6 +1,16 @@
 <div>
   <h2>Job Listings</h2>
   <div class="job-items-container">
+    @for (job of jobs; track job.id) {
+      <app-job-item [job]="job"></app-job-item>
+    } @empty {
+      <div class="p-text-center p-text-muted p-py-4">
+        <p class="p-m-0">No jobs yet.</p>
+      </div>
+      <div>
+        <p-button label="Load jobs" (onClick)="onClickLoadJobs()"/>
+      </div>
+    }
   </div>
-  <p-button label="Load jobs"/>
+
 </div>

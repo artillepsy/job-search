@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { Job } from './job.model';
 
 @Component({
-  selector: 'app-item-item',
+  selector: 'app-job-item',
   imports: [ButtonModule],
   templateUrl: './job-item.component.html',
   styleUrl: './job-item.component.scss',
 })
 export class JobItemComponent {
-  public title: string = 'Senior Software Engineer';
-  public companyName: string = 'Tech Innovations Inc.';
-  public description: string = 'Join our dynamic team to develop cutting-edge software solutions.';
+  @Input({ required: true }) job!: Job;
 
   public apply(): void {
-    alert(`Thank you for your interest in the ${this.title} position at ${this.companyName}.
+    alert(`Thank you for your interest in the ${this.job.title} position at ${this.job.companyName}.
     Our HR team will contact you soon!`);
   }
 }
