@@ -1,0 +1,89 @@
+:host {
+  background-color: rgb(176, 176, 176);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 0.25rem;
+
+  .top-panel {
+    background-color: wheat;
+    display: flex;
+
+    justify-content: center;
+
+    height: 2.5rem;
+    max-height: 3rem;
+    min-height: 2rem;
+    flex: 0 0 auto;
+
+    .search-container {
+      width: 30%;
+      gap: 0.25rem;
+
+
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+    }
+
+    .search-container input, button {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .middle-panel {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.25rem;
+
+
+    .filters-container {
+      background-color: wheat;
+      display: flex;
+
+      justify-content: center;
+      align-items: center;
+
+      direction: unset;
+      width: 10%;
+    }
+
+    .jobs-container {
+      background-color: wheat;
+
+      width: 40%;
+    }
+  }
+
+  .bottom-panel {
+    background-color: wheat;
+    display: flex;
+
+    justify-content: center;
+
+    height: 2.5rem;
+    max-height: 3rem;
+    min-height: 2rem;
+    flex: 0 0 auto;
+  }
+
+  @media (width <= 700px) {
+    .middle-panel {
+      .filters-container {
+        display: none;
+      }
+
+      .jobs-container {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -8,9 +8,9 @@ using Npgsql;
 
 namespace JobSearch.Server.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class UsersController : ControllerBase
 {
 	private readonly AppDbContext _db;

@@ -1,16 +1,35 @@
-<div>
-  <h2>Job Listings</h2>
-  <div class="job-items-container">
-    @for (job of jobs; track job.id) {
+<div class="top-panel">
+  <div class="search-container">
+    <p-floatlabel variant="on">
+      <p-autocomplete [(ngModel)]="value" [suggestions]="items"></p-autocomplete>
+      <label for="on_label">Job title</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on">
+      <p-autocomplete [(ngModel)]="selectedCountry" [suggestions]="filteredCountries"
+                      optionLabel="name"></p-autocomplete>
+      <label for="on_label">Country</label>
+    </p-floatlabel>
+    <button>Search</button>
+  </div>
+</div>
+<div class="middle-panel">
+  <div class="filters-container">
+    <h2 class="header">apply some filters</h2>
+  </div>
+  <div class="jobs-container">
+    @for (job of jobs$ | async; track job.id) {
       <app-job-item [job]="job"></app-job-item>
     } @empty {
-      <div class="p-text-center p-text-muted p-py-4">
-        <p class="p-m-0">No jobs yet.</p>
+      <div>
+        <p>No jobs yet.</p>
       </div>
       <div>
-        <p-button label="Load jobs" (onClick)="onClickLoadJobs()"/>
+        <p-button label="Refresh jobs" (onClick)="onClickLoadJobs()"/>
       </div>
     }
   </div>
-
 </div>
+<div class="bottom-panel">
+  <p>pagination controls</p>
+</div>
+
