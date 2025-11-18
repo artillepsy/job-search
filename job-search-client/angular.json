@@ -37,6 +37,7 @@
               }
             ],
             "styles": [
+              "primeicons/primeicons.css",
               "src/styles.scss"
             ]
           },
@@ -66,8 +67,8 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-          "options": { 
-            "proxyConfig": "proxy.conf.json" 
+          "options": {
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -98,6 +99,7 @@
               }
             ],
             "styles": [
+              "primeicons/primeicons.css",
               "src/styles.scss"
             ]
           }
