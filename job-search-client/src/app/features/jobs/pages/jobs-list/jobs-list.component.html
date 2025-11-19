@@ -2,13 +2,17 @@
   <div class="search-container">
     <p-floatlabel variant="on">
       <p-autocomplete [(ngModel)]="value"
-                      [suggestions]="items">
+                      [suggestions]="items"
+                      (completeMethod)="filterJobs($event)"
+                      [dropdown]="true">
       </p-autocomplete>
       <label for="on_label">Job title</label>
     </p-floatlabel>
     <p-floatlabel variant="on">
       <p-autocomplete [(ngModel)]="selectedCountry"
                       [suggestions]="filteredCountries"
+                      (completeMethod)="filterCountries($event)"
+                      [dropdown]="true"
                       optionLabel="name">
       </p-autocomplete>
       <label for="on_label">Country</label>

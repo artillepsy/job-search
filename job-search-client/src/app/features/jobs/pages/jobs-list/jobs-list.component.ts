@@ -4,15 +4,12 @@ import { CommonModule } from '@angular/common';
 import { JobItemComponent } from '../../components/item/job-item.component';
 import { JobsService } from '../../services/jobs.service';
 import { FormsModule } from '@angular/forms';
-import { AutoComplete } from 'primeng/autocomplete';
+import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { FloatLabel } from 'primeng/floatlabel';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { Job } from '../../components/item/job.model';
-
-interface Country {
-  name: string;
-  code: string;
-}
+import { COUNTRIES, Country } from '../../../../data/countries';
+import { JOB_SUGGESTIONS } from '../../../../data/job-suggestions';
 
 @Component({
   selector: 'app-jobs-list',
@@ -30,23 +27,6 @@ interface Country {
 })
 export class JobsListComponent implements OnInit {
   private _jobsService = inject(JobsService);
-
-  private _jobSuggestions: string[] = [
-    'Frontend Developer',
-    'Backend Developer',
-    'Fullstack Developer',
-    '.NET Developer',
-    'QA Engineer',
-    'DevOps Engineer',
-  ];
-
-  private _countries: Country[] = [
-    { name: 'Poland', code: 'PL' },
-    { name: 'Germany', code: 'DE' },
-    { name: 'France', code: 'FR' },
-    { name: 'United Kingdom', code: 'GB' },
-    { name: 'United States', code: 'US' },
-  ];
 
   jobs: Job[] = [];
   pagedJobs: Job[] = [];
@@ -67,6 +47,9 @@ export class JobsListComponent implements OnInit {
       this.totalRecords = jobs.length;
       this.updatePagedJobs();
     });
+
+    this.items = [...JOB_SUGGESTIONS];
+    this.filteredCountries = [...COUNTRIES];
   }
 
   updatePagedJobs() {
@@ -79,5 +62,19 @@ export class JobsListComponent implements OnInit {
     this.page = event.page ?? 0;
     this.pageSize = event.rows ?? this.pageSize;
     this.updatePagedJobs();
+  }
+
+  filterJobs(event: AutoCompleteCompleteEvent) {
+    const query = (event.query ?? '').toLowerCase();
+
+    this.items = JOB_SUGGESTIONS.filter((job) => job.toLowerCase().includes(query));
+  }
+
+  filterCountries(event: AutoCompleteCompleteEvent) {
+    const query = (event.query ?? '').toLowerCase();
+
+    this.filteredCountries = COUNTRIES.filter((country) =>
+      country.name.toLowerCase().includes(query),
+    );
   }
 }
