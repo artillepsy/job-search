@@ -28,8 +28,8 @@ public class JobsController : ControllerBase
 		
 		var jobs = await query.ToListAsync();
 		
-		Console.WriteLine(
-			string.Join(" | ", jobs.Select(j =>
+		Console.WriteLine("all jobs:\n\n" +
+			string.Join(" \n ", jobs.Select(j =>
 				$"Id={j.Id}, Title={j.Title}, Company={j.CompanyName}, Salary={j.Salary}"
 			))
 		);
@@ -55,16 +55,22 @@ public class JobsController : ControllerBase
 	//todo: add user token as a required field, remove [allowAnonymous]
 	[AllowAnonymous]
 	[HttpPost("post")]
-	public async Task<ActionResult> PostJob([FromBody] JobPostingDto dto)
+	public async Task<ActionResult> PostJob([FromBody] JobPostingDto[] dto)
 	{
-		var job = new JobModel()
+		var jobs = new List<JobModel>();
+		
+		foreach (var jobPostingDto in dto)
 		{
-			Title = dto.Title,
-			CompanyName = dto.CompanyName,
-			Salary = dto.Salary,
-		};
-
-		await _db.Jobs.AddAsync(job);
+			var job = new JobModel()
+			{
+				Title = jobPostingDto.Title,
+				CompanyName = jobPostingDto.CompanyName,
+				Salary = jobPostingDto.Salary,
+			};
+			jobs.Add(job);
+		}
+		
+		await _db.Jobs.AddRangeAsync(jobs);
 
 		try
 		{

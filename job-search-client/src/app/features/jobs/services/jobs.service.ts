@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Job } from '../components/item/job.model';
 
 export interface JobResponse {
   id?: number;
@@ -13,15 +14,9 @@ export interface JobResponse {
   providedIn: 'root',
 })
 export class JobsService {
-  private _jobs$ = new BehaviorSubject<JobResponse[]>([]);
   private _http = inject(HttpClient);
 
-  jobs$ = this._jobs$.asObservable();
-
-  loadJobs() {
-    this._http.get<JobResponse[]>('/api/jobs/get-all').subscribe({
-      next: (jobs) => this._jobs$.next(jobs),
-      error: (err) => console.error('Error loading jobs', err),
-    });
+  getJobs(): Observable<Job[]> {
+    return this._http.get<Job[]>('/api/jobs/get-all');
   }
 }
