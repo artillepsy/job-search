@@ -31,25 +31,42 @@ export class JobsListComponent implements OnInit {
   jobs: Job[] = [];
   pagedJobs: Job[] = [];
 
-  value: string | null = null;
-  items: string[] = [];
+  inputJobTitle: string | null = null;
+  filteredJobs: string[] = [];
 
-  selectedCountry: Country | null = null;
+  inputCountryName: Country | null = null;
   filteredCountries: Country[] = [];
 
   page = 0;
-  pageSize = 10;
+  pageSize = 20;
   totalRecords = 0;
 
   ngOnInit(): void {
-    this._jobsService.getJobs().subscribe((jobs) => {
+    this._jobsService.getAllJobs().subscribe((jobs) => {
       this.jobs = jobs;
       this.totalRecords = jobs.length;
       this.updatePagedJobs();
     });
 
-    this.items = [...JOB_SUGGESTIONS];
+    this.filteredJobs = [...JOB_SUGGESTIONS];
     this.filteredCountries = [...COUNTRIES];
+  }
+
+  onSearch() {
+    if (!this.inputJobTitle) {
+      this._jobsService.getAllJobs().subscribe((jobs) => {
+        this.jobs = jobs;
+        this.totalRecords = jobs.length;
+        this.updatePagedJobs();
+      });
+      return;
+    }
+
+    this._jobsService.getJobsByTitle(this.inputJobTitle).subscribe((jobs) => {
+      this.jobs = jobs;
+      this.totalRecords = jobs.length;
+      this.updatePagedJobs();
+    });
   }
 
   updatePagedJobs() {
@@ -67,7 +84,7 @@ export class JobsListComponent implements OnInit {
   filterJobs(event: AutoCompleteCompleteEvent) {
     const query = (event.query ?? '').toLowerCase();
 
-    this.items = JOB_SUGGESTIONS.filter((job) => job.toLowerCase().includes(query));
+    this.filteredJobs = JOB_SUGGESTIONS.filter((job) => job.toLowerCase().includes(query));
   }
 
   filterCountries(event: AutoCompleteCompleteEvent) {

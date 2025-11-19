@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from '../components/item/job.model';
 
@@ -16,7 +16,12 @@ export interface JobResponse {
 export class JobsService {
   private _http = inject(HttpClient);
 
-  getJobs(): Observable<Job[]> {
+  getAllJobs(): Observable<Job[]> {
     return this._http.get<Job[]>('/api/jobs/get-all');
+  }
+
+  getJobsByTitle(title: string): Observable<Job[]> {
+    const params = new HttpParams().set('title', title);
+    return this._http.get<Job[]>('/api/jobs/get', { params });
   }
 }

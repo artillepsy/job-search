@@ -1,15 +1,15 @@
 <div class="top-panel">
   <div class="search-container">
     <p-floatlabel variant="on">
-      <p-autocomplete [(ngModel)]="value"
-                      [suggestions]="items"
+      <p-autocomplete [(ngModel)]="inputJobTitle"
+                      [suggestions]="filteredJobs"
                       (completeMethod)="filterJobs($event)"
                       [dropdown]="true">
       </p-autocomplete>
       <label for="on_label">Job title</label>
     </p-floatlabel>
     <p-floatlabel variant="on">
-      <p-autocomplete [(ngModel)]="selectedCountry"
+      <p-autocomplete [(ngModel)]="inputCountryName"
                       [suggestions]="filteredCountries"
                       (completeMethod)="filterCountries($event)"
                       [dropdown]="true"
@@ -17,7 +17,7 @@
       </p-autocomplete>
       <label for="on_label">Country</label>
     </p-floatlabel>
-    <p-button>Search</p-button>
+    <p-button (click)="onSearch()">Search</p-button>
   </div>
 </div>
 <div class="middle-panel">
@@ -33,7 +33,7 @@
 <div class="bottom-panel">
   <p-paginator [rows]="pageSize"
                [totalRecords]="totalRecords"
-               [rowsPerPageOptions]="[10, 20, 50]"
+               [rowsPerPageOptions]="[20, 50, 100]"
                (onPageChange)="onPageChange($event)">
   </p-paginator>
 </div>
