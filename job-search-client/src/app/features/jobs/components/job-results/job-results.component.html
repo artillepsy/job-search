@@ -1,0 +1,11 @@
+<div class="jobs-container">
+  @for (job of pagedJobs; track job.id) {
+    <app-job-item [job]="job"></app-job-item>
+  }
+</div>
+<p-paginator [rows]="pageSize"
+             [totalRecords]="totalRecords"
+             [rowsPerPageOptions]="[20, 50, 100]"
+             (onPageChange)="onPageChange($event)">
+</p-paginator>
+

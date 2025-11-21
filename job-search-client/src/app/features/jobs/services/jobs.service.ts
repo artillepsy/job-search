@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Job } from '../components/item/job.model';
+import { Job } from '../models/job.model';
 
 export interface JobResponse {
   id?: number;

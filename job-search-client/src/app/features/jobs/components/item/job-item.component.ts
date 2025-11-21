@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { Job } from './job.model';
+import { Job } from '../../models/job.model';
 
 @Component({
   selector: 'app-job-item',

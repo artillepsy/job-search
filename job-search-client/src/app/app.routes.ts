@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/guards/auth-guard';
-import { JobsListComponent } from './features/jobs/pages/jobs-list/jobs-list.component';
+import { JobResultsComponent } from './features/jobs/components/job-results/job-results.component';
 import { LoginComponent } from './core/auth/components/login/login.component';
 
 export const routes: Routes = [
@@ -20,7 +20,7 @@ export const routes: Routes = [
 },*/
   {
     path: 'jobs',
-    component: JobsListComponent,
+    component: JobResultsComponent,
   },
 
   {
