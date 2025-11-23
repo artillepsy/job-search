@@ -5,10 +5,11 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { JobSearchParams } from '../../models/job-search.params.model';
 import { COUNTRIES, Country } from '../../../../data/countries';
 import { JOB_SUGGESTIONS } from '../../../../data/job-suggestions';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search-panel',
-  imports: [AutoComplete, Button, FloatLabel],
+  imports: [AutoComplete, Button, FloatLabel, FormsModule],
   templateUrl: './job-search-panel.component.html',
   styleUrl: './job-search-panel.component.scss',
 })

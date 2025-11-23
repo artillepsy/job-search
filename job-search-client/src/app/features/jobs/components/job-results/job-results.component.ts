@@ -1,13 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Signal,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, effect, inject, input, Input, OnInit, Signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { JobItemComponent } from '../item/job-item.component';
@@ -26,6 +17,11 @@ import { JobSearchParams } from '../../models/job-search.params.model';
 export class JobResultsComponent implements OnInit {
   private _jobsService = inject(JobsService);
 
+  searchParams = input<JobSearchParams>({
+    JobTitle: '',
+    Country: '',
+  });
+
   jobs: Job[] = [];
   pagedJobs: Job[] = [];
 
@@ -33,17 +29,15 @@ export class JobResultsComponent implements OnInit {
   pageSize = 20;
   totalRecords = 0;
 
-  @Input() searchParams!: Signal<JobSearchParams>;
+  private readonly searchEffect = effect(() => {
+    this.onSearch(this.searchParams());
+  });
 
   ngOnInit() {
     this._jobsService.getAllJobs().subscribe((jobs) => {
       this.jobs = jobs;
       this.totalRecords = jobs.length;
       this.updatePagedJobs();
-    });
-
-    effect(() => {
-      this.onSearch(this.searchParams());
     });
   }
 

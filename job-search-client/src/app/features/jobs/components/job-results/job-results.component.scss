@@ -1,99 +1,28 @@
 :host {
-  background-color: #343445;
-  width: 100%;
-  height: 100%;
   display: flex;
-  justify-content: center;
-
   flex-direction: column;
-
   gap: 0.25rem;
 
-  .top-panel {
-    background-color: #4f4f68;
-    display: flex;
+  flex: 1 1 auto; // Allow component to grow and shrink
+  min-height: 0; // Critical for proper scrolling
 
-    justify-content: center;
-
-    height: 3.5rem;
-    flex: 0 0 auto;
-
-    .search-container {
-      width: 30%;
-      gap: 0.25rem;
-
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: row;
-    }
-
-    .search-container input, button {
-      margin-top: 0.25rem;
-      margin-bottom: 0.25rem;
-    }
-  }
-
-  .middle-panel {
-    flex: 1 1 auto;
-    overflow: hidden;
+  .jobs-container {
 
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+
     gap: 0.25rem;
 
-    .filters-container {
-      background-color: #4f4f68;
-      display: flex;
-      border: 1px solid rgba(255, 255, 255, 0.43);
-      justify-content: center;
-      align-items: center;
-
-      direction: unset;
-      width: 10%;
-    }
-
-    .jobs-container {
-      display: flex;
-      flex-direction: column;
-      padding-right: 0.75rem;
-      padding-left: 0.75rem;
-
-      width: 40%;
-      gap: 0.35rem;
-
-      flex: 0 1 auto;
-      min-height: 0;
-      overflow-y: auto;
-    }
+    flex: 1 1 auto; // Take all available space, allow shrinking
+    min-height: 0; // Critical: allows overflow to work
+    overflow-y: auto; // Enable vertical scroll
   }
 
-  .bottom-panel {
-    // background-color: #4f4f68;
-    display: flex;
-
-    justify-content: center;
+  .p-paginator {
 
     height: 4.5rem;
     flex: 0 0 auto;
-
-    .p-paginator {
-      margin-top: 0.25rem;
-      margin-bottom: 0.25rem;
-    }
-  }
-
-  @media (width <= 700px) {
-    .middle-panel {
-      .filters-container {
-        display: none;
-      }
-
-      .jobs-container {
-        width: 100%;
-      }
-    }
   }
 }

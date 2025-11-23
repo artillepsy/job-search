@@ -10,7 +10,10 @@ import { JobSearchParams } from '../../models/job-search.params.model';
   styleUrl: './jobs-page.component.scss',
 })
 export class JobsPageComponent {
-  searchParams = signal<JobSearchParams>({});
+  searchParams = signal<JobSearchParams>({
+    JobTitle: '',
+    Country: '',
+  });
 
   updateSearchParams(params: JobSearchParams) {
     this.searchParams.set(params);
