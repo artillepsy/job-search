@@ -3,10 +3,12 @@
     <app-job-item [job]="job"></app-job-item>
   }
 </div>
-<p-paginator [rows]="pageSize"
-             [totalRecords]="totalRecords"
-             [rowsPerPageOptions]="[20, 50, 100]"
-             (onPageChange)="onPageChange($event)">
-</p-paginator>
+<div class="paginator-container">
+  <p-paginator [rows]="pageSize"
+               [totalRecords]="totalRecords"
+               [rowsPerPageOptions]="[20, 50, 100]"
+               (onPageChange)="onPageChange($event)">
+  </p-paginator>
+</div>
 
 

@@ -8,11 +8,11 @@
 
   cursor: pointer;
 
-  background: linear-gradient(90deg, #fcfcff 0%, #8b8baf 90%);
+  background: linear-gradient(90deg, #fcfcff 0%, #c0c0ec 90%);
   background-size: 200% 200%;
   background-position: 0% 50%;
 
-  transition: background-position 0.4s ease;
+  transition: background-position 0.2s ease;
 }
 
 .main-container:hover {

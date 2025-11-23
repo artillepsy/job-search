@@ -14,6 +14,7 @@ import { JobSearchParams } from '../../models/job-search.params.model';
   templateUrl: './job-results.component.html',
   styleUrl: './job-results.component.scss',
 })
+//cache search results, page
 export class JobResultsComponent implements OnInit {
   private _jobsService = inject(JobsService);
 

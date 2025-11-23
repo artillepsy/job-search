@@ -18,10 +18,28 @@
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
+
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 0.35rem,
+        black calc(100% - 0.7rem),
+        transparent 100%
+    );
+
+    app-job-item:first-child {
+      margin-top: 0.35rem;
+    }
+
+    app-job-item:last-child {
+      margin-bottom: 0.35rem;
+    }
   }
 
-  /*
-    .p-paginator {
+  .paginator-container {
 
-    }*/
+    .p-paginator {
+      background-color: transparent;
+    }
+  }
 }
