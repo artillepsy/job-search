@@ -3,8 +3,8 @@
   flex-direction: column;
   gap: 0.25rem;
 
-  flex: 1 1 auto; // Allow component to grow and shrink
-  min-height: 0; // Critical for proper scrolling
+  flex: 1 1 auto;
+  min-height: 0;
 
   .jobs-container {
 
@@ -15,14 +15,13 @@
 
     gap: 0.25rem;
 
-    flex: 1 1 auto; // Take all available space, allow shrinking
-    min-height: 0; // Critical: allows overflow to work
-    overflow-y: auto; // Enable vertical scroll
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
   }
 
-  .p-paginator {
+  /*
+    .p-paginator {
 
-    height: 4.5rem;
-    flex: 0 0 auto;
-  }
+    }*/
 }
