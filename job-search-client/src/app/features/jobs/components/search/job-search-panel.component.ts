@@ -48,4 +48,6 @@ export class JobSearchPanelComponent implements OnInit {
     };
     this.search.emit(params);
   }
+
+  onFilter() {}
 }

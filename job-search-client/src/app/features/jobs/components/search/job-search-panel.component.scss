@@ -1,12 +1,9 @@
 :host {
-  //background-color: #4f4f68;
-
   width: 100%;
 
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: row;
+
   gap: 0.25rem;
 
   .p-floatlabel, p-button {

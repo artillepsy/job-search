@@ -1,3 +1,5 @@
+<p-button icon="pi pi-filter" (click)="onFilter()" styleClass="p-button-icon-left" label="Filters"></p-button>
+<p-button icon="pi pi-search" (click)="onSearch()" styleClass="p-button-icon-left" label="Search"></p-button>
 <p-floatlabel variant="on">
   <p-autocomplete [(ngModel)]="inputJobTitle"
                   [suggestions]="filteredJobs"
@@ -15,4 +17,3 @@
   </p-autocomplete>
   <label for="on_label">Country</label>
 </p-floatlabel>
-<p-button (click)="onSearch()">Search</p-button>

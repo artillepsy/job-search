@@ -1,10 +1,12 @@
 <div class="top-panel"></div>
 <div class="middle-panel">
-  <div class="search-container">
-    <app-search-panel (search)="updateSearchParams($event)"></app-search-panel>
+  <div class="left-container">
+    <div class="search-panel">
+      <app-search-panel (search)="updateSearchParams($event)"></app-search-panel>
+    </div>
     <app-job-results [searchParams]="searchParams()"></app-job-results>
   </div>
-  <div class="description-container"></div>
+  <div class="right-container"></div>
 </div>
 <div class="bottom-panel"></div>
 
