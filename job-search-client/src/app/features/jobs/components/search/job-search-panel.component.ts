@@ -43,8 +43,8 @@ export class JobSearchPanelComponent implements OnInit {
 
   onSearch() {
     const params: JobSearchParams = {
-      JobTitle: this.inputJobTitle ?? undefined,
-      Country: this.inputCountryName?.name,
+      jobTitle: this.inputJobTitle ?? undefined,
+      country: this.inputCountryName?.name,
     };
     this.search.emit(params);
   }

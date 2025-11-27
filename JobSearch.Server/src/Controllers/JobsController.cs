@@ -13,7 +13,12 @@ public class JobsController : ControllerBase
 	private readonly AppDbContext _db;
 
 	public record JobSearchDto(string Title);
-	public record JobPostingDto(string Title, string CompanyName, decimal Salary);
+	public record JobPostingDto(
+		string Title, 
+		string CompanyName, 
+		decimal? Salary,
+		bool IsSalaryVisible,
+		string Location);
 	
 	public JobsController(AppDbContext db)
 	{
@@ -52,20 +57,24 @@ public class JobsController : ControllerBase
 		return Ok(jobs);
 	}
 
+	//make it dev only + add date randomizer
 	//todo: add user token as a required field, remove [allowAnonymous]
 	[AllowAnonymous]
 	[HttpPost("post")]
-	public async Task<ActionResult> PostJob([FromBody] JobPostingDto[] dto)
+	public async Task<ActionResult> PostJob([FromBody] JobPostingDto[] dtoList)
 	{
 		var jobs = new List<JobModel>();
 		
-		foreach (var jobPostingDto in dto)
+		foreach (var dto in dtoList)
 		{
 			var job = new JobModel()
 			{
-				Title = jobPostingDto.Title,
-				CompanyName = jobPostingDto.CompanyName,
-				Salary = jobPostingDto.Salary,
+				Title = dto.Title,
+				CompanyName = dto.CompanyName,
+				Salary = dto.Salary,
+				IsSalaryVisible = dto.IsSalaryVisible,
+				Location = dto.Location,
+				CreatedAt = DateTime.UtcNow,
 			};
 			jobs.Add(job);
 		}

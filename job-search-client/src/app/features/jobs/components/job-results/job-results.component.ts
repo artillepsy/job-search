@@ -19,8 +19,8 @@ export class JobResultsComponent implements OnInit {
   private _jobsService = inject(JobsService);
 
   searchParams = input<JobSearchParams>({
-    JobTitle: '',
-    Country: '',
+    jobTitle: '',
+    country: '',
   });
 
   jobs: Job[] = [];
@@ -44,7 +44,7 @@ export class JobResultsComponent implements OnInit {
 
   //todo: apply filters
   onSearch(params: JobSearchParams) {
-    if (!params.JobTitle) {
+    if (!params.jobTitle) {
       //todo: don't search if no input
       this._jobsService.getAllJobs().subscribe((jobs) => {
         this.jobs = jobs;
@@ -54,7 +54,7 @@ export class JobResultsComponent implements OnInit {
       return;
     }
 
-    this._jobsService.getJobsByTitle(params.JobTitle).subscribe((jobs) => {
+    this._jobsService.getJobsByTitle(params.jobTitle).subscribe((jobs) => {
       this.jobs = jobs;
       this.totalRecords = jobs.length;
       this.updatePagedJobs();

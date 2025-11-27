@@ -1,39 +1,86 @@
-.main-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.56);
-  border-radius: 6px;
+:host {
 
-  cursor: pointer;
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    height: 100%;
 
-  background: linear-gradient(90deg, #fcfcff 0%, #c0c0ec 90%);
-  background-size: 200% 200%;
-  background-position: 0% 50%;
+    &:hover {
+      transform: scale(1.01);
+    }
 
-  transition: background-position 0.2s ease;
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  .top-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 12px;
+
+    p:first-child {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      margin: 0;
+    }
+
+    p:last-child {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #2ecc71;
+      margin: 0;
+    }
+  }
+
+  .bottom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    p {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+
+      display: flex;
+      align-items: center;
+
+      i {
+        margin-right: 4px;
+        font-size: 13px;
+      }
+
+      &:first-child {
+        font-weight: 500;
+        color: #555;
+        margin-right: 8px;
+      }
+
+      &:nth-child(2) {
+        margin-right: auto;
+      }
+
+      &:last-child {
+        font-size: 0.8rem;
+        color: #999;
+        font-style: italic;
+      }
+    }
+  }
+
 }
 
-.main-container:hover {
-  background-position: 50% 50%;
-}
 
-.main-container h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.main-container p {
-  margin: 0;
-  font-size: 14px;
-  color: #555;
-}
-
-.main-container div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 

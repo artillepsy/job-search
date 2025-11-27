@@ -11,8 +11,8 @@ import { JobSearchParams } from '../../models/job-search.params.model';
 })
 export class JobsPageComponent {
   searchParams = signal<JobSearchParams>({
-    JobTitle: '',
-    Country: '',
+    jobTitle: '',
+    country: '',
   });
 
   updateSearchParams(params: JobSearchParams) {

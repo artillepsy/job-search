@@ -1,5 +1,5 @@
 export interface JobSearchParams {
-  JobTitle?: string;
-  Country?: string;
+  jobTitle?: string;
+  country?: string;
   // filters: params
 }

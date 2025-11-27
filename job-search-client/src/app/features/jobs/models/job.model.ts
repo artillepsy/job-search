@@ -2,5 +2,8 @@ export interface Job {
   id?: number;
   title: string;
   companyName: string;
-  salary: number;
+  location: string;
+  isSalaryVisible: boolean;
+  salary?: number;
+  createdAt: Date;
 }
