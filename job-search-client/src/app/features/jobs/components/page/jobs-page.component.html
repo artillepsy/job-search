@@ -2,7 +2,12 @@
 <div class="middle-panel">
   <div class="left-container">
     <div class="search-panel">
-      <app-search-panel (search)="updateSearchParams($event)"></app-search-panel>
+      <app-search-panel (searchEmitter)="updateSearchParams($event)"
+                        (filtersEmitter)="toggleFilters()">
+      </app-search-panel>
+      @if (isFiltersShown) {
+        <app-filters-dropdown></app-filters-dropdown>
+      }
     </div>
     <app-job-results [searchParams]="searchParams()"></app-job-results>
   </div>

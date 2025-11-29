@@ -14,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './job-search-panel.component.scss',
 })
 export class JobSearchPanelComponent implements OnInit {
-  @Output() search = new EventEmitter<JobSearchParams>();
+  @Output() searchEmitter = new EventEmitter<JobSearchParams>();
+  @Output() filtersEmitter = new EventEmitter();
 
   inputJobTitle: string | null = null;
   filteredJobs: string[] = [];
@@ -41,13 +42,15 @@ export class JobSearchPanelComponent implements OnInit {
     );
   }
 
-  onSearch() {
+  onClickSearch() {
     const params: JobSearchParams = {
       jobTitle: this.inputJobTitle ?? undefined,
       country: this.inputCountryName?.name,
     };
-    this.search.emit(params);
+    this.searchEmitter.emit(params);
   }
 
-  onFilter() {}
+  onClickFilters() {
+    this.filtersEmitter.emit();
+  }
 }
