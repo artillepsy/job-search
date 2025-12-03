@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobResultsComponent as JobsListComponent } from './job-results.component';
+import { JobItemsComponent as JobsListComponent } from './job-items.component';
 
-describe('JobResultsComponent', () => {
+describe('JobItemsComponent', () => {
   let component: JobsListComponent;
   let fixture: ComponentFixture<JobsListComponent>;
 

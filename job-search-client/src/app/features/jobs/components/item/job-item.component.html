@@ -1,15 +1,15 @@
 <div class="main-container" (click)="apply()">
   <div class="top-container">
-    <p>{{ job.title }}</p>
-    @if (job.isSalaryVisible) {
-      <p>{{ job.salary }} $</p>
+    <p>{{ job().title }}</p>
+    @if (job().isSalaryVisible) {
+      <p>{{ job().salary }} $</p>
     } @else {
       <p>Salary hidden</p>
     }
   </div>
   <div class="bottom-container">
-    <p><i class="pi pi-briefcase"></i>{{ job.companyName }}</p>
-    <p><i class="pi pi-map-marker"></i>{{ job.location }}</p>
+    <p><i class="pi pi-briefcase"></i>{{ job().companyName }}</p>
+    <p><i class="pi pi-map-marker"></i>{{ job().location }}</p>
     @if (isPostedToday()) {
       <p>Today</p>
     } @else {

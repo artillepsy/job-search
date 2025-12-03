@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { Job } from '../../models/job.model';
 
@@ -9,7 +9,7 @@ import { Job } from '../../models/job.model';
   styleUrl: './job-item.component.scss',
 })
 export class JobItemComponent {
-  @Input({ required: true }) job!: Job;
+  job = input.required<Job>();
 
   public apply(): void {
     //alert(`Thank you for your interest in the ${this.job.title} position at ${this.job.companyName}.
@@ -22,7 +22,7 @@ export class JobItemComponent {
 
   getPostingDays() {
     const today = new Date();
-    const createdAt = new Date(this.job.createdAt);
+    const createdAt = new Date(this.job().createdAt);
     const timeDiff = today.getTime() - createdAt.getTime();
     return Math.floor(timeDiff / (1000 * 3600 * 24));
   }

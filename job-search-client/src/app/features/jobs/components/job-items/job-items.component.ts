@@ -1,6 +1,5 @@
-import { Component, effect, inject, input, Input, OnInit, Signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { CommonModule } from '@angular/common';
 import { JobItemComponent } from '../item/job-item.component';
 import { JobsService } from '../../services/jobs.service';
 import { FormsModule } from '@angular/forms';
@@ -9,19 +8,16 @@ import { Job } from '../../models/job.model';
 import { JobSearchParams } from '../../models/job-search.params.model';
 
 @Component({
-  selector: 'app-job-results',
-  imports: [CommonModule, ButtonModule, JobItemComponent, FormsModule, Paginator],
-  templateUrl: './job-results.component.html',
-  styleUrl: './job-results.component.scss',
+  selector: 'app-job-items',
+  imports: [ButtonModule, JobItemComponent, FormsModule, Paginator],
+  templateUrl: './job-items.component.html',
+  styleUrl: './job-items.component.scss',
 })
 //cache search results, page
-export class JobResultsComponent implements OnInit {
+export class JobItemsComponent implements OnInit {
   private _jobsService = inject(JobsService);
 
-  searchParams = input<JobSearchParams>({
-    jobTitle: '',
-    country: '',
-  });
+  searchParams = input<JobSearchParams | undefined>(undefined);
 
   jobs: Job[] = [];
   pagedJobs: Job[] = [];
@@ -30,9 +26,15 @@ export class JobResultsComponent implements OnInit {
   pageSize = 20;
   totalRecords = 0;
 
-  private readonly searchEffect = effect(() => {
-    this.onSearch(this.searchParams());
-  });
+  constructor() {
+    effect(() => {
+      if (!this.searchParams()) {
+        return;
+      }
+
+      this.onSearch(this.searchParams()!);
+    });
+  }
 
   ngOnInit() {
     this._jobsService.getAllJobs().subscribe((jobs) => {

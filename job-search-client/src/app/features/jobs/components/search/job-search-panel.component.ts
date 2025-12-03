@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, output, Output } from '@angular/core';
 import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { Button } from 'primeng/button';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -14,8 +14,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './job-search-panel.component.scss',
 })
 export class JobSearchPanelComponent implements OnInit {
-  @Output() searchEmitter = new EventEmitter<JobSearchParams>();
-  @Output() filtersEmitter = new EventEmitter();
+  searchChange = output<JobSearchParams>();
+  filtersChange = output();
 
   inputJobTitle: string | null = null;
   filteredJobs: string[] = [];
@@ -47,10 +47,10 @@ export class JobSearchPanelComponent implements OnInit {
       jobTitle: this.inputJobTitle ?? undefined,
       country: this.inputCountryName?.name,
     };
-    this.searchEmitter.emit(params);
+    this.searchChange.emit(params);
   }
 
   onClickFilters() {
-    this.filtersEmitter.emit();
+    this.filtersChange.emit();
   }
 }

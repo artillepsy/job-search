@@ -1,12 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { JobSearchPanelComponent } from '../search/job-search-panel.component';
-import { JobResultsComponent } from '../job-results/job-results.component';
+import { JobItemsComponent } from '../job-items/job-items.component';
 import { JobSearchParams } from '../../models/job-search.params.model';
 import { FiltersDropdownComponent } from '../filters/filters-dropdown.component';
 
 @Component({
   selector: 'app-jobs-page',
-  imports: [JobSearchPanelComponent, JobResultsComponent, FiltersDropdownComponent],
+  imports: [JobSearchPanelComponent, JobItemsComponent, FiltersDropdownComponent],
   templateUrl: './jobs-page.component.html',
   styleUrl: './jobs-page.component.scss',
 })
