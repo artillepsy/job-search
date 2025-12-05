@@ -1,0 +1,19 @@
+{
+  "AllowedScrapers": [
+    {
+      "Name": "CareersInPoland",
+      "Enabled": true,
+      "ConfigFile": "Configs/CareersInPolandConfig.json"
+    },
+    {
+      "Name": "JustJoinIt",
+      "Enabled": true,
+      "ConfigFile": "Configs/JustJoinItConfig.json"
+    },
+    {
+      "Name": "NoFluffJobs",
+      "Enabled": false,
+      "ConfigFile": "Configs/NoFluffJobs.json"
+    }
+  ]
+}

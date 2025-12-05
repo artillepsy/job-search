@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.Server", "JobSearch.Server.csproj", "{AFEA464A-7C75-4EE0-A90F-B5E3F823B9C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.DataScraper", "..\JobSearch.DataScraper\JobSearch.DataScraper.csproj", "{5D70D361-AAB6-4333-8140-B34DFB8B59D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{AFEA464A-7C75-4EE0-A90F-B5E3F823B9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFEA464A-7C75-4EE0-A90F-B5E3F823B9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFEA464A-7C75-4EE0-A90F-B5E3F823B9C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D70D361-AAB6-4333-8140-B34DFB8B59D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D70D361-AAB6-4333-8140-B34DFB8B59D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D70D361-AAB6-4333-8140-B34DFB8B59D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D70D361-AAB6-4333-8140-B34DFB8B59D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
