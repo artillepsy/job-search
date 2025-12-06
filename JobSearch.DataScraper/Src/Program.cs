@@ -1,5 +1,6 @@
 using JobSearch.DataScraper;
 using JobSearch.DataScraper.Services.Core.Factory;
+using JobSearch.DataScraper.Services.Core.Schedule;
 using JobSearch.DataScraper.Services.Utils;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 		.UseSnakeCaseNamingConvention());
 
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
+builder.Services.AddHostedService<ScraperBackgroundService>();
 
 foreach (var (name, binding) in ScraperUtils.Bindings)
 {

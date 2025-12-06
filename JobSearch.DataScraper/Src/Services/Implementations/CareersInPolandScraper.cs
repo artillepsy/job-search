@@ -6,6 +6,7 @@ namespace JobSearch.DataScraper.Services.Implementations;
 
 public class CareersInPolandScraper : ScraperBase
 {
+	private readonly HttpClient _httpClient;
 	private CareersInPolandConfig _config;
 
 	public CareersInPolandScraper(
@@ -14,8 +15,10 @@ public class CareersInPolandScraper : ScraperBase
 		CareersInPolandConfig config) : base(logger, httpClientFactory)
 	{
 		_config = config;
+		_httpClient = httpClientFactory.CreateClient();
 	}
 
+	//todo: check proper configuration setup and try to check if http client works properly 
 	public override async Task<ScrapingResult> ScrapeAsync(IScrapingOptions options, CancellationToken ct)
 	{
 		var result = new ScrapingResult()
@@ -25,8 +28,16 @@ public class CareersInPolandScraper : ScraperBase
 
 		try
 		{
-			await Task.Delay(1000, ct); // Simulate work
-            
+			_logger.LogInformation($"pinging url: {_config.Url}");
+
+			
+			var response = await _httpClient.GetAsync(_config.Url, ct);
+			response.EnsureSuccessStatusCode();
+
+			var content = await response.Content.ReadAsStringAsync(ct);
+
+			_logger.LogInformation($"response content: {content}");
+			
 			result.IsSuccess = true;
 			result.RecordsScraped = 0;
 		}
