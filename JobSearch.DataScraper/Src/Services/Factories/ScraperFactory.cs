@@ -1,6 +1,7 @@
+using JobSearch.DataScraper.Services.Scrapers;
 using JobSearch.DataScraper.Services.Utils;
 
-namespace JobSearch.DataScraper.Services.Core.Factory;
+namespace JobSearch.DataScraper.Services.Factories;
 
 public class ScraperFactory : IScraperFactory
 {

@@ -1,7 +1,7 @@
-using JobSearch.DataScraper.Models;
+using JobSearch.DataScraper.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobSearch.DataScraper;
+namespace JobSearch.DataScraper.Database;
 
 public class AppDbContext : DbContext
 {

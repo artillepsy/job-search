@@ -1,6 +1,4 @@
-using JobSearch.DataScraper.Services.Core;
-
-namespace JobSearch.DataScraper.Models;
+namespace JobSearch.DataScraper.Database.Models;
 
 public class JobModel
 {

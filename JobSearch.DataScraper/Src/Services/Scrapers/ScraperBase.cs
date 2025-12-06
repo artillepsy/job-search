@@ -1,6 +1,7 @@
-using JobSearch.DataScraper.Services.Core.Schedule;
+using JobSearch.DataScraper.Services.Options;
+using JobSearch.DataScraper.Services.Result;
 
-namespace JobSearch.DataScraper.Services.Core;
+namespace JobSearch.DataScraper.Services.Scrapers;
 
 public abstract class ScraperBase : IScraper
 {

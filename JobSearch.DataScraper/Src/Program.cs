@@ -1,6 +1,8 @@
 using JobSearch.DataScraper;
-using JobSearch.DataScraper.Services.Core.Factory;
-using JobSearch.DataScraper.Services.Core.Schedule;
+using JobSearch.DataScraper.Database;
+using JobSearch.DataScraper.Services.Background;
+using JobSearch.DataScraper.Services.ConfigurationModels;
+using JobSearch.DataScraper.Services.Factories;
 using JobSearch.DataScraper.Services.Utils;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(opt =>
 	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 		.UseSnakeCaseNamingConvention());
+
+builder.Services.AddOptions<ScraperServiceConfigModel>()
+	.BindConfiguration("Src/Configs/ScraperServiceConfig.json")
+	.ValidateDataAnnotations()
+	.ValidateOnStart();
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 builder.Services.AddHostedService<ScraperBackgroundService>();

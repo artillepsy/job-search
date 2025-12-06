@@ -1,4 +1,4 @@
-namespace JobSearch.DataScraper.Services.Core.Schedule;
+namespace JobSearch.DataScraper.Services.Result;
 
 public class ScrapingResult
 {

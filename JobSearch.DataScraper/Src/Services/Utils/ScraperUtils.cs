@@ -1,5 +1,5 @@
-using JobSearch.DataScraper.Services.ConfigModels;
-using JobSearch.DataScraper.Services.Implementations;
+using JobSearch.DataScraper.Services.ConfigurationModels;
+using JobSearch.DataScraper.Services.Scrapers.Implementations;
 
 namespace JobSearch.DataScraper.Services.Utils;
 
@@ -7,11 +7,11 @@ public static class ScraperUtils
 {
 	public static readonly Dictionary<string, ScraperBinding> Bindings = new()
 	{
-			["CareersInPoland"] = new ScraperBinding()
-			{
-				Type = typeof(CareersInPolandScraper), 
-				ConfigType = typeof(CareersInPolandConfig),
-			},
+		["CareersInPoland"] = new ScraperBinding()
+		{
+			Type = typeof(CareersInPolandScraper),
+			ConfigType = typeof(CareersInPolandConfigModel),
+		},
 	};
 
 	public class ScraperBinding

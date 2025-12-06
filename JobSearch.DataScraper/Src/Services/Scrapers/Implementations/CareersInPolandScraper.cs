@@ -1,21 +1,22 @@
-using JobSearch.DataScraper.Services.ConfigModels;
-using JobSearch.DataScraper.Services.Core;
-using JobSearch.DataScraper.Services.Core.Schedule;
+using JobSearch.DataScraper.Services.ConfigurationModels;
+using JobSearch.DataScraper.Services.Options;
+using JobSearch.DataScraper.Services.Result;
 
-namespace JobSearch.DataScraper.Services.Implementations;
+namespace JobSearch.DataScraper.Services.Scrapers.Implementations;
 
 public class CareersInPolandScraper : ScraperBase
 {
 	private readonly HttpClient _httpClient;
-	private CareersInPolandConfig _config;
+	private CareersInPolandConfigModel _configModel;
 
 	public CareersInPolandScraper(
-		ILogger<ScraperBase> logger, 
+		ILogger<CareersInPolandScraper> logger, 
 		IHttpClientFactory httpClientFactory, 
-		CareersInPolandConfig config) : base(logger, httpClientFactory)
+		CareersInPolandConfigModel configModel) : base(logger, httpClientFactory)
 	{
-		_config = config;
+		_configModel = configModel;
 		_httpClient = httpClientFactory.CreateClient();
+		_logger.LogInformation($"[Constructor] config: {_configModel}");
 	}
 
 	//todo: check proper configuration setup and try to check if http client works properly 
@@ -28,10 +29,9 @@ public class CareersInPolandScraper : ScraperBase
 
 		try
 		{
-			_logger.LogInformation($"pinging url: {_config.Url}");
-
+			_logger.LogInformation($"pinging url: {_configModel.Url}");
 			
-			var response = await _httpClient.GetAsync(_config.Url, ct);
+			var response = await _httpClient.GetAsync(_configModel.Url, ct);
 			response.EnsureSuccessStatusCode();
 
 			var content = await response.Content.ReadAsStringAsync(ct);
