@@ -3,6 +3,7 @@ using JobSearch.DataScraper.Database;
 using JobSearch.DataScraper.Services.Background;
 using JobSearch.DataScraper.Services.ConfigurationModels;
 using JobSearch.DataScraper.Services.Factories;
+using JobSearch.DataScraper.Services.Options;
 using JobSearch.DataScraper.Services.Utils;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services.AddOptions<ScraperServiceConfigModel>()
 
 builder.Services.AddHttpClient();
 
+builder.Services.AddScoped<IScrapingOptions, ScrapingOptions>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 builder.Services.AddHostedService<ScraperBackgroundService>();
 
