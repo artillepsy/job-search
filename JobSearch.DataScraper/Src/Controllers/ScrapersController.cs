@@ -28,8 +28,6 @@ public class ScrapersController : ControllerBase
 	[HttpGet("run-all")]
 	public async Task<ActionResult> TestRun()
 	{
-		_logger.LogInformation($"config: {_options.Value}");
-		
 		foreach (var scraper in _options.Value.AllowedScrapers)
 		{
 			if (!scraper.IsEnabled)

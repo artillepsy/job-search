@@ -25,8 +25,12 @@ builder.Services.AddSingleton<IScrapingOptions, ScrapingOptions>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
 // background service
-builder.Services.AddSingleton<IScraperBackgroundService, ScraperBackgroundService>();
-builder.Services.AddHostedService<ScraperBackgroundService>();
+// Register as concrete type AND as hosted service
+builder.Services.AddSingleton<ScraperBackgroundService>();
+builder.Services.AddHostedService(provider => 
+	provider.GetRequiredService<ScraperBackgroundService>());
+builder.Services.AddSingleton<IScraperBackgroundService>(provider => 
+	provider.GetRequiredService<ScraperBackgroundService>());
 
 // mvc + swagger
 builder.Services.AddControllers(); 

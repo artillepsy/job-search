@@ -11,6 +11,7 @@ public class CareersInPolandScraper : ScraperBase
 	private readonly CareersInPolandConfig _config;
 	private bool _isRunning = false;
 
+	//todo: fix: being called every time i trigger the factory
 	public CareersInPolandScraper(
 		ILogger<CareersInPolandScraper> logger, 
 		IHttpClientFactory httpClientFactory, 

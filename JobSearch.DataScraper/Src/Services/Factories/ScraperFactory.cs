@@ -6,12 +6,13 @@ namespace JobSearch.DataScraper.Services.Factories;
 public class ScraperFactory : IScraperFactory
 {
 	private readonly IServiceProvider _serviceProvider;
-	
+	private readonly ILogger<ScraperFactory> _logger;
 	private readonly Dictionary<string, Type> _scraperTypes = new();
 	
-	public ScraperFactory(IServiceProvider serviceProvider)
+	public ScraperFactory(IServiceProvider serviceProvider, ILogger<ScraperFactory> logger)
 	{
 		_serviceProvider = serviceProvider;
+		_logger = logger;
 		RegisterScrapers();
 	}
 	
