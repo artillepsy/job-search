@@ -12,8 +12,8 @@ public class ScrapersController : ControllerBase
 	//private readonly AppDbContext _db;
 
 	private readonly ILogger<ScrapersController> _logger;
-	private readonly IScraperBackgroundService _scraperBackgroundSerive;
-	private readonly ScraperServiceConfigModel _configModel;
+	private readonly IScraperBackgroundService _scraperBackgroundService;
+	private readonly IOptions<ScraperServiceConfigModel> _options;
 
 	public ScrapersController(
 		IScraperBackgroundService scraperBackgroundService, 
@@ -21,14 +21,16 @@ public class ScrapersController : ControllerBase
 		ILogger<ScrapersController> logger)
 	{
 		_logger = logger;
-		_scraperBackgroundSerive = scraperBackgroundService;
-		_configModel = options.Value;
+		_scraperBackgroundService = scraperBackgroundService;
+		_options = options;
 	}
 
 	[HttpGet("run-all")]
 	public async Task<ActionResult> TestRun()
 	{
-		foreach (var scraper in _configModel.AllowedScrapers)
+		_logger.LogInformation($"config: {_options.Value}");
+		
+		foreach (var scraper in _options.Value.AllowedScrapers)
 		{
 			if (!scraper.IsEnabled)
 			{
@@ -37,7 +39,7 @@ public class ScrapersController : ControllerBase
 
 			try
 			{
-				await _scraperBackgroundSerive.StartScrapingAsync(scraper.Name);
+				await _scraperBackgroundService.StartScrapingAsync(scraper.Name);
 			}
 			catch (Exception e)
 			{

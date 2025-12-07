@@ -6,4 +6,5 @@ namespace JobSearch.DataScraper.Services.Scrapers;
 public interface IScraper
 {
 	Task<ScrapingResult> ScrapeAsync(IScrapingOptions options, CancellationToken ct);
+	bool IsRunning();
 }

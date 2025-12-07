@@ -2,12 +2,18 @@ namespace JobSearch.DataScraper.Services.ConfigurationModels;
 
 public class ScraperServiceConfigModel
 {
-	public List<AllowedScraper> AllowedScrapers { get; set; }
+	public List<ScraperConfig> AllowedScrapers { get; set; }
 
-	public class AllowedScraper
+	public class ScraperConfig
 	{
 		public string Name { get; set; }
 		public bool IsEnabled { get; set; }
 		public string ConfigPath { get; set; }
+	}
+
+	public override string ToString()
+	{
+		return "allowed scrapers:\n\n" +
+		       string.Join(" \n ", AllowedScrapers.Select(s => $"Name: {s.Name}, IsEnabled: {s.IsEnabled}, ConfigPath: {s.ConfigPath}"));
 	}
 }

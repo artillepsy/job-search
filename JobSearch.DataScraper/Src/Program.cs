@@ -1,5 +1,5 @@
-using JobSearch.DataScraper;
 using JobSearch.DataScraper.Database;
+using JobSearch.DataScraper.Extensions;
 using JobSearch.DataScraper.Services.Background;
 using JobSearch.DataScraper.Services.ConfigurationModels;
 using JobSearch.DataScraper.Services.Factories;
@@ -14,19 +14,25 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 		.UseSnakeCaseNamingConvention());
 
+builder.Configuration.AddConfigJsonFiles();
+
 builder.Services.AddOptions<ScraperServiceConfigModel>()
-	.BindConfiguration("Src/Configs/ScraperServiceConfig.json")
+	.BindConfiguration("")
 	.ValidateDataAnnotations()
 	.ValidateOnStart();
 
 builder.Services.AddHttpClient();
-
-builder.Services.AddScoped<IScrapingOptions, ScrapingOptions>();
+builder.Services.AddSingleton<IScrapingOptions, ScrapingOptions>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
+
+// background service
+builder.Services.AddSingleton<IScraperBackgroundService, ScraperBackgroundService>();
 builder.Services.AddHostedService<ScraperBackgroundService>();
+
 
 foreach (var (name, binding) in ScraperUtils.Bindings)
 {
+	
 	builder.Services.AddScoped(binding.Type);
 	builder.Services.AddScoped(binding.ConfigType);
 }
@@ -54,6 +60,9 @@ if (app.Environment.IsDevelopment())
 	});
 }
 
+// map api endpoints
+app.MapControllers();
+
 // Migrate DB (dev only or guarded)
 if (app.Environment.IsDevelopment())
 {
@@ -68,4 +77,6 @@ if (app.Environment.IsDevelopment())
 	{
 		app.Logger.LogError(ex, "Database migration failed");
 	}
-}		
+}	
+
+app.Run();	

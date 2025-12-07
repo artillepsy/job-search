@@ -1,5 +1,7 @@
+using System.Collections.Concurrent;
 using JobSearch.DataScraper.Services.Factories;
 using JobSearch.DataScraper.Services.Options;
+using JobSearch.DataScraper.Services.Scrapers;
 
 namespace JobSearch.DataScraper.Services.Background;
 
@@ -9,7 +11,10 @@ public class ScraperBackgroundService : BackgroundService, IScraperBackgroundSer
 	private readonly IScraperFactory _scraperFactory;
 	private readonly IScrapingOptions _scrapingOptions;
 
-	private string _currScraperName = "";
+	// queue of commands?
+	private ConcurrentQueue<string> _commands = new();
+
+	private Dictionary<string, IScraper> _registeredScrapers = new();
 
 	public ScraperBackgroundService(
 		ILogger<ScraperBackgroundService> logger,
@@ -21,29 +26,44 @@ public class ScraperBackgroundService : BackgroundService, IScraperBackgroundSer
 		_scrapingOptions = scrapingOptions;
 	}
 
+	// enqueue execution command?
+	
+	// if i have only one instance of a background service, every time i want to access it,
+	// i should check if it's busy or not
 	public async Task StartScrapingAsync(string scraperName)
 	{
-		_currScraperName = scraperName;
-		_logger.LogInformation("Scraping started");
-		await ExecuteAsync(new CancellationToken());
+		_registeredScrapers.TryAdd(scraperName, _scraperFactory.CreateScraper(scraperName));
+		
+		_commands.Enqueue(scraperName);
+		_logger.LogInformation($"Scraping started [mock] for {scraperName}");
 	}
 
 	protected override async Task ExecuteAsync(CancellationToken ct)
 	{
-		_logger.LogInformation("Scraper Background Service started");
-
 		while (!ct.IsCancellationRequested)
 		{
-			try
+			while (_commands.TryDequeue(out var scraperName))
 			{
-				var scraper = _scraperFactory.CreateScraper(_currScraperName);
-				await scraper.ScrapeAsync(_scrapingOptions, ct);
+				var scraper = _registeredScrapers[scraperName];
+				if (scraper.IsRunning())
+				{
+					continue;
+				}
+					
+				try
+				{
+					// or just forget | store exec info in a variable
+					await scraper.ScrapeAsync(_scrapingOptions, ct);
+				}
+				catch (Exception e)
+				{
+					_logger.LogError(e, $"command execution failed for {scraperName}");
+					throw;
+				}
+				
 			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
+			
+			
 		}
 	}
 }

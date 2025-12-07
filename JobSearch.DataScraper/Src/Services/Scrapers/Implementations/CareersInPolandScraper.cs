@@ -1,4 +1,5 @@
 using JobSearch.DataScraper.Services.ConfigurationModels;
+using JobSearch.DataScraper.Services.ConfigurationModels.Scrapers;
 using JobSearch.DataScraper.Services.Options;
 using JobSearch.DataScraper.Services.Result;
 
@@ -8,6 +9,7 @@ public class CareersInPolandScraper : ScraperBase
 {
 	private readonly HttpClient _httpClient;
 	private CareersInPolandConfigModel _configModel;
+	private bool _isRunning = false;
 
 	public CareersInPolandScraper(
 		ILogger<CareersInPolandScraper> logger, 
@@ -22,6 +24,8 @@ public class CareersInPolandScraper : ScraperBase
 	//todo: check proper configuration setup and try to check if http client works properly 
 	public override async Task<ScrapingResult> ScrapeAsync(IScrapingOptions options, CancellationToken ct)
 	{
+		_isRunning = true;
+		
 		var result = new ScrapingResult()
 		{
 			StartedAt = DateTime.UtcNow
@@ -46,13 +50,16 @@ public class CareersInPolandScraper : ScraperBase
 			result.IsSuccess = false;
 			result.Error = e.Message;
 			
-			_logger.LogError(e, message: "CareersInPoland: scraping failed");
+			_logger.LogError(e, message: "scraping failed");
 		}
 
 		result.FinishedAt = DateTime.UtcNow;
 		result.Duration = result.FinishedAt.Value - result.StartedAt;
-		_logger.LogDebug( $"CareersInPoland: scraping finished. Result: {result}");
+		_logger.LogDebug( $"scraping finished. Result: {result}");
 
+		_isRunning = false;
 		return result;
 	}
+
+	public override bool IsRunning() => _isRunning;
 }

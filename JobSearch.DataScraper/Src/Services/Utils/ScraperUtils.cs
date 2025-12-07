@@ -1,4 +1,5 @@
 using JobSearch.DataScraper.Services.ConfigurationModels;
+using JobSearch.DataScraper.Services.ConfigurationModels.Scrapers;
 using JobSearch.DataScraper.Services.Scrapers.Implementations;
 
 namespace JobSearch.DataScraper.Services.Utils;

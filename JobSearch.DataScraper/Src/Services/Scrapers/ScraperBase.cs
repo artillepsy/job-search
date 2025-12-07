@@ -15,4 +15,5 @@ public abstract class ScraperBase : IScraper
 	}
 
 	public abstract Task<ScrapingResult> ScrapeAsync(IScrapingOptions options, CancellationToken ct);
+	public abstract bool IsRunning();
 }

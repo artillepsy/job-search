@@ -1,4 +1,4 @@
-namespace JobSearch.DataScraper.Services.ConfigurationModels;
+namespace JobSearch.DataScraper.Services.ConfigurationModels.Scrapers;
 
 public class CareersInPolandConfigModel
 {
