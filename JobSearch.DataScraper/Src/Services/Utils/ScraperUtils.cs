@@ -1,5 +1,4 @@
-using JobSearch.DataScraper.Services.ConfigurationModels;
-using JobSearch.DataScraper.Services.ConfigurationModels.Scrapers;
+using JobSearch.DataScraper.Services.Configuration.Scrapers;
 using JobSearch.DataScraper.Services.Scrapers.Implementations;
 
 namespace JobSearch.DataScraper.Services.Utils;
@@ -11,7 +10,7 @@ public static class ScraperUtils
 		["CareersInPoland"] = new ScraperBinding()
 		{
 			Type = typeof(CareersInPolandScraper),
-			ConfigType = typeof(CareersInPolandConfigModel),
+			ConfigType = typeof(CareersInPolandConfig),
 		},
 	};
 

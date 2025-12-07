@@ -1,6 +1,6 @@
-namespace JobSearch.DataScraper.Services.ConfigurationModels;
+namespace JobSearch.DataScraper.Services.Configuration;
 
-public class ScraperServiceConfigModel
+public class ScraperServiceConfig
 {
 	public List<ScraperConfig> AllowedScrapers { get; set; }
 

@@ -1,10 +1,8 @@
 using JobSearch.DataScraper.Database;
 using JobSearch.DataScraper.Extensions;
 using JobSearch.DataScraper.Services.Background;
-using JobSearch.DataScraper.Services.ConfigurationModels;
 using JobSearch.DataScraper.Services.Factories;
 using JobSearch.DataScraper.Services.Options;
-using JobSearch.DataScraper.Services.Utils;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,12 +12,13 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 		.UseSnakeCaseNamingConvention());
 
+// configs
 builder.Configuration.AddConfigJsonFiles();
+builder.Services.BindConfigs();
+builder.Services.RegisterConfigs();
 
-builder.Services.AddOptions<ScraperServiceConfigModel>()
-	.BindConfiguration("")
-	.ValidateDataAnnotations()
-	.ValidateOnStart();
+// scrapers
+builder.Services.RegisterScrapers();
 
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IScrapingOptions, ScrapingOptions>();
@@ -28,14 +27,6 @@ builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 // background service
 builder.Services.AddSingleton<IScraperBackgroundService, ScraperBackgroundService>();
 builder.Services.AddHostedService<ScraperBackgroundService>();
-
-
-foreach (var (name, binding) in ScraperUtils.Bindings)
-{
-	
-	builder.Services.AddScoped(binding.Type);
-	builder.Services.AddScoped(binding.ConfigType);
-}
 
 // mvc + swagger
 builder.Services.AddControllers(); 

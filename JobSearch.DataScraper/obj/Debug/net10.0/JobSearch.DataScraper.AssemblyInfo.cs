@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobSearch.DataScraper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db1161421ff5e8469badf3b467487f136378738d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d129ec4de8d593d272dd3220e27f9c2957beb47")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobSearch.DataScraper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobSearch.DataScraper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
