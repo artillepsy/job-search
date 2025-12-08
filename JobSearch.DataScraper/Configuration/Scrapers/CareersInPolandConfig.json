@@ -1,5 +1,7 @@
 {
-  "Url": "https://www.careersinpoland.com/",
-  "PingIntervalSecMin": "2",
-  "PingIntervalSecMax": "5"
+  "BaseUrl": "https://www.careersinpoland.com/api/job-offers/",
+  "PageStartIndex": "1",
+  "SearchIntervalMin": "2", 
+  "SearchIntervalMax": "5",
+  "MaxRetries": "5"
 }
