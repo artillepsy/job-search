@@ -1,9 +1,9 @@
+using JobSearch.DataScraper.Core.Random;
 using JobSearch.DataScraper.Database;
 using JobSearch.DataScraper.Extensions;
 using JobSearch.DataScraper.Services.Background;
 using JobSearch.DataScraper.Services.Factories;
 using JobSearch.DataScraper.Services.Options;
-using JobSearch.DataScraper.Services.Random;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

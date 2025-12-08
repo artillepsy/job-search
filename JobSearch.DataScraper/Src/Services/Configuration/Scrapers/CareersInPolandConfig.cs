@@ -4,8 +4,8 @@ public class CareersInPolandConfig
 {
 	public string BaseUrl { get; set; } = "";
 	public int PageStartIndex { get; set; }
-	public float SearchIntervalMin { get; set; }
-	public float SearchIntervalMax { get; set; }
+	public int SearchIntervalMin { get; set; } // millisec
+	public int SearchIntervalMax { get; set; } // millisec
 	public int MaxRetries { get; set; }
 
 	public override string ToString() =>

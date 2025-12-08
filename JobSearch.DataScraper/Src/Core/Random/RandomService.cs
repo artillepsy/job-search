@@ -1,4 +1,4 @@
-namespace JobSearch.DataScraper.Services.Random;
+namespace JobSearch.DataScraper.Core.Random;
 
 public class RandomService : IRandomService
 {
@@ -6,5 +6,10 @@ public class RandomService : IRandomService
 	{
 		var multiplier = System.Random.Shared.NextSingle();
 		return minVal + (multiplier * (maxVal - minVal));
+	}
+
+	public int NextInt(int minVal, int maxVal)
+	{
+		return System.Random.Shared.Next(minVal, maxVal);
 	}
 }

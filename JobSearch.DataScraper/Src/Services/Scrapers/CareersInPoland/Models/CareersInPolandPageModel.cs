@@ -15,12 +15,13 @@ public class JobOffers
 	[JsonPropertyName("pagination")]
 	public Pagination Pagination { get; set; }
 	
-	public override string ToString() => $"Pagination: {Pagination}\n";
-
+	public override string ToString() => $"Pagination: {Pagination}\n\n";
 }
 
 public class Pagination
 {
+	[JsonPropertyName("current_page")]
+	public int CurrentPage { get; set; }
 	[JsonPropertyName("last_page")]
 	public int LastPage { get; set; }
 	[JsonPropertyName("next_page_url")]
@@ -30,14 +31,18 @@ public class Pagination
 
 	[JsonPropertyName("data")]
 	public List<JobData> Data { get; set; }
+
+	[JsonIgnore]
+	public bool IsLastPage => CurrentPage == LastPage;
 	
 	public override string ToString()
 	{
 		return
+			$"CurrentPage: {CurrentPage}\n" +
 			$"LastPage: {LastPage}\n" +
 			$"NextPageUrl: {NextPageUrl}\n" +
 			$"Total: {Total}\n" +
-			string.Join("\n", Data) + "\n";
+			string.Join("\n", Data.Select((item, index) => $"[{index}] {item}")) + "\n";
 	}
 }
 

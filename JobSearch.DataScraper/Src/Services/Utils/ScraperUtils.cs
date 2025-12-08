@@ -1,5 +1,5 @@
 using JobSearch.DataScraper.Services.Configuration.Scrapers;
-using JobSearch.DataScraper.Services.Scrapers.Implementations;
+using JobSearch.DataScraper.Services.Scrapers.CareersInPoland.Implementations;
 
 namespace JobSearch.DataScraper.Services.Utils;
 
