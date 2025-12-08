@@ -3,6 +3,7 @@ using JobSearch.DataScraper.Extensions;
 using JobSearch.DataScraper.Services.Background;
 using JobSearch.DataScraper.Services.Factories;
 using JobSearch.DataScraper.Services.Options;
+using JobSearch.DataScraper.Services.Random;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.RegisterScrapers();
 
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IScrapingOptions, ScrapingOptions>();
+builder.Services.AddSingleton<IRandomService, RandomService>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
 // background service
