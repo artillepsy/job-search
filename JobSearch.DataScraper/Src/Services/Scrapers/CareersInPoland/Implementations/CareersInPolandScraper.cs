@@ -1,5 +1,6 @@
 using System.Text.Json;
 using JobSearch.DataScraper.Core.Random;
+using JobSearch.DataScraper.Core.Utils;
 using JobSearch.DataScraper.Services.Configuration.Scrapers;
 using JobSearch.DataScraper.Services.Options;
 using JobSearch.DataScraper.Services.Result;
@@ -35,6 +36,7 @@ public class CareersInPolandScraper : ScraperBase
 	{
 		_isRunning = true;
 		var currPage = _config.PageStartIndex;
+		var pageModels = new List<CareersInPolandPageModel>();
 		
 		var result = new ScrapingResult()
 		{
@@ -46,8 +48,13 @@ public class CareersInPolandScraper : ScraperBase
 			try
 			{
 				var pageModel = await GetPageAsync(currPage, ct);
-				_logger.LogInformation($"page {currPage} received");
-
+				pageModels.Add(pageModel);
+				
+				_logger.LogInformation(
+					$"page {currPage} " +
+					$"of size {MemoryHelper.GetSerializedSize(pageModel)} B received. " +
+					$"Total size: {MemoryHelper.GetSerializedSize(pageModels)} B");
+				
 				result.RecordsScraped += pageModel.JobOffers.Pagination.Data.Count;
 				
 				if (pageModel.JobOffers.Pagination.IsLastPage)
@@ -83,6 +90,7 @@ public class CareersInPolandScraper : ScraperBase
 
 	private async Task<CareersInPolandPageModel> GetPageAsync(int page, CancellationToken ct)
 	{
+		
 		var url = $"{_config.BaseUrl}{page}";
 		CareersInPolandPageModel model;
 		
@@ -96,7 +104,7 @@ public class CareersInPolandScraper : ScraperBase
 			var jsonString = CareersInPolandDebug.GetMockJsonPage(page);
 			model = JsonSerializer.Deserialize<CareersInPolandPageModel>(jsonString) ?? throw new InvalidOperationException();
 			
-			_logger.LogInformation($"json model: {model}");
+			//_logger.LogInformation($"json model: {model}\nsize: {MemoryHelper.GetSerializedSize(model)}");
 		}
 		catch (Exception e)
 		{
