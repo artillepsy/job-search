@@ -1,0 +1,95 @@
+using System.Text.Json.Serialization;
+
+namespace JobSearch.DataScraper.Services.Scrapers.CareersInPoland.Models;
+
+public class CareersInPolandPageModel
+{
+	[JsonPropertyName("jobOffers")]
+	public JobOffers JobOffers { get; set; }
+	
+	public override string ToString() => $"JobOffers: {JobOffers} ";
+}
+
+public class JobOffers
+{
+	[JsonPropertyName("pagination")]
+	public Pagination Pagination { get; set; }
+	
+	public override string ToString() => $"Pagination: {Pagination}\n";
+
+}
+
+public class Pagination
+{
+	[JsonPropertyName("last_page")]
+	public int LastPage { get; set; }
+	[JsonPropertyName("next_page_url")]
+	public string NextPageUrl { get; set; } = "";
+	[JsonPropertyName("total")]
+	public int Total { get; set; }
+
+	[JsonPropertyName("data")]
+	public List<JobData> Data { get; set; }
+	
+	public override string ToString()
+	{
+		return
+			$"LastPage: {LastPage}\n" +
+			$"NextPageUrl: {NextPageUrl}\n" +
+			$"Total: {Total}\n" +
+			string.Join("\n", Data) + "\n";
+	}
+}
+
+public class JobData
+{
+	[JsonPropertyName("id")]
+	public string Id { get; set; }
+	[JsonPropertyName("title")]
+	public string Title { get; set; }
+	[JsonPropertyName("date")]
+	public DateTime Date { get; set; }
+
+	[JsonPropertyName("work_time")]
+	public string WorkTime { get; set; }
+	
+	[JsonPropertyName("employer_name")]
+	public string EmployerName { get; set; }
+	[JsonPropertyName("salary")]
+	public string Salary { get; set; }
+	
+	[JsonPropertyName("locations")]
+	public List<JobLocation> Locations { get; set; }
+	
+	public override string ToString()
+	{
+		return
+			$"- Id: {Id}\n" +
+			$"- Title: {Title}\n" +
+			$"- Date: {Date}\n" +
+			$"- WorkTime: {WorkTime}\n" +
+			$"- EmployerName: {EmployerName}\n" +
+			$"- Salary: {Salary}\n" +
+			string.Join("\n", Locations);
+	}
+}
+
+public class JobLocation
+{
+	[JsonPropertyName("url")]
+	public string RelativeUrl { get; set; }
+	
+	[JsonIgnore]
+	public string FullUrl => $"https://careersinpoland.com{RelativeUrl}"; 
+
+	[JsonPropertyName("location")]
+	public string Location { get; set; }
+
+	public override string ToString()
+	{
+		return
+			$"- - RelativeUrl: {RelativeUrl}\n" +
+			$"- - FullUrl: {FullUrl}\n" +
+			$"- - Location: {Location}";
+	}
+}
