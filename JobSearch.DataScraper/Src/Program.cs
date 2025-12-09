@@ -1,5 +1,7 @@
 using JobSearch.DataScraper.Core.Random;
+using JobSearch.DataScraper.Core.Urls;
 using JobSearch.DataScraper.Database;
+using JobSearch.DataScraper.Database.Repositories;
 using JobSearch.DataScraper.Extensions;
 using JobSearch.DataScraper.Services.Background;
 using JobSearch.DataScraper.Services.Factories;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 //db + ef setup
+builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddDbContext<AppDbContext>(opt =>
 	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 		.UseSnakeCaseNamingConvention());
@@ -24,6 +27,7 @@ builder.Services.RegisterScrapers();
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IScrapingOptions, ScrapingOptions>();
 builder.Services.AddSingleton<IRandomService, RandomService>();
+builder.Services.AddSingleton<IUrlHashService, UrlHashSha1Service>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
 // background service
