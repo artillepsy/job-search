@@ -10,16 +10,12 @@ public class JobRepository : IJobRepository
 	private readonly AppDbContext _db;
 	private readonly ILogger<JobRepository> _logger;
 
-	private class Sha1UrlSelection
-	{
-		public int Id { get; set; }
-		public string Sha1UrlHash { get; set; } = "";
-	}
-
 	public JobRepository(AppDbContext db, ILogger<JobRepository> logger)
 	{
 		_db = db;
 		_logger = logger;
+		
+		_logger.LogInformation($"[JobRepository] Create db context, id: {_db.Id}");
 	}
 
 	// start from key combination without hash (yet)
@@ -33,16 +29,19 @@ public class JobRepository : IJobRepository
 
 	public async Task AddUniqueAsync(IEnumerable<JobModel> models)
 	{
-		if (!models.Any())
+		var jobModels = models as JobModel[] ?? models.ToArray();
+		
+		if (!jobModels.Any())
 			return;
 		
+		var incomingHashes = jobModels.Select(m => m.Sha1UrlHash).ToHashSet();
 		var existingHashes = await _db.Jobs
 			.AsNoTracking()
-			.Where(j => models.Select(m => m.Sha1UrlHash).Contains(j.Sha1UrlHash))
+			.Where(j => incomingHashes.Contains(j.Sha1UrlHash))
 			.Select(j => j.Sha1UrlHash)
 			.ToHashSetAsync();
 		
-		var uniqueModels = models
+		var uniqueModels = jobModels
 			.Where(m => !existingHashes.Contains(m.Sha1UrlHash))
 			.ToList();
 		
@@ -51,6 +50,8 @@ public class JobRepository : IJobRepository
     
 		await _db.Jobs.AddRangeAsync(uniqueModels);
 
+		_logger.LogInformation($"Added {uniqueModels.Count} items to DB");
+		
 		try
 		{
 			await _db.SaveChangesAsync();
@@ -64,11 +65,14 @@ public class JobRepository : IJobRepository
 
 	public async Task RemoveNonExistentAsync(IEnumerable<JobModel> models)
 	{
-		if (!models.Any())
+		var jobModels = models as JobModel[] ?? models.ToArray();
+		
+		if (!jobModels.Any())
 			return;
 		
-		var website = models.First().Website;
-		var incomingHashes = models.Select(m => m.Sha1UrlHash).ToHashSet();
+		var website = jobModels.First().Website;
+		var incomingHashes = jobModels.Select(m => m.Sha1UrlHash).ToHashSet();
+		
 		var idsToDelete = await _db.Jobs
 			.AsNoTracking()
 			.Where(j => j.Website.Equals(website) && !incomingHashes.Contains(j.Sha1UrlHash))
@@ -81,5 +85,7 @@ public class JobRepository : IJobRepository
 		await _db.Jobs
 			.Where(j => idsToDelete.Contains(j.Id))
 			.ExecuteDeleteAsync();
+		
+		_logger.LogInformation($"Removed {idsToDelete.Count} items from DB");
 	}
 }

@@ -13,6 +13,7 @@ public class UrlHashSha1Service : IUrlHashService
 		using var sha1 = SHA1.Create();
 		
 		var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(combinedStr));
-		return Convert.ToHexStringLower(hash);
+		var hashStr = Convert.ToHexStringLower(hash);
+		return hashStr;
 	}
 }

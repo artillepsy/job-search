@@ -1,5 +1,4 @@
 using JobSearch.DataScraper.Core.Urls;
-using JobSearch.DataScraper.Database.Repositories;
 using JobSearch.DataScraper.Services.Options;
 using JobSearch.DataScraper.Services.Result;
 
@@ -7,10 +6,10 @@ namespace JobSearch.DataScraper.Services.Scrapers;
 
 public abstract class ScraperBase : IScraper
 {
+	protected readonly IServiceScopeFactory _scopeFactory;
 	protected readonly ILogger<ScraperBase> _logger;
 	protected readonly IUrlHashService _urlHashService;
 	protected readonly IHttpClientFactory _httpClientFactory;
-	protected readonly IJobRepository _repository;
 	protected readonly HttpClient _httpClient;
 	protected bool _isRunning = false;
 
@@ -18,12 +17,12 @@ public abstract class ScraperBase : IScraper
 		ILogger<ScraperBase> logger, 
 		IHttpClientFactory httpClientFactory, 
 		IUrlHashService urlHashService, 
-		IJobRepository repository)
+		IServiceScopeFactory scopeFactory)
 	{
 		_logger = logger;
 		_httpClientFactory = httpClientFactory;
 		_urlHashService = urlHashService;
-		_repository = repository;
+		_scopeFactory = scopeFactory;
 		_httpClient = _httpClient = httpClientFactory.CreateClient();
 	}
 

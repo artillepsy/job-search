@@ -5,13 +5,13 @@ namespace JobSearch.DataScraper.Services.Factories;
 
 public class ScraperFactory : IScraperFactory
 {
-	private readonly IServiceProvider _serviceProvider;
+	private readonly IServiceScopeFactory _serviceScopeFactory;
 	private readonly ILogger<ScraperFactory> _logger;
 	private readonly Dictionary<string, Type> _scraperTypes = new();
 	
-	public ScraperFactory(IServiceProvider serviceProvider, ILogger<ScraperFactory> logger)
+	public ScraperFactory(IServiceScopeFactory serviceScopeFactory, ILogger<ScraperFactory> logger)
 	{
-		_serviceProvider = serviceProvider;
+		_serviceScopeFactory = serviceScopeFactory;
 		_logger = logger;
 		RegisterScrapers();
 	}
@@ -27,7 +27,7 @@ public class ScraperFactory : IScraperFactory
 		if (!_scraperTypes.TryGetValue(scraperName, out var scraperType))
 			throw new ArgumentException($"Scraper '{scraperName}' not found");
 		
-		using var scope = _serviceProvider.CreateScope();
+		using var scope = _serviceScopeFactory.CreateScope();
 		return (IScraper)scope.ServiceProvider.GetRequiredService(scraperType);
 	}
 }

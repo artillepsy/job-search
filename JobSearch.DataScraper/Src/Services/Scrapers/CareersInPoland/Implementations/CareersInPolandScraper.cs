@@ -23,9 +23,9 @@ public class CareersInPolandScraper : ScraperBase
 		ILogger<CareersInPolandScraper> logger, 
 		IHttpClientFactory httpClientFactory, 
 		IUrlHashService urlHashService,
-		IJobRepository repository,
 		IRandomService randomService,
-		IOptions<CareersInPolandConfig> options) : base(logger, httpClientFactory, urlHashService, repository)
+		IOptions<CareersInPolandConfig> options, 
+		IServiceScopeFactory scopeFactory) : base(logger, httpClientFactory, urlHashService, scopeFactory)
 	{
 		_randomService = randomService;
 		_config = options.Value;
@@ -47,7 +47,7 @@ public class CareersInPolandScraper : ScraperBase
 			var pageModels = await GetAllPagesAsync(ct);
 			result.RecordsScraped = pageModels.Sum(m => m.JobOffers.Pagination.Data.Count);
 			result.IsSuccess = true;
-			
+			await CacheJobModelsAsync(pageModels);
 			
 			_logger.LogInformation( $"Scraping finished");
 		}
@@ -70,9 +70,9 @@ public class CareersInPolandScraper : ScraperBase
 
 	#endregion
 
-	#region Models
+	#region Models Caching
 
-	private async Task CacheJobModels(IEnumerable<CareersInPolandPageModel> pageModels)
+	private async Task CacheJobModelsAsync(IEnumerable<CareersInPolandPageModel> pageModels)
 	{
 		var jobModels = new List<JobModel>();
 
@@ -96,7 +96,11 @@ public class CareersInPolandScraper : ScraperBase
 			jobModels.Add(jobModel);
 		}
 
-		await _repository.AddUniqueAsync(jobModels);
+		using var scope = _scopeFactory.CreateScope();
+		var repository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
+		
+		await repository.AddUniqueAsync(jobModels);
+		await repository.RemoveNonExistentAsync(jobModels);
 	}
 
 	#endregion
