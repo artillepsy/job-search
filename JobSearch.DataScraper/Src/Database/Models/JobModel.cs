@@ -15,5 +15,6 @@ public class JobModel
 	public string WebsiteSpecificId { get; set; } = "";
 	
 	public string Url { get; set; } = "";
+	public string Sha1UrlHash { get; set; } = "";
 	public DateTime CreatedAt { get; set; }
 }

@@ -10,6 +10,12 @@ public class JobRepository : IJobRepository
 	private readonly AppDbContext _db;
 	private readonly ILogger<JobRepository> _logger;
 
+	private class Sha1UrlSelection
+	{
+		public int Id { get; set; }
+		public string Sha1UrlHash { get; set; } = "";
+	}
+
 	public JobRepository(AppDbContext db, ILogger<JobRepository> logger)
 	{
 		_db = db;
@@ -17,6 +23,7 @@ public class JobRepository : IJobRepository
 	}
 
 	// start from key combination without hash (yet)
+
 	public async Task<bool> ExistsAsync(JobModel model)
 	{
 		return await _db.Jobs
@@ -24,9 +31,25 @@ public class JobRepository : IJobRepository
 			.AnyAsync(j => j.WebsiteSpecificId.Equals(model.WebsiteSpecificId) && j.Url.Equals(model.Url));
 	}
 
-	public async Task AddRangeAsync(IEnumerable<JobModel> models)
+	public async Task AddUniqueAsync(IEnumerable<JobModel> models)
 	{
-		await _db.Jobs.AddRangeAsync(models);
+		if (!models.Any())
+			return;
+		
+		var existingHashes = await _db.Jobs
+			.AsNoTracking()
+			.Where(j => models.Select(m => m.Sha1UrlHash).Contains(j.Sha1UrlHash))
+			.Select(j => j.Sha1UrlHash)
+			.ToHashSetAsync();
+		
+		var uniqueModels = models
+			.Where(m => !existingHashes.Contains(m.Sha1UrlHash))
+			.ToList();
+		
+		if (!uniqueModels.Any())
+			return;
+    
+		await _db.Jobs.AddRangeAsync(uniqueModels);
 
 		try
 		{
@@ -37,5 +60,26 @@ public class JobRepository : IJobRepository
 			_logger.LogError(e, "writing data to DB failed");
 			throw;
 		}
+	}
+
+	public async Task RemoveNonExistentAsync(IEnumerable<JobModel> models)
+	{
+		if (!models.Any())
+			return;
+		
+		var website = models.First().Website;
+		var incomingHashes = models.Select(m => m.Sha1UrlHash).ToHashSet();
+		var idsToDelete = await _db.Jobs
+			.AsNoTracking()
+			.Where(j => j.Website.Equals(website) && !incomingHashes.Contains(j.Sha1UrlHash))
+			.Select(j => j.Id)
+			.ToListAsync();
+
+		if (!idsToDelete.Any())
+			return;
+		
+		await _db.Jobs
+			.Where(j => idsToDelete.Contains(j.Id))
+			.ExecuteDeleteAsync();
 	}
 }
