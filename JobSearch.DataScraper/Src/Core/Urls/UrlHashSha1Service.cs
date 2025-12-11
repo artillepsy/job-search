@@ -8,7 +8,7 @@ public class UrlHashSha1Service : IUrlHashService
 	public string HashUrl(string id, string url)
 	{
 		var normalizedUrl = url.ToLowerInvariant().TrimEnd('/');
-		var combinedStr = $"{id}{url}";
+		var combinedStr = $"{id}|{normalizedUrl}";
 
 		using var sha1 = SHA1.Create();
 		
