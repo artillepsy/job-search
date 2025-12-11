@@ -9,15 +9,12 @@ public class ScrapingResult
 	public TimeSpan Duration { get; set; }
 	public DateTime StartedAt { get; set; }
 	public DateTime? FinishedAt { get; set; }
-
-	public override string ToString()
-	{
-		return
-			$"Success: {IsSuccess}; " +
-			$"Records: {RecordsScraped}; " +
-			$"Duration: {Duration}; " +
-			$"Started at: {StartedAt}, " +
-			$"FinishedAt: {FinishedAt}; " +
-			$"Error: {Error}";
-	}
+	
+	public override string ToString() =>
+		$"Success: {IsSuccess}\n" +
+		$"Records: {RecordsScraped}\n" +
+		$"Duration: {Duration}\n" +
+		$"Started at: {StartedAt}\n" +
+		$"FinishedAt: {FinishedAt}\n" + 
+		$"Error: {Error}";
 }
