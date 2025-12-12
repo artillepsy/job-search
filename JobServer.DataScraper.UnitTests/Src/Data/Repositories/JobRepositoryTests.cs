@@ -53,4 +53,33 @@ public class JobRepositoryTests
 		Assert.Contains(allJobs, j => j.Sha1UrlHash.Equals("3"));
 		Assert.Single(allJobs, j => j.Sha1UrlHash.Equals("2"));
 	}
+
+	[Fact]
+	public async Task RemoveNonExistentAsync_Removes_Items_Not_In_Incoming_List()
+	{
+		var ctx = CreateAppDbContext();
+		var repository = CreateRepository(ctx);
+		
+		var existingJobs = new List<JobEntity>()
+		{
+			new () { Website = "site", Sha1UrlHash = "1" },
+			new () { Website = "site",  Sha1UrlHash = "2" },
+		};
+		
+		var incomingJobs = new List<JobEntity>()
+		{
+			new () { Website = "site", Sha1UrlHash = "2" },
+			new () { Website = "site", Sha1UrlHash = "3" },
+		};
+		
+		ctx.Jobs.AddRange(existingJobs);
+		await ctx.SaveChangesAsync();
+		
+		await repository.RemoveNonExistentAsync(incomingJobs);
+		
+		var allJobs = await ctx.Jobs.ToListAsync();
+		
+		Assert.Single(allJobs);
+		Assert.DoesNotContain(allJobs, j => j.Sha1UrlHash.Equals("1"));
+	}
 }
