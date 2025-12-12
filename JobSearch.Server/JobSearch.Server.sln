@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.Server", "JobSear
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobSearch.DataScraper", "..\JobSearch.DataScraper\JobSearch.DataScraper.csproj", "{5D70D361-AAB6-4333-8140-B34DFB8B59D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobServer.DataScraper.UnitTests", "..\JobServer.DataScraper.UnitTests\JobServer.DataScraper.UnitTests.csproj", "{00CBE08D-7937-4347-9D4C-581F4F757F51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{5D70D361-AAB6-4333-8140-B34DFB8B59D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D70D361-AAB6-4333-8140-B34DFB8B59D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D70D361-AAB6-4333-8140-B34DFB8B59D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00CBE08D-7937-4347-9D4C-581F4F757F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00CBE08D-7937-4347-9D4C-581F4F757F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00CBE08D-7937-4347-9D4C-581F4F757F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00CBE08D-7937-4347-9D4C-581F4F757F51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
