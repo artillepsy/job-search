@@ -87,6 +87,10 @@ public class CareersInPolandScraper : ScraperBase
 			};
 			jobModels.Add(jobModel);
 		}
+		
+		_logger.LogInformation(
+			$"items count: {jobModels.Count}\n\n" +
+		           $"{string.Join("\n", jobModels.Select(j => $"{j.Title}; {j.CreatedAt}; {j.CompanyName}; {j.Url}"))}");
 
 		using var scope = _scopeFactory.CreateScope();
 		var repository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
@@ -141,8 +145,8 @@ public class CareersInPolandScraper : ScraperBase
 
 		var model = JsonSerializer.Deserialize<CareersInPolandPageModel>(jsonString) ??
 		            throw new InvalidOperationException();
-
-		_logger.LogInformation($"json model: {model}\nsize: {MemoryHelper.GetSerializedSize(model)}");
+		
+		//_logger.LogInformation($"json model: {model}\nsize: {MemoryHelper.GetSerializedSize(model)}");
 
 		return model;
 	}

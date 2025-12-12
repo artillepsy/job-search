@@ -50,7 +50,7 @@ public class JobRepository : IJobRepository
     
 		await _db.Jobs.AddRangeAsync(uniqueModels);
 
-		_logger.LogInformation($"Added {uniqueModels.Count} items to DB");
+		_logger.LogInformation($"Added {uniqueModels.Count} new items to DB");
 		
 		try
 		{
