@@ -20,4 +20,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Src\Scraping\Scrapers\Implementations\" />
+    </ItemGroup>
+
 </Project>

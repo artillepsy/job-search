@@ -1,11 +1,9 @@
-using JobSearch.DataScraper.Core.Random;
-using JobSearch.DataScraper.Core.Urls;
-using JobSearch.DataScraper.Database;
-using JobSearch.DataScraper.Database.Repositories;
+using JobSearch.DataScraper.Data;
+using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Extensions;
-using JobSearch.DataScraper.Services.Background;
-using JobSearch.DataScraper.Services.Factories;
-using JobSearch.DataScraper.Services.Options;
+using JobSearch.DataScraper.Scraping;
+using JobSearch.DataScraper.Scraping.Scrapers.Factories;
+using JobSearch.DataScraper.Scraping.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,8 +23,7 @@ builder.Services.RegisterConfigs();
 builder.Services.RegisterScrapers();
 
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IScrapingOptions, ScrapingOptions>();
-builder.Services.AddSingleton<IRandomService, RandomService>();
+builder.Services.AddSingleton<ScrapingOptions>();
 builder.Services.AddSingleton<IUrlHashService, UrlHashSha1Service>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
@@ -35,8 +32,8 @@ builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 builder.Services.AddSingleton<ScraperBackgroundService>();
 builder.Services.AddHostedService(provider => 
 	provider.GetRequiredService<ScraperBackgroundService>());
-builder.Services.AddSingleton<IScraperBackgroundService>(provider => 
-	provider.GetRequiredService<ScraperBackgroundService>());
+/*builder.Services.AddSingleton<ScraperBackgroundService>(provider => 
+	provider.GetRequiredService<ScraperBackgroundService>());*/
 
 // mvc + swagger
 builder.Services.AddControllers(); 

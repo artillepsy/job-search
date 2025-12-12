@@ -1,5 +1,5 @@
-using JobSearch.DataScraper.Services.Background;
-using JobSearch.DataScraper.Services.Configuration;
+using JobSearch.DataScraper.Scraping;
+using JobSearch.DataScraper.Scraping.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -12,11 +12,11 @@ public class ScrapersController : ControllerBase
 	//private readonly AppDbContext _db;
 
 	private readonly ILogger<ScrapersController> _logger;
-	private readonly IScraperBackgroundService _scraperBackgroundService;
+	private readonly ScraperBackgroundService _scraperBackgroundService;
 	private readonly IOptions<ScraperServiceConfig> _options;
 
 	public ScrapersController(
-		IScraperBackgroundService scraperBackgroundService, 
+		ScraperBackgroundService scraperBackgroundService, 
 		IOptions<ScraperServiceConfig> options,
 		ILogger<ScrapersController> logger)
 	{

@@ -1,6 +1,6 @@
-using JobSearch.DataScraper.Services.Configuration;
-using JobSearch.DataScraper.Services.Configuration.Scrapers;
-using JobSearch.DataScraper.Services.Scrapers.CareersInPoland.Implementations;
+using JobSearch.DataScraper.Scraping.Configuration;
+using JobSearch.DataScraper.Scraping.Configuration.Scrapers;
+using JobSearch.DataScraper.Scraping.Scrapers.Implementations.CareersInPoland;
 
 namespace JobSearch.DataScraper.Extensions;
 
