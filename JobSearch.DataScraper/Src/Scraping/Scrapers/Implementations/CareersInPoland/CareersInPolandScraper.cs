@@ -2,7 +2,6 @@ using System.Text.Json;
 using JobSearch.DataScraper.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Scraping.Configuration.Scrapers;
-using JobSearch.DataScraper.Scraping.Scrapers.Implementations.CareersInPoland.Debug;
 using JobSearch.DataScraper.Scraping.Services;
 using JobSearch.DataScraper.Utils;
 using Microsoft.Extensions.Options;
@@ -134,18 +133,16 @@ public class CareersInPolandScraper : ScraperBase
 	private async Task<CareersInPolandPageModel> GetPageAsync(int page, CancellationToken ct)
 	{
 		var url = $"{_config.BaseUrl}{page}";
-		CareersInPolandPageModel model;
 
-		/*var response = await _httpClient.GetAsync(url, ct);
+		var response = await _httpClient.GetAsync(url, ct);
 		response.EnsureSuccessStatusCode();
 
-		var jsonString = await response.Content.ReadAsStringAsync(ct);*/
+		var jsonString = await response.Content.ReadAsStringAsync(ct);
 
-		var jsonString = CareersInPolandDebug.GetMockJsonPage(page);
-		model = JsonSerializer.Deserialize<CareersInPolandPageModel>(jsonString) ??
-		        throw new InvalidOperationException();
+		var model = JsonSerializer.Deserialize<CareersInPolandPageModel>(jsonString) ??
+		            throw new InvalidOperationException();
 
-		//_logger.LogInformation($"json model: {model}\nsize: {MemoryHelper.GetSerializedSize(model)}");
+		_logger.LogInformation($"json model: {model}\nsize: {MemoryHelper.GetSerializedSize(model)}");
 
 		return model;
 	}
