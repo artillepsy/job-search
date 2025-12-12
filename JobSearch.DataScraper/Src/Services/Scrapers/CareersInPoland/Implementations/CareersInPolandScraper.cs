@@ -83,7 +83,7 @@ public class CareersInPolandScraper : ScraperBase
 			var jobModel = new JobModel()
 			{
 				CompanyName = data.EmployerName,
-				CreatedAt = data.Date,
+				CreatedAt = data.Date.ToUniversalTime(),
 				Website = _config.Website,
 				WebsiteSpecificId = data.Id,
 				IsSalaryVisible = !string.IsNullOrEmpty(data.Salary),
