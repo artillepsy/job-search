@@ -8,7 +8,6 @@ public abstract class ScraperBase : IScraper
 	protected readonly ILogger<ScraperBase> _logger;
 	protected readonly IUrlHashService _urlHashService;
 	protected readonly IHttpClientFactory _httpClientFactory;
-	protected readonly HttpClient _httpClient;
 	protected bool _isRunning = false;
 
 	protected ScraperBase(
@@ -21,7 +20,6 @@ public abstract class ScraperBase : IScraper
 		_httpClientFactory = httpClientFactory;
 		_urlHashService = urlHashService;
 		_scopeFactory = scopeFactory;
-		_httpClient = _httpClient = httpClientFactory.CreateClient();
 	}
 
 	public abstract bool IsRunning();

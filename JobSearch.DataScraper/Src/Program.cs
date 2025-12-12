@@ -22,7 +22,19 @@ builder.Services.RegisterConfigs();
 // scrapers
 builder.Services.RegisterScrapers();
 
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("JobScraper", client =>
+{
+	client.DefaultRequestHeaders.UserAgent.ParseAdd(
+		"Mozilla/5.0 (compatible; JobScraper/1.0; +artillepsy@gmail.com)"
+	);
+	client.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+	client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9");
+	client.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
+	client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("pl-PL,pl;q=0.8");
+	client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+	client.Timeout = TimeSpan.FromSeconds(30);
+});
+
 builder.Services.AddSingleton<ScrapingOptions>();
 builder.Services.AddSingleton<IUrlHashService, UrlHashSha1Service>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();

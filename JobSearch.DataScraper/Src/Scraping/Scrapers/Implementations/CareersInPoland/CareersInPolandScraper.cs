@@ -11,6 +11,7 @@ namespace JobSearch.DataScraper.Scraping.Scrapers.Implementations.CareersInPolan
 //todo: add chunks of data with higher load, but since there are tens of pages only, optimization can wait
 public class CareersInPolandScraper : ScraperBase
 {
+	private readonly HttpClient _httpClient;
 	private readonly CareersInPolandConfig _config;
 
 	public CareersInPolandScraper(
@@ -21,6 +22,7 @@ public class CareersInPolandScraper : ScraperBase
 		IServiceScopeFactory scopeFactory) : base(logger, httpClientFactory, urlHashService, scopeFactory)
 	{
 		_config = options.Value;
+		_httpClient = _httpClient = httpClientFactory.CreateClient("JobScraper");
 		_logger.LogInformation($"[constructor] config: {_config}");
 	}
 
