@@ -73,19 +73,25 @@ public class JobRepository : IJobRepository
 		var website = jobModels.First().Website;
 		var incomingHashes = jobModels.Select(m => m.Sha1UrlHash).ToHashSet();
 		
-		var idsToDelete = await _db.Jobs
-			.AsNoTracking()
+		var jobsToDelete = await _db.Jobs
 			.Where(j => j.Website.Equals(website) && !incomingHashes.Contains(j.Sha1UrlHash))
-			.Select(j => j.Id)
 			.ToListAsync();
 
-		if (!idsToDelete.Any())
+		if (!jobsToDelete.Any())
 			return;
 		
-		await _db.Jobs
-			.Where(j => idsToDelete.Contains(j.Id))
-			.ExecuteDeleteAsync();
+		_db.Jobs.RemoveRange(jobsToDelete);
 		
-		_logger.LogInformation($"Removed {idsToDelete.Count} items from DB");
+		try
+		{
+			await _db.SaveChangesAsync();
+		}
+		catch (Exception e)
+		{
+			_logger.LogError(e, "deleting data from DB failed");
+			throw;
+		}
+		
+		_logger.LogInformation($"Removed {jobsToDelete.Count} items from DB");
 	}
 }
