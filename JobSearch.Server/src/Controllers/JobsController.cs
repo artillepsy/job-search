@@ -16,7 +16,7 @@ public class JobsController : ControllerBase
 	public record JobPostingDto(
 		string Title, 
 		string CompanyName, 
-		decimal? Salary,
+		string? Salary,
 		bool IsSalaryVisible,
 		string Location);
 	
@@ -25,21 +25,56 @@ public class JobsController : ControllerBase
 		_db = db;
 	}
 	
+	// todo: paged results
+	// todo: preload next page
+	// todo: max results limit (in config file)
 	[AllowAnonymous]
 	[HttpGet("get-all")]
-	public async Task<ActionResult<IEnumerable<JobModel>>> GetJobs()
+	public async Task<ActionResult<IEnumerable<JobModel>>> GetJobs(
+		[FromQuery] int pageNumber = 1, 
+		[FromQuery] int pageSize = 100)
 	{
+		pageNumber = pageNumber < 1 ? 1 : pageNumber;
+		pageSize = pageSize > 100 ? 100 : pageSize;
+		
 		IQueryable<JobModel> query = _db.Jobs;
+		var totalRecords = await query.CountAsync();
+		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 		
-		var jobs = await query.ToListAsync();
+		var jobs = await query
+			.OrderByDescending(j => j.CreatedAt) // change order based on filters
+			.Skip((pageNumber - 1) * pageSize)
+			.Take(pageSize)
+			.Select(j => new JobPostingDto(
+				j.Title, 
+				j.CompanyName, 
+				j.Salary,
+				j.Salary != null, 
+				j.Location))
+			.ToListAsync();
 		
-		Console.WriteLine("all jobs:\n\n" +
-			string.Join(" \n ", jobs.Select(j =>
-				$"Id={j.Id}, Title={j.Title}, Company={j.CompanyName}, Salary={j.Salary}"
-			))
-		);
+		Console.WriteLine("========================================");
+		Console.WriteLine($"SERVER LOG: {DateTime.Now:T}");
+		Console.WriteLine($"Request: Page {pageNumber}, Size {pageSize}");
+		Console.WriteLine($"Database: Total Records = {totalRecords}");
+		Console.WriteLine($"Result: Returning {jobs.Count} jobs");
+    
+		foreach (var job in jobs)
+		{
+			Console.WriteLine($" -> [JOB] {job.Title} at {job.CompanyName}");
+		}
+		Console.WriteLine("========================================");
 		
-		return Ok(jobs);
+		return Ok(new {
+			TotalPages = totalPages,
+			PageNumber = pageNumber,
+			PageSize = pageSize,
+			
+			TotalRecords = totalRecords,
+			ReturnRecords = jobs.Count,
+			
+			Jobs = jobs
+		});
 	}
 	
 	[AllowAnonymous]
@@ -72,7 +107,6 @@ public class JobsController : ControllerBase
 				Title = dto.Title,
 				CompanyName = dto.CompanyName,
 				Salary = dto.Salary,
-				IsSalaryVisible = dto.IsSalaryVisible,
 				Location = dto.Location,
 				CreatedAt = DateTime.UtcNow,
 			};

@@ -48,8 +48,6 @@ public class Pagination
 
 public class JobData
 {
-	[JsonPropertyName("id")]
-	public string Id { get; set; }
 	[JsonPropertyName("title")]
 	public string Title { get; set; }
 	[JsonPropertyName("date")]
@@ -69,7 +67,6 @@ public class JobData
 	public override string ToString()
 	{
 		return
-			$"- Id: {Id}\n" +
 			$"- Title: {Title}\n" +
 			$"- Date: {Date}\n" +
 			$"- WorkTime: {WorkTime}\n" +

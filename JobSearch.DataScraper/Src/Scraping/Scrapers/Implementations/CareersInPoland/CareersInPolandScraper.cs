@@ -79,13 +79,11 @@ public class CareersInPolandScraper : ScraperBase
 				CompanyName = data.EmployerName,
 				CreatedAt = data.Date.ToUniversalTime(),
 				Website = _config.Website,
-				WebsiteSpecificId = data.Id,
 				IsSalaryVisible = !string.IsNullOrEmpty(data.Salary),
 				Salary = data.Salary,
 				Location = location.Location,
 				Title = data.Title,
 				Url = location.FullUrl,
-				Sha1UrlHash = _urlHashService.HashUrl(data.Id, location.FullUrl),
 			};
 			jobModels.Add(jobModel);
 		}
