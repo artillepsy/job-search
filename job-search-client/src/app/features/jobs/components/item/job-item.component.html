@@ -1,8 +1,8 @@
 <div class="main-container" (click)="apply()">
   <div class="top-container">
     <p>{{ job().title }}</p>
-    @if (job().isSalaryVisible) {
-      <p>{{ job().salary }} $</p>
+    @if (job().salary) {
+      <p>{{ job().salary }}</p>
     } @else {
       <p>Salary hidden</p>
     }

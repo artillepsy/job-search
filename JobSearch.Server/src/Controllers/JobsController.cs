@@ -14,10 +14,10 @@ public class JobsController : ControllerBase
 
 	public record JobSearchDto(string Title);
 	public record JobPostingDto(
+		int id,
 		string Title, 
 		string CompanyName, 
 		string? Salary,
-		bool IsSalaryVisible,
 		string Location);
 	
 	public JobsController(AppDbContext db)
@@ -46,10 +46,10 @@ public class JobsController : ControllerBase
 			.Skip((pageNumber - 1) * pageSize)
 			.Take(pageSize)
 			.Select(j => new JobPostingDto(
+				j.Id,
 				j.Title, 
 				j.CompanyName, 
 				j.Salary,
-				j.Salary != null, 
 				j.Location))
 			.ToListAsync();
 		

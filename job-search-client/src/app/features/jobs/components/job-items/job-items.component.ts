@@ -1,7 +1,7 @@
 import { Component, effect, inject, input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { JobItemComponent } from '../item/job-item.component';
-import { JobsService } from '../../services/jobs.service';
+import {JobResponse, JobsService} from '../../services/jobs.service';
 import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { Job } from '../../models/job.model';
@@ -20,10 +20,10 @@ export class JobItemsComponent implements OnInit {
   searchParams = input<JobSearchParams | undefined>(undefined);
 
   jobs: Job[] = [];
-  pagedJobs: Job[] = [];
 
-  page = 0;
-  pageSize = 20;
+  totalPages = 0;
+  pageNumber = 0;
+  pageSize = 100;
   totalRecords = 0;
 
   constructor() {
@@ -37,10 +37,10 @@ export class JobItemsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._jobsService.getAllJobs().subscribe((jobs) => {
-      this.jobs = jobs;
-      this.totalRecords = jobs.length;
-      this.updatePagedJobs();
+    this._jobsService.getAllJobs(1, 100).subscribe((data: JobResponse) => {
+      this.jobs = data.jobs;
+      this.totalRecords = data.totalRecords;
+      this.totalPages = data.totalPages;
     });
   }
 
@@ -48,30 +48,31 @@ export class JobItemsComponent implements OnInit {
   onSearch(params: JobSearchParams) {
     if (!params.jobTitle) {
       //todo: don't search if no input
-      this._jobsService.getAllJobs().subscribe((jobs) => {
-        this.jobs = jobs;
-        this.totalRecords = jobs.length;
-        this.updatePagedJobs();
-      });
+      this.loadJobs();
       return;
     }
 
-    this._jobsService.getJobsByTitle(params.jobTitle).subscribe((jobs) => {
+    this.loadJobs(); // todo: use different method instead
+    /*this._jobsService.getJobsByTitle(params.jobTitle).subscribe((jobs) => {
       this.jobs = jobs;
       this.totalRecords = jobs.length;
       this.updatePagedJobs();
-    });
-  }
-
-  updatePagedJobs() {
-    const start = this.page * this.pageSize;
-    const end = start + this.pageSize;
-    this.pagedJobs = this.jobs.slice(start, end);
+    });*/
   }
 
   onPageChange(event: PaginatorState) {
-    this.page = event.page ?? 0;
+    this.pageNumber = event.page ? event.page + 1 : 1; // page + 1
     this.pageSize = event.rows ?? this.pageSize;
-    this.updatePagedJobs();
+
+    this.loadJobs();
+  }
+
+  // filters as params
+  loadJobs() {
+    this._jobsService.getAllJobs(this.pageNumber, this.pageSize)
+      .subscribe((res: JobResponse) => {
+        this.jobs = res.jobs;
+        this.totalRecords = res.totalRecords;
+      });
   }
 }

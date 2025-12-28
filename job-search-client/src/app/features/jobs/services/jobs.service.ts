@@ -4,10 +4,12 @@ import { Observable } from 'rxjs';
 import { Job } from '../models/job.model';
 
 export interface JobResponse {
-  id?: number;
-  title: string;
-  companyName: string;
-  salary: number;
+  totalPages: number;
+  pageNumber: number;
+  pageSize: number;
+  totalRecords: number;
+  returnRecords: number;
+  jobs: Job[];
 }
 
 @Injectable({
@@ -16,8 +18,11 @@ export interface JobResponse {
 export class JobsService {
   private _http = inject(HttpClient);
 
-  getAllJobs(): Observable<Job[]> {
-    return this._http.get<Job[]>('/api/jobs/get-all');
+  getAllJobs(pageNumber: number, pageSize: number): Observable<JobResponse> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+    return this._http.get<JobResponse>('/api/jobs/get-all', { params });
   }
 
   getJobsByTitle(title: string): Observable<Job[]> {
