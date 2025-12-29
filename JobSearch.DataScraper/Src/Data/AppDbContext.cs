@@ -17,6 +17,19 @@ public class AppDbContext : DbContext
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+		modelBuilder.Entity<JobEntity>(entity =>
+		{
+			entity.ToTable("jobs");
+			entity.HasKey(e => e.Id);
+			entity.Property(e => e.Id).UseIdentityByDefaultColumn();
+			entity.Property(e => e.Title).IsRequired();
+			entity.Property(e => e.CompanyName).IsRequired();
+			entity.Property(e => e.Website).IsRequired();
+			entity.Property(e => e.Url).IsRequired();
+			entity.Property(e => e.CreatedAt).IsRequired();
+			entity.HasIndex(e => e.CreatedAt).HasDatabaseName("idx_table_name_created_at");
+		});
+		
 		modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 	}
 

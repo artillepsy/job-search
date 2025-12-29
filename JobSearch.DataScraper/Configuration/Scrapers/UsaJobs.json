@@ -1,0 +1,8 @@
+{
+  "BaseUrl": "https://data.usajobs.gov/api/search",
+  "Website": "UsaJobs",
+  "Authorization-Key": "bvopr8vlupSAsNF0QlNgExsdkeev14e/GU362RjR3MM=",
+  "User-Agent": "pavel.vaitsiakhovich.work@gmail.com",
+  "Host": "data.usajobs.gov",
+  "MaxRetries": "5"
+}

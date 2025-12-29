@@ -5,10 +5,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
-COPY ["../JobSearch.DataScraper/JobSearch.DataScraper.csproj", "../JobSearch.DataScraper/"]
-RUN dotnet restore "../JobSearch.DataScraper/JobSearch.DataScraper.csproj"
+
+COPY ["JobSearch.DataScraper/JobSearch.DataScraper.csproj", "JobSearch.DataScraper/"]
+COPY ["JobSearch.Data/JobSearch.Data.csproj", "JobSearch.Data/"]
+
+RUN dotnet restore "JobSearch.DataScraper/JobSearch.DataScraper.csproj"
 COPY . .
-WORKDIR "/src/../JobSearch.DataScraper"
+WORKDIR "/src/JobSearch.DataScraper"
 RUN dotnet build "JobSearch.DataScraper.csproj" -c Release -o /app/build
 
 FROM build AS publish

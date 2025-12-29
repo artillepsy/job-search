@@ -5,10 +5,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
-COPY ["JobSearch.Server.csproj", "./"]
-RUN dotnet restore "JobSearch.Server.csproj"
+
+COPY ["JobSearch.Server/JobSearch.Server.csproj", "JobSearch.Server/"]
+COPY ["JobSearch.Data/JobSearch.Data.csproj", "JobSearch.Data/"]
+
+RUN dotnet restore "JobSearch.Server/JobSearch.Server.csproj"
+
 COPY . .
-WORKDIR "/src/"
+
+WORKDIR "/src/JobSearch.Server"
 RUN dotnet build "JobSearch.Server.csproj" -c Release -o /app/build
 
 FROM build AS publish

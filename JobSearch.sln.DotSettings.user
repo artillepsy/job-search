@@ -1,0 +1,7 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1c46e6e3_002D78bc_002D4bf2_002Dba60_002D9055ba899103/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddUniqueAsync_Adds_Only_New_Items" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::00CBE08D-7937-4347-9D4C-581F4F757F51::net10.0::JobServer.DataScraper.UnitTests.Data.Repositories.JobRepositoryTests.AddUniqueAsync_Adds_Only_New_Items&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::00CBE08D-7937-4347-9D4C-581F4F757F51::net10.0::JobServer.DataScraper.UnitTests.Data.Repositories.JobRepositoryTests.RemoveNonExistentAsync_Removes_Items_Not_In_Incoming_List&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

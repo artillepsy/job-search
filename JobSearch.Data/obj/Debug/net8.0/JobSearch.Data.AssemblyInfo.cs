@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobSearch.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83e62c607b292dfa67c0caa711325b7b13b4cba1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c05975bbc3f8d28e0412c9cc3286598c0e8a785a")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobSearch.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobSearch.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
