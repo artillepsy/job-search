@@ -23,7 +23,7 @@ export class JobItemsComponent implements OnInit {
 
   totalPages = 0;
   pageNumber = 0;
-  pageSize = 100;
+  pageSize = 10;
   totalRecords = 0;
 
   constructor() {

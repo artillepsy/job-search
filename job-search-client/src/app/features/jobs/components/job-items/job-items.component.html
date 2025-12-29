@@ -6,7 +6,7 @@
 <div class="paginator-container">
   <p-paginator [rows]="pageSize"
                [totalRecords]="totalRecords"
-               [rowsPerPageOptions]="[10, 20, 50, 100]"
+               [pageLinkSize]="5"
                (onPageChange)="onPageChange($event)">
   </p-paginator>
 </div>
