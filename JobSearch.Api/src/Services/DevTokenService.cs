@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace JobSearch.Server.Services;
+namespace JobSearch.Api.Services;
 
 public class DevTokenService : ITokenService
 {

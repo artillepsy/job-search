@@ -1,9 +1,10 @@
+using JobSearch.Data;
 using JobSearch.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobSearch.Server.Controllers;
+namespace JobSearch.Api.Controllers;
 
 [Authorize]
 [ApiController]

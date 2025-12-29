@@ -1,3 +1,4 @@
+using JobSearch.Data;
 using JobSearch.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 

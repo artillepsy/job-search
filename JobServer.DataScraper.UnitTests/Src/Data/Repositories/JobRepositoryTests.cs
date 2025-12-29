@@ -1,3 +1,4 @@
+using JobSearch.Data;
 using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data;
 using JobSearch.DataScraper.Data.Repositories;

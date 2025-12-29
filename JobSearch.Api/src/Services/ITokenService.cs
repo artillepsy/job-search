@@ -1,4 +1,4 @@
-namespace JobSearch.Server.Services;
+namespace JobSearch.Api.Services;
 
 public interface ITokenService
 {

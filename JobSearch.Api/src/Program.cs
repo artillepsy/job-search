@@ -1,6 +1,6 @@
+using JobSearch.Api.Services;
+using JobSearch.Data;
 using JobSearch.Data.Entities;
-using JobSearch.Server;
-using JobSearch.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

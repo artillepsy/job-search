@@ -1,7 +1,7 @@
 using JobSearch.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobSearch.DataScraper.Data;
+namespace JobSearch.Data;
 
 public class AppDbContext : DbContext
 {
@@ -14,22 +14,10 @@ public class AppDbContext : DbContext
 	}
 	
 	public DbSet<JobEntity> Jobs => Set<JobEntity>();
+	public DbSet<UserEntity> Users => Set<UserEntity>();
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
-		modelBuilder.Entity<JobEntity>(entity =>
-		{
-			entity.ToTable("jobs");
-			entity.HasKey(e => e.Id);
-			entity.Property(e => e.Id).UseIdentityByDefaultColumn();
-			entity.Property(e => e.Title).IsRequired();
-			entity.Property(e => e.CompanyName).IsRequired();
-			entity.Property(e => e.Website).IsRequired();
-			entity.Property(e => e.Url).IsRequired();
-			entity.Property(e => e.CreatedAt).IsRequired();
-			entity.HasIndex(e => e.CreatedAt);
-		});
-		
 		modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 	}
 

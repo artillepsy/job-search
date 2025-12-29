@@ -1,12 +1,13 @@
+using JobSearch.Api.Services;
+using JobSearch.Data;
 using JobSearch.Data.Entities;
-using JobSearch.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace JobSearch.Server.Controllers;
+namespace JobSearch.Api.Controllers;
 
 [Authorize]
 [ApiController]
