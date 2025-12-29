@@ -1,5 +1,5 @@
+using JobSearch.Data.Entities;
 using JobSearch.Server;
-using JobSearch.Server.Models;
 using JobSearch.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +18,7 @@ builder.Services.AddOpenApi();
 
 // misc
 builder.Services.AddRouting(o => o.LowercaseUrls = true);
-builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
+builder.Services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
 builder.Services.AddSingleton<ITokenService, DevTokenService>();
 
 var app = builder.Build();

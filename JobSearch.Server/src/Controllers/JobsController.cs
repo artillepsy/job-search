@@ -1,4 +1,4 @@
-using JobSearch.Server.Models;
+using JobSearch.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,14 +30,14 @@ public class JobsController : ControllerBase
 	// todo: max results limit (in config file)
 	[AllowAnonymous]
 	[HttpGet("get-all")]
-	public async Task<ActionResult<IEnumerable<JobModel>>> GetJobs(
+	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs(
 		[FromQuery] int pageNumber = 1, 
 		[FromQuery] int pageSize = 100)
 	{
 		pageNumber = pageNumber < 1 ? 1 : pageNumber;
 		pageSize = pageSize > 100 ? 100 : pageSize;
 		
-		IQueryable<JobModel> query = _db.Jobs;
+		IQueryable<JobEntity> query = _db.Jobs;
 		var totalRecords = await query.CountAsync();
 		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 		
@@ -79,9 +79,9 @@ public class JobsController : ControllerBase
 	
 	[AllowAnonymous]
 	[HttpGet("get")]
-	public async Task<ActionResult<IEnumerable<JobModel>>> GetJobs([FromQuery] JobSearchDto dto)
+	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs([FromQuery] JobSearchDto dto)
 	{
-		IQueryable<JobModel> query = _db.Jobs;
+		IQueryable<JobEntity> query = _db.Jobs;
 		
 		if (!string.IsNullOrWhiteSpace(dto.Title))
 		{
@@ -98,11 +98,11 @@ public class JobsController : ControllerBase
 	[HttpPost("post")]
 	public async Task<ActionResult> PostJob([FromBody] JobPostingDto[] dtoList)
 	{
-		var jobs = new List<JobModel>();
+		var jobs = new List<JobEntity>();
 		
 		foreach (var dto in dtoList)
 		{
-			var job = new JobModel()
+			var job = new JobEntity()
 			{
 				Title = dto.Title,
 				CompanyName = dto.CompanyName,

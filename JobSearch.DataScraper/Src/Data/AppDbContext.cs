@@ -1,4 +1,4 @@
-using JobSearch.DataScraper.Data.Entities;
+using JobSearch.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobSearch.DataScraper.Data;

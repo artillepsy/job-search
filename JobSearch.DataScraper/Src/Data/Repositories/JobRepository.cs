@@ -1,4 +1,4 @@
-using JobSearch.DataScraper.Data.Entities;
+using JobSearch.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobSearch.DataScraper.Data.Repositories;
@@ -34,15 +34,15 @@ public class JobRepository : IJobRepository
 		if (!jobModels.Any())
 			return;
 		
-		var incomingHashes = jobModels.Select(m => m.Sha1UrlHash).ToHashSet();
+		var incomingHashes = jobModels.Select(m => m.Url).ToHashSet();
 		var existingHashes = await _db.Jobs
 			.AsNoTracking()
-			.Where(j => incomingHashes.Contains(j.Sha1UrlHash))
-			.Select(j => j.Sha1UrlHash)
+			.Where(j => incomingHashes.Contains(j.Url))
+			.Select(j => j.Url)
 			.ToHashSetAsync();
 		
 		var uniqueModels = jobModels
-			.Where(m => !existingHashes.Contains(m.Sha1UrlHash))
+			.Where(m => !existingHashes.Contains(m.Url))
 			.ToList();
 		
 		if (!uniqueModels.Any())
@@ -71,10 +71,10 @@ public class JobRepository : IJobRepository
 			return;
 		
 		var website = jobModels.First().Website;
-		var incomingHashes = jobModels.Select(m => m.Sha1UrlHash).ToHashSet();
+		var incomingHashes = jobModels.Select(m => m.Url).ToHashSet();
 		
 		var jobsToDelete = await _db.Jobs
-			.Where(j => j.Website.Equals(website) && !incomingHashes.Contains(j.Sha1UrlHash))
+			.Where(j => j.Website.Equals(website) && !incomingHashes.Contains(j.Url))
 			.ToListAsync();
 
 		if (!jobsToDelete.Any())

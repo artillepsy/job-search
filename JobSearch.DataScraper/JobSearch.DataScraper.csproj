@@ -24,4 +24,8 @@
       <Folder Include="Src\Scraping\Scrapers\Implementations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\JobSearch.Data\JobSearch.Data.csproj" />
+    </ItemGroup>
+
 </Project>

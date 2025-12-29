@@ -1,5 +1,5 @@
 using System.Text.Json;
-using JobSearch.DataScraper.Data.Entities;
+using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Scraping.Configuration.Scrapers;
 using JobSearch.DataScraper.Scraping.Services;

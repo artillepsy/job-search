@@ -1,6 +1,6 @@
-namespace JobSearch.Server.Models;
+namespace JobSearch.Data.Entities;
 
-public class UserModel
+public class UserEntity
 {
 	public int Id { get; set; }
 	public string Username { get; set; } = "";

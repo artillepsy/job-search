@@ -1,4 +1,4 @@
-using JobSearch.Server.Models;
+using JobSearch.Data.Entities;
 using JobSearch.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,13 +14,13 @@ namespace JobSearch.Server.Controllers;
 public class UsersController : ControllerBase
 {
 	private readonly AppDbContext _db;
-	private readonly IPasswordHasher<UserModel> _hasher;
+	private readonly IPasswordHasher<UserEntity> _hasher;
 	private readonly ITokenService _tokenService;
 
 	public record RegisterDto(string Username, string Password);
 	public record LoginDto(string Username, string Password);
 
-	public UsersController(AppDbContext db, IPasswordHasher<UserModel> hasher, ITokenService tokenService)
+	public UsersController(AppDbContext db, IPasswordHasher<UserEntity> hasher, ITokenService tokenService)
 	{
 		_db = db;
 		_hasher = hasher;
@@ -40,7 +40,7 @@ public class UsersController : ControllerBase
 		if (exists)
 			return Conflict(new { error = "username is already taken" });
 
-		var user = new UserModel() { Username = username };
+		var user = new UserEntity() { Username = username };
 
 		user.PasswordHash = _hasher.HashPassword(user, dto.Password);
 		await _db.Users.AddAsync(user);

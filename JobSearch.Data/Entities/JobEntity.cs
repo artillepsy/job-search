@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace JobSearch.DataScraper.Data.Entities;
+namespace JobSearch.Data.Entities;
 
 public class JobEntity
 {
@@ -17,9 +15,6 @@ public class JobEntity
 	public string WebsiteSpecificId { get; set; } = "";
 	
 	public string Url { get; set; } = "";
-	
-	[Column("sha1_url_hash")]
-	public string Sha1UrlHash { get; set; } = "";
 
 	public DateTime CreatedAt { get; set; }
 }

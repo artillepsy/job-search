@@ -1,5 +1,5 @@
+using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data;
-using JobSearch.DataScraper.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -32,14 +32,14 @@ public class JobRepositoryTests
 
 		var existingJobs = new List<JobEntity>()
 		{
-			new () { Sha1UrlHash = "1" },
-			new () { Sha1UrlHash = "2" },
+			new () { Url = "1" },
+			new () { Url = "2" },
 		};
 		
 		var incomingJobs = new List<JobEntity>()
 		{
-			new () { Sha1UrlHash = "2" },
-			new () { Sha1UrlHash = "3" },
+			new () { Url = "2" },
+			new () { Url = "3" },
 		};
 		
 		ctx.Jobs.AddRange(existingJobs);
@@ -50,8 +50,8 @@ public class JobRepositoryTests
 		var allJobs = await ctx.Jobs.ToListAsync();
 		
 		Assert.Equal(3, allJobs.Count);
-		Assert.Contains(allJobs, j => j.Sha1UrlHash.Equals("3"));
-		Assert.Single(allJobs, j => j.Sha1UrlHash.Equals("2"));
+		Assert.Contains(allJobs, j => j.Url.Equals("3"));
+		Assert.Single(allJobs, j => j.Url.Equals("2"));
 	}
 
 	[Fact]
@@ -62,14 +62,14 @@ public class JobRepositoryTests
 		
 		var existingJobs = new List<JobEntity>()
 		{
-			new () { Website = "site", Sha1UrlHash = "1" },
-			new () { Website = "site",  Sha1UrlHash = "2" },
+			new () { Website = "site", Url = "1" },
+			new () { Website = "site",  Url = "2" },
 		};
 		
 		var incomingJobs = new List<JobEntity>()
 		{
-			new () { Website = "site", Sha1UrlHash = "2" },
-			new () { Website = "site", Sha1UrlHash = "3" },
+			new () { Website = "site", Url = "2" },
+			new () { Website = "site", Url = "3" },
 		};
 		
 		ctx.Jobs.AddRange(existingJobs);
@@ -80,6 +80,6 @@ public class JobRepositoryTests
 		var allJobs = await ctx.Jobs.ToListAsync();
 		
 		Assert.Single(allJobs);
-		Assert.DoesNotContain(allJobs, j => j.Sha1UrlHash.Equals("1"));
+		Assert.DoesNotContain(allJobs, j => j.Url.Equals("1"));
 	}
 }

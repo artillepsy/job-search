@@ -1,4 +1,4 @@
-﻿using JobSearch.Server.Models;
+﻿using JobSearch.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobSearch.Server
@@ -7,8 +7,8 @@ public class AppDbContext : DbContext
 {
 	public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-	public DbSet<UserModel> Users => Set<UserModel>();
-	public DbSet<JobModel> Jobs => Set<JobModel>();
+	public DbSet<UserEntity> Users => Set<UserEntity>();
+	public DbSet<JobEntity> Jobs => Set<JobEntity>();
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
