@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Src\Scraping\Scrapers\Implementations\" />
+      <Folder Include="src\Scraping\Scrapers\Implementations\" />
     </ItemGroup>
 
     <ItemGroup>

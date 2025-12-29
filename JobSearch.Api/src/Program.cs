@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 //db + ef setup
 builder.Services.AddDbContext<AppDbContext>(opt =>
-	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+			o => o.MigrationsHistoryTable("__EFMigrationsHistory")) // Forces the default name
 		.UseSnakeCaseNamingConvention());
 
 // mvc + swagger

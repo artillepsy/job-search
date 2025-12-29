@@ -27,7 +27,7 @@ public class AppDbContext : DbContext
 			entity.Property(e => e.Website).IsRequired();
 			entity.Property(e => e.Url).IsRequired();
 			entity.Property(e => e.CreatedAt).IsRequired();
-			entity.HasIndex(e => e.CreatedAt).HasDatabaseName("idx_table_name_created_at");
+			entity.HasIndex(e => e.CreatedAt);
 		});
 		
 		modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
