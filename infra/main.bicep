@@ -5,6 +5,10 @@
 param location string = resourceGroup().location
 param keyVaultName string = 'kv-data-${uniqueString(resourceGroup().id)}'
 
+@description('Database admin password. Passed through CLI')
+@secure()
+param dbPassword string
+
 // =============================================================================
 // Modules
 // =============================================================================
@@ -64,11 +68,26 @@ module scraperKvRbac './modules/rbac.bicep' = {
 // =============================================================================
 // Foundation
 // =============================================================================
+@description('Prefix for all resources')
+var prefix = 'jobsearch'
+
 module foundation './modules/foundation.bicep' = {
   name: 'foundation-deploy'
   params: {
     location: location
-    prefix: 'jobsearch'
+    prefix: prefix
+  }
+}
+
+// =============================================================================
+// Storage
+// =============================================================================
+module storage './modules/storage.bicep' = {
+  name: 'storage-deploy'
+  params: {
+    location: location
+    prefix: prefix
+    dbAdminPassword: dbPassword
   }
 }
 
