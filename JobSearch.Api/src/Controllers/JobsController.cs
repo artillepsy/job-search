@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobSearch.Api.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class JobsController : ControllerBase
@@ -29,7 +29,7 @@ public class JobsController : ControllerBase
 	// todo: paged results
 	// todo: preload next page
 	// todo: max results limit (in config file)
-	[AllowAnonymous]
+	//[AllowAnonymous]
 	[HttpGet("get-all")]
 	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs(
 		[FromQuery] int pageNumber = 1, 
@@ -78,7 +78,7 @@ public class JobsController : ControllerBase
 		});
 	}
 	
-	[AllowAnonymous]
+	//[AllowAnonymous]
 	[HttpGet("get")]
 	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs([FromQuery] JobSearchDto dto)
 	{

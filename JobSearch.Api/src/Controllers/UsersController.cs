@@ -54,15 +54,9 @@ public class UsersController : ControllerBase
 		{
 			return Conflict(new { error = "username is already taken" });
 		}
-
-		return CreatedAtAction(nameof(GetByUsername), new { username = user.Username }, new { user.Id, user.Username });
-
+		
+		return Ok($"User {username}  successfully registered");
 	}
-	
-	//??
-	[HttpGet("{username}")]
-	public async Task<IActionResult> GetByUsername(string username) 
-		=> Ok($"User {username} has been successfully created");
 
 	[AllowAnonymous]
 	[HttpPost("login")]
