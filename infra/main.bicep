@@ -1,12 +1,12 @@
 // =============================================================================
-// params
+// Params
 // =============================================================================
 @description('The location of all resources')
 param location string = resourceGroup().location
 param keyVaultName string = 'kv-data-${uniqueString(resourceGroup().id)}'
 
 // =============================================================================
-// modules
+// Modules
 // =============================================================================
 @description('Create identity for the API project')
 module apiIdentity './modules/identity.bicep' = {
@@ -62,7 +62,18 @@ module scraperKvRbac './modules/rbac.bicep' = {
 }
 
 // =============================================================================
-// outputs
+// Foundation
+// =============================================================================
+module foundation './modules/foundation.bicep' = {
+  name: 'foundation-deploy'
+  params: {
+    location: location
+    prefix: 'jobsearch'
+  }
+}
+
+// =============================================================================
+// Outputs
 // =============================================================================
 output apiIdentityId string = apiIdentity.outputs.identityId
 output scraperIdentityId string = scraperIdentity.outputs.identityId
