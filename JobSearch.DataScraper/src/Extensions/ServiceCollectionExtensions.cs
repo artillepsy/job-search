@@ -1,32 +1,34 @@
-using JobSearch.DataScraper.Scraping.Configuration;
-using JobSearch.DataScraper.Scraping.Configuration.Scrapers;
-using JobSearch.DataScraper.Scraping.Scrapers.Implementations.CareersInPoland;
+using System.Reflection;
+using JobSearch.DataScraper.Scraping.Attributes;
+using JobSearch.DataScraper.Scraping.Scrapers;
 
 namespace JobSearch.DataScraper.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-	public static void BindConfigs(this IServiceCollection services)
+	extension(IServiceCollection services)
 	{
-		services.AddOptions<ScraperServiceConfig>()
-			.BindConfiguration("")
-			.ValidateDataAnnotations()
-			.ValidateOnStart();
-		
-		services.AddOptions<CareersInPolandConfig>()
-			.BindConfiguration("")
-			.ValidateDataAnnotations()
-			.ValidateOnStart();
-	}
+		public void AddScrapers(IConfiguration configuration)
+		{
+			var assembly = typeof(ScraperBase).Assembly;
+			var scraperTypes = assembly.GetTypes()
+				.Where(t => t is { IsClass: true, IsAbstract: false } && t.IsSubclassOf(typeof(ScraperBase)));
 
-	public static void RegisterConfigs(this IServiceCollection services)
-	{
-		services.AddScoped<ScraperServiceConfig>();
-		services.AddScoped<CareersInPolandConfig>();
-	}
+			foreach (var type in scraperTypes)
+			{
+				var attr = type.GetCustomAttribute<ScraperMetadataAttribute>();
+				if (attr == null) continue;
 
-	public static void RegisterScrapers(this IServiceCollection services)
-	{
-		services.AddScoped<CareersInPolandScraper>();
+				// Automatically register as Scoped using a factory delegate
+				services.AddScoped(type, sp => 
+				{
+					// Pull the specific section defined in the attribute
+					var section = configuration.GetSection($"Scrapers:{attr.SectionName}");
+            
+					// Create the scraper, injecting the section manually
+					return ActivatorUtilities.CreateInstance(sp, type, section);
+				});
+			}
+		}
 	}
 }

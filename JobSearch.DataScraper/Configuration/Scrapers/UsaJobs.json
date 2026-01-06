@@ -1,6 +1,0 @@
-{
-  "BaseUrl": "https://data.usajobs.gov/api/search",
-  "Website": "UsaJobs",
-  "Host": "data.usajobs.gov",
-  "MaxRetries": "5"
-}

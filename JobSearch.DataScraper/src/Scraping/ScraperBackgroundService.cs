@@ -7,10 +7,9 @@ namespace JobSearch.DataScraper.Scraping;
 
 public class ScraperBackgroundService : BackgroundService
 {
+	private readonly IConfiguration _configuration;
 	private readonly ILogger<ScraperBackgroundService> _logger;
 	private readonly IScraperFactory _scraperFactory;
-	private readonly ScrapingOptions _scrapingOptions;
-	private int _simpleCounter = 0;
 
 	// queue of commands?
 	private readonly Channel<string> _commands;
@@ -20,12 +19,12 @@ public class ScraperBackgroundService : BackgroundService
 	public ScraperBackgroundService(
 		ILogger<ScraperBackgroundService> logger,
 		IScraperFactory scraperFactory,
-		ScrapingOptions scrapingOptions)
+		IConfiguration configuration)
 	{
 		_logger = logger;
 		_scraperFactory = scraperFactory;
-		_scrapingOptions = scrapingOptions;
 		_commands = Channel.CreateUnbounded<string>();
+		_configuration = configuration;
 	}
 	// enqueue execution command?
 	
@@ -39,8 +38,25 @@ public class ScraperBackgroundService : BackgroundService
 		}
 		
 		await _commands.Writer.WriteAsync(scraperName);
-		_logger.LogInformation($"[StartScrapingAsync] Thread: {Thread.CurrentThread.ManagedThreadId}, dict. items count: {_registeredScrapers.Count}, channel items: {_commands.Reader.Count}");
-		_simpleCounter++;
+		_logger.LogInformation($"[StartScrapingAsync] Thread: {Thread.CurrentThread.ManagedThreadId}, " +
+		                       $"dict. items count: {_registeredScrapers.Count}, " +
+		                       $"channel items: {_commands.Reader.Count}");
+	}
+	
+	public async Task RunAllEnabledScrapersAsync()
+	{
+		var allowedNames = _configuration.GetSection("Scrapers:Allowed").Get<List<string>>() ?? new();
+
+		foreach (var name in allowedNames)
+		{
+			var isEnabled = _configuration.GetValue<bool>($"Scrapers:{name}:Enabled");
+            
+			if (isEnabled)
+			{
+				_logger.LogInformation($"Queuing enabled scraper: {name}");
+				await StartScrapingAsync(name);
+			}
+		}
 	}
 
 	protected override async Task ExecuteAsync(CancellationToken ct)
@@ -60,7 +76,7 @@ public class ScraperBackgroundService : BackgroundService
 			try
 			{
 				// or just forget | store exec info in a variable
-				await scraper.ScrapeAsync(_scrapingOptions, ct);
+				await scraper.ScrapeAsync(ct);
 			}
 			catch (Exception e)
 			{

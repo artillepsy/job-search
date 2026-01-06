@@ -1,29 +1,42 @@
 using System.Text.Json;
 using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
-using JobSearch.DataScraper.Scraping.Configuration.Scrapers;
+using JobSearch.DataScraper.Scraping.Attributes;
 using JobSearch.DataScraper.Scraping.Services;
 using JobSearch.DataScraper.Utils;
-using Microsoft.Extensions.Options;
 
 namespace JobSearch.DataScraper.Scraping.Scrapers.Implementations.CareersInPoland;
 
 //todo: add chunks of data with higher load, but since there are tens of pages only, optimization can wait
+[ScraperMetadata("CareersInPoland")]
 public class CareersInPolandScraper : ScraperBase
 {
 	private readonly HttpClient _httpClient;
-	private readonly CareersInPolandConfig _config;
+	private readonly Config _config;
+
+	private class Config 
+	{
+		public bool Enabled { get; set; }
+		
+		public string BaseUrl { get; set; } = string.Empty;
+		public string Website { get; set; } = string.Empty;
+		public string HttpClientName { get; set; } = string.Empty;
+		
+		public int PageStartIndex { get; set; }
+		public int SearchIntervalMin { get; set; }
+		public int SearchIntervalMax { get; set; }
+	}
 
 	public CareersInPolandScraper(
 		ILogger<CareersInPolandScraper> logger, 
 		IHttpClientFactory httpClientFactory, 
 		IUrlHashService urlHashService,
-		IOptions<CareersInPolandConfig> options, 
+		IConfiguration section, 
 		IServiceScopeFactory scopeFactory) : base(logger, httpClientFactory, urlHashService, scopeFactory)
 	{
-		_config = options.Value;
-		_httpClient = _httpClient = httpClientFactory.CreateClient("JobScraper");
-		_logger.LogInformation($"[constructor] config: {_config}");
+		_config = new Config();
+		section.Bind(_config);
+		_httpClient = _httpClient = httpClientFactory.CreateClient(_config.HttpClientName);
 	}
 
 	#region Scraping
@@ -31,7 +44,7 @@ public class CareersInPolandScraper : ScraperBase
 	public override bool IsRunning() => _isRunning;
 
 	//todo: check proper configuration setup and try to check if http client works properly 
-	public override async Task<ScrapingResult> ScrapeAsync(ScrapingOptions options, CancellationToken ct)
+	public override async Task<ScrapingResult> ScrapeAsync(CancellationToken ct)
 	{
 		_isRunning = true;
 		var result = new ScrapingResult() { StartedAt = DateTime.UtcNow };

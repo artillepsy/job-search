@@ -2,6 +2,9 @@ using JobSearch.DataScraper.Scraping.Services;
 
 namespace JobSearch.DataScraper.Scraping.Scrapers;
 
+/// <summary>
+/// Base class for scrapers. In order to setup a new scraper.
+/// </summary>
 public abstract class ScraperBase : IScraper
 {
 	protected readonly IServiceScopeFactory _scopeFactory;
@@ -23,5 +26,5 @@ public abstract class ScraperBase : IScraper
 	}
 
 	public abstract bool IsRunning();
-	public abstract Task<ScrapingResult> ScrapeAsync(ScrapingOptions options, CancellationToken ct);
+	public abstract Task<ScrapingResult> ScrapeAsync(CancellationToken ct);
 }

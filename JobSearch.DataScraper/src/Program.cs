@@ -15,13 +15,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 			o => o.MigrationsHistoryTable("__EFMigrationsHistory")) // Forces the default name
 		.UseSnakeCaseNamingConvention());
 
-// configs
-builder.Configuration.AddConfigJsonFiles();
-builder.Services.BindConfigs();
-builder.Services.RegisterConfigs();
-
 // scrapers
-builder.Services.RegisterScrapers();
+builder.Services.AddScrapers(builder.Configuration);
 
 builder.Services.AddHttpClient("JobScraper", client =>
 {
@@ -36,17 +31,14 @@ builder.Services.AddHttpClient("JobScraper", client =>
 	client.Timeout = TimeSpan.FromSeconds(30);
 });
 
-builder.Services.AddSingleton<ScrapingOptions>();
 builder.Services.AddSingleton<IUrlHashService, UrlHashSha1Service>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
 // background service
-// Register as concrete type AND as hosted service
+// Register as a concrete type AND as hosted service
 builder.Services.AddSingleton<ScraperBackgroundService>();
 builder.Services.AddHostedService(provider => 
 	provider.GetRequiredService<ScraperBackgroundService>());
-/*builder.Services.AddSingleton<ScraperBackgroundService>(provider => 
-	provider.GetRequiredService<ScraperBackgroundService>());*/
 
 // mvc + swagger
 builder.Services.AddControllers(); 
@@ -90,4 +82,4 @@ if (app.Environment.IsDevelopment())
 	}
 }	
 
-app.Run();	
+app.Run();

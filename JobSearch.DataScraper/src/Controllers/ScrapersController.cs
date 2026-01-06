@@ -1,7 +1,5 @@
 using JobSearch.DataScraper.Scraping;
-using JobSearch.DataScraper.Scraping.Configuration;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace JobSearch.DataScraper.Controllers;
 
@@ -9,42 +7,29 @@ namespace JobSearch.DataScraper.Controllers;
 [Route("api/[controller]")]
 public class ScrapersController : ControllerBase
 {
-	//private readonly AppDbContext _db;
-
 	private readonly ILogger<ScrapersController> _logger;
-	private readonly ScraperBackgroundService _scraperBackgroundService;
-	private readonly IOptions<ScraperServiceConfig> _options;
+	private readonly ScraperBackgroundService _scraperService;
 
 	public ScrapersController(
-		ScraperBackgroundService scraperBackgroundService, 
-		IOptions<ScraperServiceConfig> options,
+		ScraperBackgroundService scraperService, 
 		ILogger<ScrapersController> logger)
 	{
 		_logger = logger;
-		_scraperBackgroundService = scraperBackgroundService;
-		_options = options;
+		_scraperService = scraperService;
 	}
 
 	[HttpGet("run-all")]
-	public async Task<ActionResult> TestRun()
+	public async Task<ActionResult> RunAll()
 	{
-		foreach (var scraper in _options.Value.AllowedScrapers)
-		{
-			if (!scraper.IsEnabled)
-			{
-				continue;
-			}
+		await _scraperService.RunAllEnabledScrapersAsync();
+		return Accepted();
+	}
 
-			try
-			{
-				await _scraperBackgroundService.StartScrapingAsync(scraper.Name);
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e, $"scraper failed to run: {scraper.Name}");
-				throw;
-			}
-		}
-		return Ok();
+	[HttpGet("run/{name}")]
+	public async Task<ActionResult> RunSingle(string name)
+	{
+		// You can still run a single one if needed
+		await _scraperService.StartScrapingAsync(name);
+		return Accepted();
 	}
 }

@@ -30,4 +30,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Configuration\ScraperServiceConfig.json" />
+      <_ContentIncludedByDefault Remove="Configuration\Scrapers\CareersInPolandConfig.json" />
+      <_ContentIncludedByDefault Remove="Configuration\Scrapers\UsaJobs.json" />
+    </ItemGroup>
+
 </Project>

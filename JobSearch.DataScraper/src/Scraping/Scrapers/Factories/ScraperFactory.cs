@@ -1,32 +1,47 @@
-using JobSearch.DataScraper.Utils;
+using System.Reflection;
+using JobSearch.DataScraper.Scraping.Attributes;
 
 namespace JobSearch.DataScraper.Scraping.Scrapers.Factories;
 
 public class ScraperFactory : IScraperFactory
 {
-	private readonly IServiceScopeFactory _serviceScopeFactory;
+	private readonly IServiceScopeFactory _scopeFactory;
 	private readonly ILogger<ScraperFactory> _logger;
 	private readonly Dictionary<string, Type> _scraperTypes = new();
 	
-	public ScraperFactory(IServiceScopeFactory serviceScopeFactory, ILogger<ScraperFactory> logger)
+	public ScraperFactory(IServiceScopeFactory scopeFactory, ILogger<ScraperFactory> logger)
 	{
-		_serviceScopeFactory = serviceScopeFactory;
+		_scopeFactory = scopeFactory;
 		_logger = logger;
 		RegisterScrapers();
 	}
 	
 	private void RegisterScrapers()
 	{
-		foreach (var (name, binding) in ScraperHelper.TypeBindings)
-			_scraperTypes[name] = binding.Type;
+		var assembly = Assembly.GetExecutingAssembly();
+		var types = assembly.GetTypes()
+			.Where(t => t is { IsClass: true, IsAbstract: false } && t.IsSubclassOf(typeof(ScraperBase)));
+
+		foreach (var type in types)
+		{
+			var attribute = type.GetCustomAttribute<ScraperMetadataAttribute>();
+            
+			if (attribute != null)
+			{
+				_scraperTypes[attribute.SectionName] = type;
+				_logger.LogInformation($"Registered scraper '{attribute.SectionName}' from type {type.Name}");
+			}
+		}
 	}
 
 	public IScraper CreateScraper(string scraperName)
 	{
 		if (!_scraperTypes.TryGetValue(scraperName, out var scraperType))
+		{
 			throw new ArgumentException($"Scraper '{scraperName}' not found");
-		
-		using var scope = _serviceScopeFactory.CreateScope();
+		}
+
+		var scope = _scopeFactory.CreateScope();
 		return (IScraper)scope.ServiceProvider.GetRequiredService(scraperType);
 	}
 }
