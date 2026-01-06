@@ -25,7 +25,7 @@ public class JobRepository : IJobRepository
 	{
 		return await _db.Jobs
 			.AsNoTracking()
-			.AnyAsync(j => j.WebsiteSpecificId.Equals(entity.WebsiteSpecificId) && j.Url.Equals(entity.Url));
+			.AnyAsync(j => j.Url.Equals(entity.Url));
 	}
 
 	public async Task AddUniqueAsync(IEnumerable<JobEntity> models)

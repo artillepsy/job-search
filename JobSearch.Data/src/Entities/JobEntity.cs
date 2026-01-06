@@ -12,7 +12,6 @@ public class JobEntity
 	public string Salary { get; set; } = "";
 
 	public string Website { get; set; } = "";
-	public string WebsiteSpecificId { get; set; } = "";
 	
 	public string Url { get; set; } = "";
 
