@@ -18,7 +18,7 @@ resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
       containers: [
         {
           name: 'api'
-          image: '${containerRegistryName}.azurecr.io/jobapi:latest'
+          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
           env: [{ name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }]
         }
       ]

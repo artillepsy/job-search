@@ -27,7 +27,7 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
       containers: [
         {
           name: 'scraper'
-          image: '${containerRegistryName}.azurecr.io/datascraper:latest'
+          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
           env: [{ name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }]
         }
       ]

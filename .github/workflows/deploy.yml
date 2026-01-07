@@ -36,15 +36,16 @@ jobs:
     steps:
       - name: '1. Checkout code'
         uses: actions/checkout@v4
-        
+
       - name: '2. Login to Azure'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
+
       - name: '3. Deploy Bicep infrastructure'
+        id: bicep_deploy
         uses: azure/arm-deploy@v2
         with:
           resourceGroupName: ${{ secrets.AZURE_RG }}
@@ -52,43 +53,31 @@ jobs:
           parameters: >
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
             location=northeurope
-            
-      - name: '4. Update Azure Key Vault Secrets'
-        run: |
-          # 1. Fetch the Key Vault name from the Bicep deployment output
-          KV_NAME=$(az deployment group show \
-            -g ${{ secrets.AZURE_RG }} \
-            -n main \
-            --query properties.outputs.keyVaultName.value -o tsv)
-          
-          # Use the Azure CLI to set secrets in the vault
-          az keyvault secret set --vault-name "$KV_NAME" \
-            --name "usa-jobs-api-key" \
-            --value "${{ secrets.USA_JOBS_API_KEY }}"
-          
-          az keyvault secret set --vault-name "$KV_NAME" \
-            --name "db-password" \
-            --value "${{ secrets.AZURE_DB_PASSWORD }}"
-            
-      - name: '5. Build and push images'
-        run: |
-          # Get the ACR name from the Bicep output
-          CONTAINER_REGISTRY_NAME=$(az deployment group show -g ${{ secrets.AZURE_RG }} -n main --query properties.outputs.containerRegistryName.value -o tsv)
 
-          # Build images in the cloud via ACR Tasks
-          az acr build --registry $CONTAINER_REGISTRY_NAME --image jobapi:${{ github.sha }} ./JobSearch.Api
-          az acr build --registry $CONTAINER_REGISTRY_NAME --image datascraper:${{ github.sha }} ./JobSearch.DataScraper
-          
-      - name: '6. Update Container App & Job'
+      - name: '4. Build and push real images'
         run: |
-          CONTAINER_REGISTRY_NAME=$(az deployment group show -g ${{ secrets.AZURE_RG }} -n main --query properties.outputs.containerRegistryName.value -o tsv)
+          # Use the output from the Bicep step directly
+          ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
           
-          # Update the API App
+          az acr build --registry $ACR_NAME --image jobapi:${{ github.sha }} ./JobSearch.Api
+          az acr build --registry $ACR_NAME --image datascraper:${{ github.sha }} ./JobSearch.DataScraper
+
+      - name: '5. Update Container App & Job with real images'
+        run: |
+          ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
+          
+          # This replaces the 'Hello World' placeholder with your actual code
           az containerapp update -n job-api -g ${{ secrets.AZURE_RG }} \
-          --image $CONTAINER_REGISTRY_NAME.azurecr.io/jobapi:${{ github.sha }}
+            --image $ACR_NAME.azurecr.io/jobapi:${{ github.sha }}
           
-          # Update the Scraper Job
           az containerapp job update -n job-scraper -g ${{ secrets.AZURE_RG }} \
-          --image $CONTAINER_REGISTRY_NAME.azurecr.io/datascraper:${{ github.sha }}
+            --image $ACR_NAME.azurecr.io/datascraper:${{ github.sha }}
+
+      - name: '6. Update Azure Key Vault Secrets'
+        run: |
+          KV_NAME=${{ steps.bicep_deploy.outputs.keyVaultName }}
+          
+          az keyvault secret set --vault-name "$KV_NAME" --name "usa-jobs-api-key" --value "${{ secrets.USA_JOBS_API_KEY }}"
+          az keyvault secret set --vault-name "$KV_NAME" --name "db-password" --value "${{ secrets.AZURE_DB_PASSWORD }}"
             
             
