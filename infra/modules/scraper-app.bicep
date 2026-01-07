@@ -13,14 +13,14 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
   location: location
   identity: {
     type: 'SystemAssigned'
-  }
+  } // Enable Identity
   properties: {
     environmentId: environmentId
     configuration: {
       replicaTimeout: 300
       triggerType: 'Schedule'
       scheduleTriggerConfig: {
-        cronExpression: '0 * * * *'
+        cronExpression: '0 * * * *' // Runs every hour
         parallelism: 1
         replicaCompletionCount: 1
       }
