@@ -119,6 +119,7 @@ module api './modules/api-app.bicep' = {
   name: 'api-deploy'
   params: {
     location: location
+    containerRegistryName: foundation.outputs.containerRegistryName
     environmentId: foundation.outputs.environmentId
     dbConnectionString: dbConnectionString
   }
