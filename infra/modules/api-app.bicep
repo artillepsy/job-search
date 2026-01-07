@@ -1,5 +1,4 @@
 param location string
-param containerRegistryName string
 param environmentId string
 param dbConnectionString string
 
@@ -23,7 +22,7 @@ resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
         }
       ]
       scale: {
-        minReplicas: 0 // <--- Scale to zero for $0 idle cost!
+        minReplicas: 0 // <--- Scale to zero for $0 idle cost
         maxReplicas: 5
       }
     }
