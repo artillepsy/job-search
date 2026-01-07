@@ -2,6 +2,7 @@ name: deploy
 on:
   push:
     branches: [ master ]
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -29,7 +30,9 @@ jobs:
         run: dotnet test --no-build --verbosity normal
   
   build-and-deploy:
+    needs: test
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: '1. Checkout code'
         uses: actions/checkout@v4
@@ -50,7 +53,24 @@ jobs:
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
             location=northeurope
             
-      - name: '4. Build and push images'
+      - name: '4. Update Azure Key Vault Secrets'
+        run: |
+          # 1. Fetch the Key Vault name from the Bicep deployment output
+          KV_NAME=$(az deployment group show \
+            -g ${{ secrets.AZURE_RG }} \
+            -n main \
+            --query properties.outputs.keyVaultName.value -o tsv)
+          
+          # Use the Azure CLI to set secrets in the vault
+          az keyvault secret set --vault-name "$KV_NAME" \
+            --name "usa-jobs-api-key" \
+            --value "${{ secrets.USA_JOBS_API_KEY }}"
+          
+          az keyvault secret set --vault-name "$KV_NAME" \
+            --name "db-password" \
+            --value "${{ secrets.AZURE_DB_PASSWORD }}"
+            
+      - name: '5. Build and push images'
         run: |
           # Get the ACR name from the Bicep output
           CONTAINER_REGISTRY_NAME=$(az deployment group show -g ${{ secrets.AZURE_RG }} -n main --query properties.outputs.containerRegistryName.value -o tsv)
@@ -59,7 +79,7 @@ jobs:
           az acr build --registry $CONTAINER_REGISTRY_NAME --image jobapi:${{ github.sha }} ./JobSearch.Api
           az acr build --registry $CONTAINER_REGISTRY_NAME --image datascraper:${{ github.sha }} ./JobSearch.DataScraper
           
-      - name: '5. Update Container App & Job'
+      - name: '6. Update Container App & Job'
         run: |
           CONTAINER_REGISTRY_NAME=$(az deployment group show -g ${{ secrets.AZURE_RG }} -n main --query properties.outputs.containerRegistryName.value -o tsv)
           

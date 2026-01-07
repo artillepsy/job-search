@@ -141,3 +141,4 @@ module scraper './modules/scraper-app.bicep' = {
 output apiIdentityId string = apiIdentity.outputs.identityId
 output scraperIdentityId string = scraperIdentity.outputs.identityId
 output keyVaultId string = keyVault.outputs.vaultId
+output keyVaultName string = keyVaultName
