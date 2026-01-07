@@ -1,11 +1,12 @@
 param location string
 param prefix string
+param serverName string
 @secure()
 param dbAdminPassword string
 
 // Create a PostgreSQL Server instance
 resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview' = {
-  name: '${prefix}-db-${uniqueString(resourceGroup().id)}'
+  name: serverName
   location: location
   sku: {
     name: 'Standard_B1ms'

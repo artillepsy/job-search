@@ -3,8 +3,8 @@
 // =============================================================================
 @description('The location of all resources')
 param location string = resourceGroup().location
+@description('Key Vault name')
 param keyVaultName string = 'kv-data-${uniqueString(resourceGroup().id)}'
-
 @description('Database admin password. Passed through CLI')
 @secure()
 param dbPassword string
@@ -80,14 +80,58 @@ module foundation './modules/foundation.bicep' = {
 }
 
 // =============================================================================
-// Storage
+// Storage (PostgreSQL)
 // =============================================================================
-module storage './modules/storage.bicep' = {
-  name: 'storage-deploy'
+var storageServerName = '${prefix}-db-${uniqueString(resourceGroup().id)}'
+
+module database './modules/storage.bicep' = {
+  name: 'storageDeployment'
   params: {
     location: location
-    prefix: prefix
+    prefix: 'jobsearch'
     dbAdminPassword: dbPassword
+    serverName: storageServerName
+  }
+}
+
+// =============================================================================
+// Networking / Firewall
+// =============================================================================
+resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview' existing = {
+  name: storageServerName
+}
+
+resource allowAzure 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-03-01-preview' = {
+  name: 'AllowAllAzureServices'
+  parent: postgresServer
+  properties: {
+    startIpAddress: '0.0.0.0'
+    endIpAddress: '0.0.0.0'
+  }
+}
+
+// =============================================================================
+// Deploy Apps
+// =============================================================================
+var dbConnectionString = 'Host=${database.outputs.dbHost};Database=jobsearch;Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
+
+module api './modules/api-app.bicep' = {
+  name: 'api-deploy'
+  params: {
+    location: location
+    containerRegistryName: foundation.outputs.containerRegistryName
+    environmentId: foundation.outputs.environmentId
+    dbConnectionString: dbConnectionString
+  }
+}
+
+module scraper './modules/scraper-app.bicep' = {
+  name: 'scraper-deploy'
+  params: {
+    location: location
+    containerRegistryName: foundation.outputs.containerRegistryName
+    environmentId: foundation.outputs.environmentId
+    dbConnectionString: dbConnectionString
   }
 }
 
