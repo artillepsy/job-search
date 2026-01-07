@@ -1,16 +1,16 @@
 param location string
-param acrName string
-param envId string
+param containerRegistryName string
+param environmentId string
 param dbConnectionString string
 
 resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
-  name: 'job-api'
+  name: 'api'
   location: location
   properties: {
-    managedEnvironmentId: envId
+    managedEnvironmentId: environmentId
     configuration: {
       ingress: {
-        external: true // Allows you to access it from the web
+        external: true
         targetPort: 8080
       }
     }
@@ -18,7 +18,7 @@ resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
       containers: [
         {
           name: 'api'
-          image: '${acrName}.azurecr.io/jobapi:latest'
+          image: '${containerRegistryName}.azurecr.io/jobapi:latest'
           env: [{ name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }]
         }
       ]

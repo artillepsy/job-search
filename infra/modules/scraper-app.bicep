@@ -1,22 +1,24 @@
 param location string
-param acrName string
-param envId string
+param containerRegistryName string
+param environmentId string
 param dbConnectionString string
 
 resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
-  name: 'job-scraper'
+  name: 'scraper'
   location: location
   properties: {
-    environmentId: envId
+    environmentId: environmentId
     configuration: {
-      replicaTimeout: 300 // 5 minutes max run time
+      replicaTimeout: 300
       triggerType: 'Schedule'
-      scheduleConfiguration: {
-        cronExpression: '0 0 * * *' // Runs every day at midnight
+      scheduleTriggerConfig: {
+        cronExpression: '0 * * * *'
+        parallelism: 1
+        replicaCompletionCount: 1
       }
       registries: [
         {
-          server: '${acrName}.azurecr.io'
+          server: '${containerRegistryName}.azurecr.io'
           identity: 'system'
         }
       ]
@@ -25,7 +27,7 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
       containers: [
         {
           name: 'scraper'
-          image: '${acrName}.azurecr.io/datascraper:latest'
+          image: '${containerRegistryName}.azurecr.io/datascraper:latest'
           env: [{ name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }]
         }
       ]
