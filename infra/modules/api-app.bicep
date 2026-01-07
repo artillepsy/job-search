@@ -25,7 +25,7 @@ resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
       ]
       ingress: {
         external: true
-        targetPort: 8080
+        targetPort: 80
       }
     }
     template: {
