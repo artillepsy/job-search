@@ -38,7 +38,8 @@ resource jobSearchDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/databases@
 
 // Create a firewall rule to allow access from Azure services
 resource firewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-03-01-preview' = {
-  name: '${serverName}/AllowAzureServices'
+  parent: postgresServer
+  name: 'AllowAzureServices'
   dependsOn: [
     postgresServer
   ]
