@@ -56,7 +56,10 @@ jobs:
           template: ./infra/main.bicep
           parameters: >
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
-            location=eastus2
+            location=northeurope
+            
+      - name: 'Wait for Identity sync'
+          run: sleep 60
 
       - name: '4. Build and push real images'
         run: |

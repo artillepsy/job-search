@@ -35,8 +35,17 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
       containers: [
         {
           name: 'scraper'
-          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
-          env: [{ name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }]
+          image: 'mcr.microsoft.com/k8se/quickstart:latest'
+          // MANDATORY: Tells the web server to just exit so the Job finishes
+          command: [
+            '/bin/sh'
+            '-c'
+            'echo "Quickstart placeholder job finished"; sleep 5; exit 0'
+          ]
+          env: [
+            { name: 'ASPNETCORE_URLS', value: 'http://+:8080' }
+            { name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }
+          ]
         }
       ]
     }
