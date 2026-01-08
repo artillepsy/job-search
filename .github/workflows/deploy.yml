@@ -58,6 +58,25 @@ jobs:
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
             location=northeurope
             
+      - name: 'Wait for PostgreSQL server to be ready'
+        run: |
+          echo "Waiting 2 minutes for PostgreSQL server to complete provisioning..."
+          sleep 120
+            
+      - name: 'Create PostgreSQL firewall rule for Azure services'
+        run: |
+          SERVER_NAME="${{ steps.bicep_deploy.outputs.storageServerName }}"
+
+          echo "Creating firewall rule for server: $SERVER_NAME"
+          az postgres flexible-server firewall-rule create \
+            --resource-group ${{ secrets.AZURE_RG }} \
+            --name $SERVER_NAME \
+            --rule-name AllowAzureServices \
+            --start-ip-address 0.0.0.0 \
+            --end-ip-address 0.0.0.0
+
+          echo "Firewall rule created successfully"
+            
       - name: 'Wait for Identity sync'
         run: sleep 60
 

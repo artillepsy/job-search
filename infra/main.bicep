@@ -95,22 +95,6 @@ module database './modules/storage.bicep' = {
 }
 
 // =============================================================================
-// Networking / Firewall
-// =============================================================================
-resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-preview' existing = {
-  name: storageServerName
-}
-
-resource allowAzure 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-03-01-preview' = {
-  name: 'AllowAllAzureServices'
-  parent: postgresServer
-  properties: {
-    startIpAddress: '0.0.0.0'
-    endIpAddress: '0.0.0.0'
-  }
-}
-
-// =============================================================================
 // Deploy Apps
 // =============================================================================
 var dbConnectionString = 'Host=${database.outputs.dbHost};Database=${database.outputs.dbName};Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
@@ -149,3 +133,4 @@ output scraperIdentityId string = scraperIdentity.outputs.identityId
 output keyVaultId string = keyVault.outputs.vaultId
 output keyVaultName string = keyVaultName
 output ContainerRegistryName string = foundation.outputs.containerRegistryName
+output StorageServerName string = storageServerName
