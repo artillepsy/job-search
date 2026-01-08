@@ -26,20 +26,22 @@ resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-pr
   }
 }
 
-/* // Create a database with a name specified
+// Create a database with a name specified
 resource jobSearchDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2023-03-01-preview' = {
   parent: postgresServer
-  name: 'jobsearch'
+  name: '${prefix}db'
   properties: {
     charset: 'UTF8'
     collation: 'en_US.UTF8'
   }
-} */
+}
 
 // Create a firewall rule to allow access from Azure services
 resource firewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-03-01-preview' = {
-  parent: postgresServer
-  name: 'AllowAzureServices'
+  name: '${serverName}/AllowAzureServices'
+  dependsOn: [
+    postgresServer
+  ]
   properties: {
     startIpAddress: '0.0.0.0'
     endIpAddress: '0.0.0.0'
@@ -47,4 +49,4 @@ resource firewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-
 }
 
 output dbHost string = postgresServer.properties.fullyQualifiedDomainName
-output dbName string = '${prefix}db'
+output dbName string = jobSearchDatabase.name

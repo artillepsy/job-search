@@ -113,10 +113,13 @@ resource allowAzure 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@202
 // =============================================================================
 // Deploy Apps
 // =============================================================================
-var dbConnectionString = 'Host=${database.outputs.dbHost};Database=postgres;Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
+var dbConnectionString = 'Host=${database.outputs.dbHost};Database=${database.outputs.dbName};Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
 
 module scraper './modules/scraper-app.bicep' = {
   name: 'scraper-deploy'
+  dependsOn: [
+    database
+  ]
   params: {
     location: location
     containerRegistryName: foundation.outputs.containerRegistryName
