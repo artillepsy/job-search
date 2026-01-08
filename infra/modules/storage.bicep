@@ -26,7 +26,7 @@ resource postgresServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-03-01-pr
   }
 }
 
-// Create a database with a name specified
+/* // Create a database with a name specified
 resource jobSearchDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2023-03-01-preview' = {
   parent: postgresServer
   name: 'jobsearch'
@@ -34,7 +34,7 @@ resource jobSearchDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/databases@
     charset: 'UTF8'
     collation: 'en_US.UTF8'
   }
-}
+} */
 
 // Create a firewall rule to allow access from Azure services
 resource firewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-03-01-preview' = {
