@@ -67,20 +67,18 @@ jobs:
           az acr build --registry $ACR_NAME --image jobapi:${{ github.sha }} ./JobSearch.Api
           az acr build --registry $ACR_NAME --image datascraper:${{ github.sha }} ./JobSearch.DataScraper
 
-      - name: '5a. Update API with real image'
+      - name: '5a. Update Scraper with real image'
+        run: |
+          ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
+          az containerapp job update -n scraper -g ${{ secrets.AZURE_RG }} --image $ACR_NAME.azurecr.io/datascraper:${{ github.sha }}
+
+      - name: '5b. Update API with real image'
         run: |
           ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
           az containerapp update -n api -g ${{ secrets.AZURE_RG }} --image $ACR_NAME.azurecr.io/jobapi:${{ github.sha }}
 
-      - name: '5b. Update Scraper with real image'
-        run: |
-          ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
-          az containerapp job update -n scraper -g ${{ secrets.AZURE_RG }} --image $ACR_NAME.azurecr.io/datascraper:${{ github.sha }}
-          
       - name: '6. Update Azure Key Vault Secrets'
         run: |
           KV_NAME=${{ steps.bicep_deploy.outputs.keyVaultName }}
           az keyvault secret set --vault-name "$KV_NAME" --name "usa-jobs-api-key" --value "${{ secrets.USA_JOBS_API_KEY }}"
-          az keyvault secret set --vault-name "$KV_NAME" --name "db-password" --value "${{ secrets.AZURE_DB_PASSWORD }}"
-              
-            
+          az keyvault secret set --vault-name "$KV_NAME" --name "db-password" --value "${{ secrets.AZURE_DB_PASSWORD }}" 

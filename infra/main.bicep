@@ -115,8 +115,8 @@ resource allowAzure 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@202
 // =============================================================================
 var dbConnectionString = 'Host=${database.outputs.dbHost};Database=postgres;Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
 
-module api './modules/api-app.bicep' = {
-  name: 'api-deploy'
+module scraper './modules/scraper-app.bicep' = {
+  name: 'scraper-deploy'
   params: {
     location: location
     containerRegistryName: foundation.outputs.containerRegistryName
@@ -125,10 +125,10 @@ module api './modules/api-app.bicep' = {
   }
 }
 
-module scraper './modules/scraper-app.bicep' = {
-  name: 'scraper-deploy'
+module api './modules/api-app.bicep' = {
+  name: 'api-deploy'
   dependsOn: [
-    api
+    scraper
   ]
   params: {
     location: location
