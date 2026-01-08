@@ -113,7 +113,7 @@ resource allowAzure 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@202
 // =============================================================================
 // Deploy Apps
 // =============================================================================
-var dbConnectionString = 'Host=${database.outputs.dbHost};Database=postgres;Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
+var dbConnectionString = 'Host=${database.outputs.dbHost};Database=jobsearch;Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
 
 module api './modules/api-app.bicep' = {
   name: 'api-deploy'
