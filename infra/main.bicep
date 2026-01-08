@@ -12,27 +12,27 @@ param dbPassword string
 // =============================================================================
 // Modules
 // =============================================================================
-@description('Create identity for the API project')
-module apiIdentity './modules/identity.bicep' = {
-  name: 'apiIdentityDeployment'
-  params: {
-    identityName: 'id-web-api'
-    location: location
-  }
-}
-
 @description('Create identity for the Scraper project')
 module scraperIdentity './modules/identity.bicep' = {
-  name: 'scraperIdentityDeployment'
+  name: 'scraper-identity-deploy'
   params: {
     identityName: 'id-data-scraper'
     location: location
   }
 }
 
+@description('Create identity for the API project')
+module apiIdentity './modules/identity.bicep' = {
+  name: 'api-identity-deploy'
+  params: {
+    identityName: 'id-web-api'
+    location: location
+  }
+}
+
 @description('Create key vault for application data storage')
 module keyVault './modules/keyvault.bicep' = {
-  name: 'keyVaultDeployment'
+  name: 'keyvault-deploy'
   params: {
     vaultName: keyVaultName
     location: location
@@ -47,7 +47,7 @@ var keyVaultSecretsUser = '4633458b-17de-408a-b874-0445c86b69e6'
 
 @description('Assign API Identity to Key Vault')
 module apiIdentityKeyVaultRbac './modules/rbac.bicep' = {
-  name: 'apiIdentityKeyVaultRbacDeployment'
+  name: 'api-identity-keyvault-rbac-deploy'
   scope: resourceGroup()
   params: {
     principalId: apiIdentity.outputs.principalId
@@ -57,7 +57,7 @@ module apiIdentityKeyVaultRbac './modules/rbac.bicep' = {
 
 @description('Assign Scraper Identity to Key Vault')
 module scraperKvRbac './modules/rbac.bicep' = {
-  name: 'scraperKvRbacDeployment'
+  name: 'scraper-keyvault-rbac-deploy'
   scope: resourceGroup()
   params: {
     principalId: scraperIdentity.outputs.principalId
@@ -85,10 +85,10 @@ module foundation './modules/foundation.bicep' = {
 var storageServerName = '${prefix}-db-${uniqueString(resourceGroup().id)}'
 
 module database './modules/storage.bicep' = {
-  name: 'storageDeployment'
+  name: 'storage-deploy'
   params: {
     location: location
-    prefix: 'jobsearch'
+    prefix: prefix
     dbAdminPassword: dbPassword
     serverName: storageServerName
   }
