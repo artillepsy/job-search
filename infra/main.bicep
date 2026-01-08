@@ -127,6 +127,9 @@ module api './modules/api-app.bicep' = {
 
 module scraper './modules/scraper-app.bicep' = {
   name: 'scraper-deploy'
+  dependsOn: [
+    api
+  ]
   params: {
     location: location
     containerRegistryName: foundation.outputs.containerRegistryName
