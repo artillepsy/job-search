@@ -41,6 +41,7 @@ resource firewall 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2023-
   parent: postgresServer
   name: 'AllowAzureServices'
   dependsOn: [
+    jobSearchDatabase
     postgresServer
   ]
   properties: {
