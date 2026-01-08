@@ -56,7 +56,7 @@ jobs:
           template: ./infra/main.bicep
           parameters: >
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
-            location=northeurope
+            location=eastus2
 
       - name: '4. Build and push real images'
         run: |
