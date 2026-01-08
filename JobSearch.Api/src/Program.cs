@@ -24,8 +24,10 @@ builder.Services.AddSingleton<ITokenService, DevTokenService>();
 
 var app = builder.Build();
 
-
-app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+	app.UseHttpsRedirection();
+}
 
 // swagger + openApi
 if (app.Environment.IsDevelopment())

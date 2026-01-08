@@ -25,15 +25,18 @@ resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
       ]
       ingress: {
         external: true
-        targetPort: 80
+        targetPort: 8080
       }
     }
     template: {
       containers: [
         {
           name: 'api'
-          image: 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
-          env: [{ name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }]
+          image: 'mcr.microsoft.com/k8se/quickstart:latest'
+          env: [
+            { name: 'ASPNETCORE_URLS', value: 'http://+:8080' }
+            { name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }
+          ]
         }
       ]
       scale: {

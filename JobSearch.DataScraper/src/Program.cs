@@ -50,7 +50,10 @@ builder.Services.AddRouting(o => o.LowercaseUrls = true);
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+	app.UseHttpsRedirection();
+}
 
 // swagger + openApi
 if (app.Environment.IsDevelopment())
