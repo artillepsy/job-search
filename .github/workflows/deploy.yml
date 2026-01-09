@@ -65,15 +65,19 @@ jobs:
         run: |
           # Get the ACR name from the Foundation deployment outputs
           ACR_NAME=${{ steps.foundation_deploy.outputs.containerRegistryName }}
-          IMAGE_TAG="scraper:${{ github.sha }}"
+          ACR_SERVER=$ACR_NAME.azurecr.io
+          IMAGE_TAG="$ACR_SERVER/scraper:${{ github.sha }}"
           
-          # Specify the path to the Scraper's Dockerfile
-          az acr build --registry $ACR_NAME --image $IMAGE_TAG --file JobSearch.DataScraper/Dockerfile .
+          # Login to Docker using Azure CLI credentials
+          az acr login --name $ACR_NAME
           
-          # Save the full image path for the next Bicep step
-          echo "full_image=$ACR_NAME.azurecr.io/$IMAGE_TAG" >> $GITHUB_OUTPUT
+          # Build from Solution Root to include shared projects
+          docker build -t $IMAGE_TAG -f JobSearch.DataScraper/Dockerfile .
+          docker push $IMAGE_TAG
+          
+          echo "full_image=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: 'Deploy Bicep'
+      - name: 'Deploy Main Infrastructure'
         id: bicep_deploy
         uses: azure/arm-deploy@v2
         with:
