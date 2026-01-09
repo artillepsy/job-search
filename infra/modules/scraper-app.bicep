@@ -3,17 +3,16 @@ param containerRegistryName string
 param environmentId string
 param dbConnectionString string
 param scraperImage string
-
-// Get a reference to the existing ACR to assign permissions
-resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
-  name: containerRegistryName
-}
+param identityId string
 
 resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
   name: 'scraper'
   location: location
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned' // CHANGED: SystemAssigned -> UserAssigned
+    userAssignedIdentities: {
+      '${identityId}': {}
+    }
   }
   properties: {
     environmentId: environmentId
@@ -28,7 +27,7 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
       registries: [
         {
           server: '${containerRegistryName}.azurecr.io'
-          identity: 'system'
+          identity: identityId
         }
       ]
     }
@@ -44,18 +43,5 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
         }
       ]
     }
-  }
-}
-
-resource acrRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(resourceGroup().id, containerRegistry.name, scraperJob.name, 'AcrPull')
-  scope: containerRegistry
-  dependsOn: [
-    scraperJob
-  ]
-  properties: {
-    principalId: scraperJob.identity.principalId
-    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-af7b-1100f57d5111')
-    principalType: 'ServicePrincipal'
   }
 }

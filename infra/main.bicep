@@ -48,23 +48,35 @@ module keyVault './modules/keyvault.bicep' = {
 // =============================================================================
 @description('The role definition ID for Key Vault Secrets User (Azures built-in role)')
 var keyVaultSecretsUser = '4633458b-17de-408a-b874-0445c86b69e6'
+@description('The role definition ID for ACR Pull (Azures built-in role)')
+var acrPullRole = '7f951dda-4ed3-4680-af7b-1100f57d5111'
 
-@description('Assign API Identity to Key Vault')
-module apiIdentityKeyVaultRbac './modules/rbac.bicep' = {
-  name: 'api-identity-keyvault-rbac-deploy'
+// Assign AcrPull to the Scraper Identity
+module scraperAcrRbac './modules/rbac.bicep' = {
+  name: 'scraper-acr-rbac-deploy'
   scope: resourceGroup()
   params: {
-    principalId: apiIdentity.outputs.principalId
-    roleDefinitionId: keyVaultSecretsUser
+    principalId: scraperIdentity.outputs.principalId
+    roleDefinitionId: acrPullRole
   }
 }
 
 @description('Assign Scraper Identity to Key Vault')
-module scraperKvRbac './modules/rbac.bicep' = {
-  name: 'scraper-keyvault-rbac-deploy'
+module scraperIdentityKvRbac './modules/rbac.bicep' = {
+  name: 'scraper-identity-keyvault-rbac-deploy'
   scope: resourceGroup()
   params: {
     principalId: scraperIdentity.outputs.principalId
+    roleDefinitionId: keyVaultSecretsUser
+  }
+}
+
+@description('Assign API Identity to Key Vault')
+module apiIdentityKvRbac './modules/rbac.bicep' = {
+  name: 'api-identity-keyvault-rbac-deploy'
+  scope: resourceGroup()
+  params: {
+    principalId: apiIdentity.outputs.principalId
     roleDefinitionId: keyVaultSecretsUser
   }
 }
@@ -105,6 +117,7 @@ module scraper './modules/scraper-app.bicep' = {
   dependsOn: [
     database
     foundation
+    scraperAcrRbac
   ]
   params: {
     location: location
@@ -112,6 +125,7 @@ module scraper './modules/scraper-app.bicep' = {
     environmentId: foundation.outputs.environmentId
     scraperImage: scraperImage
     dbConnectionString: dbConnectionString
+    identityId: scraperIdentity.outputs.identityId
   }
 }
 
