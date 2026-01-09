@@ -112,6 +112,8 @@ module scraper './modules/scraper-app.bicep' = {
   }
 }
 
+
+
 module api './modules/api-app.bicep' = {
   name: 'api-deploy'
   dependsOn: [

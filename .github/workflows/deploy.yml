@@ -16,21 +16,21 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: '1. Checkout code'
+      - name: 'Checkout code'
         uses: actions/checkout@v4
         
-      - name: '2. Setup .NET'
+      - name: 'Setup .NET'
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
           
-      - name: '3. Restore dependencies'
+      - name: 'Restore dependencies'
         run: dotnet restore
           
-      - name: '4. Build Solution'
+      - name: 'Build Solution'
         run: dotnet build --no-restore
 
-      - name: '5. Run All Tests'
+      - name: 'Run All Tests'
         run: dotnet test --no-build --verbosity normal
   
   build-and-deploy:
@@ -38,17 +38,24 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: '1. Checkout code'
+      - name: 'Checkout code'
         uses: actions/checkout@v4
 
-      - name: '2. Login to Azure'
+      - name: 'Login to Azure'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      - name: 'Deploy Foundation'
+        run: |
+          az deployment group create \
+            --resource-group ${{ secrets.AZURE_RG }} \
+            --template-file ./infra/modules/foundation.bicep \
+            --parameters prefix='jobsearch' location=northeurope
 
-      - name: '3. Deploy Bicep'
+      - name: 'Deploy Bicep'
         id: bicep_deploy
         uses: azure/arm-deploy@v2
         with:
@@ -80,23 +87,23 @@ jobs:
      # - name: 'Wait for Identity sync'
      #   run: sleep 60
 #
-     # - name: '4. Build and push real images'
+     # - name: 'Build and push real images'
      #   run: |
      #     ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
      #     az acr build --registry $ACR_NAME --image jobapi:${{ github.sha }} ./JobSearch.Api
      #     az acr build --registry $ACR_NAME --image datascraper:${{ github.sha }} ./JobSearch.DataScraper
 #
-     # - name: '5a. Update Scraper with real image'
+     # - name: '5Update Scraper with real image'
      #   run: |
      #     ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
      #     az containerapp job update -n scraper -g ${{ secrets.AZURE_RG }} --image $ACR_NAME.azurecr.io/datascraper:${{ github.sha }}
 #
-     # - name: '5b. Update API with real image'
+     # - name: '5Update API with real image'
      #   run: |
      #     ACR_NAME=${{ steps.bicep_deploy.outputs.containerRegistryName }}
      #     az containerapp update -n api -g ${{ secrets.AZURE_RG }} --image $ACR_NAME.azurecr.io/jobapi:${{ github.sha }}
 #
-     # - name: '6. Update Azure Key Vault Secrets'
+     # - name: 'Update Azure Key Vault Secrets'
      #   run: |
      #     KV_NAME=${{ steps.bicep_deploy.outputs.keyVaultName }}
      #     az keyvault secret set --vault-name "$KV_NAME" --name "usa-jobs-api-key" --value "${{ secrets.USA_JOBS_API_KEY }}"
