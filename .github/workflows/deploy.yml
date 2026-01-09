@@ -52,11 +52,10 @@ jobs:
       - name: 'Deploy Foundation'
         id: foundation_deploy
         uses: azure/arm-deploy@v2
-        run: |
-          az deployment group create \
-            --resource-group ${{ secrets.AZURE_RG }} \
-            --template-file ./infra/modules/foundation.bicep \
-            --parameters prefix='jobsearch' location=northeurope
+        with:
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ./infra/modules/foundation.bicep
+          parameters: prefix='jobsearch' location=northeurope
       
       # Build the scraper image to ACR to pass it to Bicep
       - name: 'Build Scraper Image in ACR'
