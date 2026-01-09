@@ -51,6 +51,7 @@ jobs:
       # Before deploying apps to Azure, we need to deploy the foundation resources first to create ACR    
       - name: 'Deploy Foundation'
         id: foundation_deploy
+        uses: azure/arm-deploy@v2
         run: |
           az deployment group create \
             --resource-group ${{ secrets.AZURE_RG }} \
