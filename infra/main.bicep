@@ -115,8 +115,6 @@ var dbConnectionString = 'Host=${database.outputs.dbHost};Database=${database.ou
 module scraper './modules/scraper-app.bicep' = {
   name: 'scraper-deploy'
   dependsOn: [
-    database
-    foundation
     scraperAcrRbac
   ]
   params: {
