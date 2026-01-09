@@ -47,16 +47,15 @@ resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
   }
 }
 
-// Static Role Assignment: Allows API to pull from ACR
-resource apiAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(apiApp.id, containerRegistry.id, 'AcrPull')
+resource apiAcrRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, containerRegistry.name, apiApp.name, 'AcrPull')
   scope: containerRegistry
+  dependsOn: [
+    apiApp // Assuming your container app is named apiContainerApp
+  ]
   properties: {
     principalId: apiApp.identity.principalId
-    roleDefinitionId: subscriptionResourceId(
-      'Microsoft.Authorization/roleDefinitions',
-      '7f951dda-4ed3-4680-af7b-1100f57d5111'
-    ) // AcrPull Role ID
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-af7b-1100f57d5111')
     principalType: 'ServicePrincipal'
   }
 }
