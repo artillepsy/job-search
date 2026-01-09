@@ -97,7 +97,7 @@ module database './modules/storage.bicep' = {
 // =============================================================================
 // Deploy Apps
 // =============================================================================
-var dbConnectionString = 'Host=${database.outputs.dbHost};Database=${database.outputs.dbName};Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
+/* var dbConnectionString = 'Host=${database.outputs.dbHost};Database=${database.outputs.dbName};Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
 
 module scraper './modules/scraper-app.bicep' = {
   name: 'scraper-deploy'
@@ -123,7 +123,7 @@ module api './modules/api-app.bicep' = {
     environmentId: foundation.outputs.environmentId
     dbConnectionString: dbConnectionString
   }
-}
+} */
 
 // =============================================================================
 // Outputs
