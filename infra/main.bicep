@@ -57,7 +57,7 @@ module scraperAcrRbac './modules/rbac.bicep' = {
   scope: resourceGroup()
   params: {
     principalId: scraperIdentity.outputs.principalId
-    roleDefinitionId: acrPullRole
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRole)
   }
 }
 
@@ -67,19 +67,19 @@ module scraperIdentityKvRbac './modules/rbac.bicep' = {
   scope: resourceGroup()
   params: {
     principalId: scraperIdentity.outputs.principalId
-    roleDefinitionId: keyVaultSecretsUser
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', keyVaultSecretsUser)
   }
 }
 
-@description('Assign API Identity to Key Vault')
-module apiIdentityKvRbac './modules/rbac.bicep' = {
-  name: 'api-identity-keyvault-rbac-deploy'
-  scope: resourceGroup()
-  params: {
-    principalId: apiIdentity.outputs.principalId
-    roleDefinitionId: keyVaultSecretsUser
-  }
-}
+// @description('Assign API Identity to Key Vault')
+// module apiIdentityKvRbac './modules/rbac.bicep' = {
+//   name: 'api-identity-keyvault-rbac-deploy'
+//   scope: resourceGroup()
+//   params: {
+//     principalId: apiIdentity.outputs.principalId
+//     roleDefinitionId: keyVaultSecretsUser
+//   }
+// }
 
 // =============================================================================
 // Foundation
