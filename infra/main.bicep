@@ -5,6 +5,8 @@
 param location string = resourceGroup().location
 @description('Key Vault name')
 param keyVaultName string = 'kv-data-${uniqueString(resourceGroup().id)}'
+@description('Scraper container image. Built by Azure and passed through CLI')
+param scraperImage string
 @description('Database admin password. Passed through CLI')
 @secure()
 param dbPassword string
@@ -97,27 +99,30 @@ module database './modules/storage.bicep' = {
 // =============================================================================
 // Deploy Apps
 // =============================================================================
-/* var dbConnectionString = 'Host=${database.outputs.dbHost};Database=${database.outputs.dbName};Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
+var dbConnectionString = 'Host=${database.outputs.dbHost};Database=${database.outputs.dbName};Username=dbadmin;Password=${dbPassword};SSL Mode=Require;Trust Server Certificate=true'
 
 module scraper './modules/scraper-app.bicep' = {
   name: 'scraper-deploy'
   dependsOn: [
     database
+    foundation
   ]
   params: {
     location: location
     containerRegistryName: foundation.outputs.containerRegistryName
     environmentId: foundation.outputs.environmentId
+    scraperImage: scraperImage
     dbConnectionString: dbConnectionString
   }
 }
 
-
-
+/* 
 module api './modules/api-app.bicep' = {
   name: 'api-deploy'
   dependsOn: [
     scraper
+    database
+    foundation
   ]
   params: {
     location: location

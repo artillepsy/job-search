@@ -2,7 +2,7 @@ param location string
 param containerRegistryName string
 param environmentId string
 param dbConnectionString string
-param scraperImage string = 'mcr.microsoft.com/k8se/quickstart:latest'
+param scraperImage string
 
 // Get a reference to the existing ACR to assign permissions
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
@@ -14,7 +14,7 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
   location: location
   identity: {
     type: 'SystemAssigned'
-  } // Enable Identity
+  }
   properties: {
     environmentId: environmentId
     configuration: {
@@ -46,20 +46,6 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
     }
   }
 }
-
-// // Grant the Scraper permission to pull from ACR
-// resource runerAcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-//   name: guid(scraperJob.id, containerRegistry.id, 'AcrPull')
-//   scope: containerRegistry
-//   properties: {
-//     principalId: scraperJob.identity.principalId
-//     roleDefinitionId: subscriptionResourceId(
-//       'Microsoft.Authorization/roleDefinitions',
-//       '7f951dda-4ed3-4680-af7b-1100f57d5111'
-//     ) // AcrPull Role ID
-//     principalType: 'ServicePrincipal'
-//   }
-// }
 
 resource acrRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, containerRegistry.name, scraperJob.name, 'AcrPull')

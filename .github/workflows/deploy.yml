@@ -47,13 +47,27 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
+      
+      # Before deploying apps to Azure, we need to deploy the foundation resources first to create ACR    
       - name: 'Deploy Foundation'
         run: |
           az deployment group create \
             --resource-group ${{ secrets.AZURE_RG }} \
             --template-file ./infra/modules/foundation.bicep \
             --parameters prefix='jobsearch' location=northeurope
+      
+      # Build the scraper image to ACR to pass it to Bicep
+      - name: 'Build Scraper Image in ACR'
+        id: build_image
+        run: |
+          # Get the ACR name from the Foundation deployment outputs
+          ACR_NAME=${{ steps.foundation_deploy.outputs.containerRegistryName }}
+          IMAGE_TAG="scraper:${{ github.sha }}"
+          
+          az acr build --registry $ACR_NAME --image $IMAGE_TAG .
+          
+          # Save the full image path for the next Bicep step
+          echo "full_image=$ACR_NAME.azurecr.io/$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: 'Deploy Bicep'
         id: bicep_deploy
@@ -64,25 +78,33 @@ jobs:
           parameters: >
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
             location=northeurope
+            scraperImage=${{ steps.build_image.outputs.full_image }}
             
-     # #- name: 'Wait for PostgreSQL server to be ready'
-     #   run: |
-     #     echo "Waiting 2 minutes for PostgreSQL server to complete provisioning..."
-     #     sleep 120
-     #       
-     # - name: 'Create PostgreSQL firewall rule for Azure services'
-     #   run: |
-     #     SERVER_NAME="${{ steps.bicep_deploy.outputs.storageServerName }}"
+      #- name: 'Wait for PostgreSQL server to be ready'
+      #  run: |
+      #    echo "Waiting 2 minutes for PostgreSQL server to complete provisioning..."
+      #    sleep 120
+      #      
+      #- name: 'Create PostgreSQL firewall rule for Azure services'
+      #  run: |
+      #    SERVER_NAME="${{ steps.bicep_deploy.outputs.storageServerName }}"
 #
-     #     echo "Creating firewall rule for server: $SERVER_NAME"
-     #     az postgres flexible-server firewall-rule create \
-     #       --resource-group ${{ secrets.AZURE_RG }} \
-     #       --name $SERVER_NAME \
-     #       --rule-name AllowAzureServices \
-     #       --start-ip-address 0.0.0.0 \
-     #       --end-ip-address 0.0.0.0
+      #    echo "Creating firewall rule for server: $SERVER_NAME"
+      #    az postgres flexible-server firewall-rule create \
+      #      --resource-group ${{ secrets.AZURE_RG }} \
+      #      --name $SERVER_NAME \
+      #      --rule-name AllowAzureServices \
+      #      --start-ip-address 0.0.0.0 \
+      #      --end-ip-address 0.0.0.0
 #
-     #     echo "Firewall rule created successfully"
+      #    echo "Firewall rule created successfully"
+      #    
+      #- name: 'Update Azure Key Vault Secrets'
+      #  run: |
+      #    KV_NAME=${{ steps.bicep_deploy.outputs.keyVaultName }}
+      #    az keyvault secret set --vault-name "$KV_NAME" --name "usa-jobs-api-key" --value "${{ secrets.USA_JOBS_API_KEY }}"
+      #    az keyvault secret set --vault-name "$KV_NAME" --name "db-password" --value "${{ secrets.AZURE_DB_PASSWORD }}"
+      
      #       
      # - name: 'Wait for Identity sync'
      #   run: sleep 60
