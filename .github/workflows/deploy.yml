@@ -64,7 +64,8 @@ jobs:
           ACR_NAME=${{ steps.foundation_deploy.outputs.containerRegistryName }}
           IMAGE_TAG="scraper:${{ github.sha }}"
           
-          az acr build --registry $ACR_NAME --image $IMAGE_TAG .
+          # Specify the path to the Scraper's Dockerfile
+          az acr build --registry $ACR_NAME --image $IMAGE_TAG --file JobSearch.DataScraper/Dockerfile .
           
           # Save the full image path for the next Bicep step
           echo "full_image=$ACR_NAME.azurecr.io/$IMAGE_TAG" >> $GITHUB_OUTPUT
