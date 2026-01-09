@@ -5,8 +5,10 @@
 param location string = resourceGroup().location
 @description('Key Vault name')
 param keyVaultName string = 'kv-data-${uniqueString(resourceGroup().id)}'
-@description('Scraper container image. Built by Azure and passed through CLI')
+@description('Scraper container image. Built via Docker and passed through CLI')
 param scraperImage string
+@description('Api container image. Built via Docker and passed through CLI')
+param apiImage string
 @description('Prefix for all resources')
 param prefix string
 @description('Database admin password. Passed through CLI')
@@ -61,6 +63,16 @@ module scraperAcrRbac './modules/rbac.bicep' = {
   }
 }
 
+// Assign AcrPull to the Api Identity
+module apiAcrRbac './modules/rbac.bicep' = {
+  name: 'api-acr-rbac-deploy'
+  scope: resourceGroup()
+  params: {
+    principalId: apiIdentity.outputs.principalId
+    roleDefinitionId: acrPullRole
+  }
+}
+
 @description('Assign Scraper Identity to Key Vault')
 module scraperIdentityKvRbac './modules/rbac.bicep' = {
   name: 'scraper-identity-keyvault-rbac-deploy'
@@ -71,15 +83,15 @@ module scraperIdentityKvRbac './modules/rbac.bicep' = {
   }
 }
 
-// @description('Assign API Identity to Key Vault')
-// module apiIdentityKvRbac './modules/rbac.bicep' = {
-//   name: 'api-identity-keyvault-rbac-deploy'
-//   scope: resourceGroup()
-//   params: {
-//     principalId: apiIdentity.outputs.principalId
-//     roleDefinitionId: keyVaultSecretsUser
-//   }
-// }
+@description('Assign API Identity to Key Vault')
+module apiIdentityKvRbac './modules/rbac.bicep' = {
+  name: 'api-identity-keyvault-rbac-deploy'
+  scope: resourceGroup()
+  params: {
+    principalId: apiIdentity.outputs.principalId
+    roleDefinitionId: keyVaultSecretsUser
+  }
+}
 
 // =============================================================================
 // Foundation
@@ -121,27 +133,27 @@ module scraper './modules/scraper-app.bicep' = {
     location: location
     containerRegistryName: foundation.outputs.containerRegistryName
     environmentId: foundation.outputs.environmentId
-    scraperImage: scraperImage
     dbConnectionString: dbConnectionString
+    image: scraperImage
     identityId: scraperIdentity.outputs.identityId
   }
 }
 
-/* 
 module api './modules/api-app.bicep' = {
   name: 'api-deploy'
   dependsOn: [
     scraper
-    database
-    foundation
+    apiAcrRbac
   ]
   params: {
     location: location
     containerRegistryName: foundation.outputs.containerRegistryName
     environmentId: foundation.outputs.environmentId
     dbConnectionString: dbConnectionString
+    image: apiImage
+    identityId: apiIdentity.outputs.identityId
   }
-} */
+}
 
 // =============================================================================
 // Outputs

@@ -61,7 +61,7 @@ jobs:
       
       # Build the scraper image to ACR to pass it to Bicep
       - name: 'Build Scraper Image via Docker'
-        id: build_image
+        id: build_scraper_image
         run: |
           # Get the ACR name from the Foundation deployment outputs
           ACR_NAME=${{ steps.foundation_deploy.outputs.containerRegistryName }}
@@ -76,6 +76,25 @@ jobs:
           docker push $IMAGE_TAG
           
           echo "full_image=$IMAGE_TAG" >> $GITHUB_OUTPUT
+          
+            # Build the scraper image to ACR to pass it to Bicep
+          
+      - name: 'Build API Image via Docker'
+        id: build_api_image
+        run: |
+          # Get the ACR name from the Foundation deployment outputs
+          ACR_NAME=${{ steps.foundation_deploy.outputs.containerRegistryName }}
+          ACR_SERVER=$ACR_NAME.azurecr.io
+          IMAGE_TAG="$ACR_SERVER/api:${{ github.sha }}"
+          
+          # Login to Docker using Azure CLI credentials
+          az acr login --name $ACR_NAME
+          
+          # Build from Solution Root to include shared projects
+          docker build -t $IMAGE_TAG -f JobSearch.Api/Dockerfile .
+          docker push $IMAGE_TAG
+          
+          echo "full_image=$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: 'Deploy Main Infrastructure'
         id: bicep_deploy
@@ -87,7 +106,14 @@ jobs:
             prefix=jobsearch
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
             location=northeurope
-            scraperImage=${{ steps.build_image.outputs.full_image }}
+            scraperImage=${{ steps.build_scraper_image.outputs.full_image }}
+            apiImage=${{ steps.build_api_image.outputs.full_image }}
+            
+      - name: 'Set/Update Azure Key Vault Secrets'
+        run: |
+          KV_NAME=${{ steps.bicep_deploy.outputs.keyVaultName }}
+          az keyvault secret set --vault-name "$KV_NAME" --name "usa-jobs-api-key" --value "${{ secrets.USA_JOBS_API_KEY }}"
+          az keyvault secret set --vault-name "$KV_NAME" --name "db-password" --value "${{ secrets.AZURE_DB_PASSWORD }}"
             
       #- name: 'Wait for PostgreSQL server to be ready'
       #  run: |
@@ -107,12 +133,7 @@ jobs:
       #      --end-ip-address 0.0.0.0
 #
       #    echo "Firewall rule created successfully"
-      #    
-      #- name: 'Update Azure Key Vault Secrets'
-      #  run: |
-      #    KV_NAME=${{ steps.bicep_deploy.outputs.keyVaultName }}
-      #    az keyvault secret set --vault-name "$KV_NAME" --name "usa-jobs-api-key" --value "${{ secrets.USA_JOBS_API_KEY }}"
-      #    az keyvault secret set --vault-name "$KV_NAME" --name "db-password" --value "${{ secrets.AZURE_DB_PASSWORD }}"
+
       
      #       
      # - name: 'Wait for Identity sync'

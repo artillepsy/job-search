@@ -2,14 +2,14 @@ param location string
 param containerRegistryName string
 param environmentId string
 param dbConnectionString string
-param scraperImage string
+param image string
 param identityId string
 
 resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
   name: 'scraper'
   location: location
   identity: {
-    type: 'UserAssigned' // CHANGED: SystemAssigned -> UserAssigned
+    type: 'UserAssigned'
     userAssignedIdentities: {
       '${identityId}': {}
     }
@@ -35,7 +35,7 @@ resource scraperJob 'Microsoft.App/jobs@2023-05-01' = {
       containers: [
         {
           name: 'scraper'
-          image: scraperImage
+          image: image
           env: [
             { name: 'ASPNETCORE_URLS', value: 'http://+:8080' }
             { name: 'ConnectionStrings__DefaultConnection', value: dbConnectionString }
