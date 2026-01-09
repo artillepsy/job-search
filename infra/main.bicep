@@ -7,6 +7,8 @@ param location string = resourceGroup().location
 param keyVaultName string = 'kv-data-${uniqueString(resourceGroup().id)}'
 @description('Scraper container image. Built by Azure and passed through CLI')
 param scraperImage string
+@description('Prefix for all resources')
+param prefix string
 @description('Database admin password. Passed through CLI')
 @secure()
 param dbPassword string
@@ -70,9 +72,6 @@ module scraperKvRbac './modules/rbac.bicep' = {
 // =============================================================================
 // Foundation
 // =============================================================================
-@description('Prefix for all resources')
-var prefix = 'jobsearch'
-
 module foundation './modules/foundation.bicep' = {
   name: 'foundation-deploy'
   params: {

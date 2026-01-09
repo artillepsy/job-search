@@ -55,7 +55,9 @@ jobs:
         with:
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./infra/modules/foundation.bicep
-          parameters: prefix='jobsearch' location=northeurope
+          parameters: > 
+            prefix=jobsearch 
+            location=northeurope
       
       # Build the scraper image to ACR to pass it to Bicep
       - name: 'Build Scraper Image in ACR'
@@ -78,6 +80,7 @@ jobs:
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./infra/main.bicep
           parameters: >
+            prefix=jobsearch
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
             location=northeurope
             scraperImage=${{ steps.build_image.outputs.full_image }}
