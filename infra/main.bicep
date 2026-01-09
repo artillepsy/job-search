@@ -49,7 +49,7 @@ module keyVault './modules/keyvault.bicep' = {
 @description('The role definition ID for Key Vault Secrets User (Azures built-in role)')
 var keyVaultSecretsUser = '4633458b-17de-408a-b874-0445c86b69e6'
 @description('The role definition ID for ACR Pull (Azures built-in role)')
-var acrPullRole = '7f951dda-4ed3-4680-af7b-1100f57d5111'
+var acrPullRole = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
 
 // Assign AcrPull to the Scraper Identity
 module scraperAcrRbac './modules/rbac.bicep' = {
@@ -57,7 +57,7 @@ module scraperAcrRbac './modules/rbac.bicep' = {
   scope: resourceGroup()
   params: {
     principalId: scraperIdentity.outputs.principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRole)
+    roleDefinitionId: acrPullRole
   }
 }
 
@@ -67,7 +67,7 @@ module scraperIdentityKvRbac './modules/rbac.bicep' = {
   scope: resourceGroup()
   params: {
     principalId: scraperIdentity.outputs.principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', keyVaultSecretsUser)
+    roleDefinitionId: keyVaultSecretsUser
   }
 }
 
