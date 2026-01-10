@@ -11,6 +11,8 @@ param scraperImage string
 param apiImage string
 @description('Prefix for all resources')
 param prefix string
+@description('The Object ID of the identity running the deployment (GitHub runner)')
+param deployerPrincipalId string
 @description('Database admin password. Passed through CLI')
 @secure()
 param dbPassword string
@@ -152,6 +154,21 @@ module api './modules/api-app.bicep' = {
     dbConnectionString: dbConnectionString
     image: apiImage
     identityId: apiIdentity.outputs.identityId
+  }
+}
+
+// =============================================================================
+// Key Vault Secrets Role Assignment
+// =============================================================================
+@description('The role definition ID for Key Vault Secrets Officer (Azures built-in role)')
+var keyVaultSecretsOfficer = 'b86a8fe4-44ce-4948-aee5-eccb2c155cd7'
+
+module githubActionsKvRbac './modules/rbac.bicep' = {
+  name: 'github-actions-kv-rbac-deploy'
+  scope: resourceGroup()
+  params: {
+    principalId: deployerPrincipalId
+    roleDefinitionId: keyVaultSecretsOfficer
   }
 }
 
