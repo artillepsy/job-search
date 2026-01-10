@@ -36,5 +36,14 @@ resource jobSearchDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/databases@
   }
 }
 
+resource allowAzureServices 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2022-12-01' = {
+  name: 'AllowAzureServices'
+  parent: postgresServer
+  properties: {
+    startIpAddress: '0.0.0.0'
+    endIpAddress: '0.0.0.0'
+  }
+}
+
 output dbHost string = postgresServer.properties.fullyQualifiedDomainName
 output dbName string = jobSearchDatabase.name
