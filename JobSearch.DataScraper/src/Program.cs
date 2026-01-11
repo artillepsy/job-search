@@ -1,88 +1,54 @@
 using JobSearch.Data;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Extensions;
-using JobSearch.DataScraper.Scraping;
 using JobSearch.DataScraper.Scraping.Scrapers.Factories;
 using JobSearch.DataScraper.Scraping.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//db + ef setup
+// Extract the scraper name from args
+string? scraperToRun = args.SkipWhile(a => a != "--scraper").Skip(1).FirstOrDefault();
+
+// DB & Repositories
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddDbContext<AppDbContext>(opt =>
-	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), 
+	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
 			o => o.MigrationsHistoryTable("__EFMigrationsHistory")) // Forces the default name
 		.UseSnakeCaseNamingConvention());
 
-// scrapers
 builder.Services.AddScrapers(builder.Configuration);
-
-builder.Services.AddHttpClient("JobScraper", client =>
-{
-	client.DefaultRequestHeaders.UserAgent.ParseAdd(
-		"Mozilla/5.0 (compatible; JobScraper/1.0; +artillepsy@gmail.com)"
-	);
-	client.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-	client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9");
-	client.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
-	client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("pl-PL,pl;q=0.8");
-	client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
-	client.Timeout = TimeSpan.FromSeconds(30);
-});
-
+builder.Services.AddScraperHttpClient();
 builder.Services.AddSingleton<IUrlHashService, UrlHashSha1Service>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
-// background service
-// Register as a concrete type AND as hosted service
-builder.Services.AddSingleton<ScraperBackgroundService>();
-builder.Services.AddHostedService(provider => 
-	provider.GetRequiredService<ScraperBackgroundService>());
+using IHost host = builder.Build();
 
-// mvc + swagger
-builder.Services.AddControllers(); 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddOpenApi();
+using var scope = host.Services.CreateScope();
 
-// misc
-builder.Services.AddRouting(o => o.LowercaseUrls = true);
+var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+var factory = scope.ServiceProvider.GetRequiredService<IScraperFactory>();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+try
 {
-	app.UseHttpsRedirection();
-}
+	logger.LogInformation("Migrating database...");
+	await db.Database.MigrateAsync();
+	logger.LogInformation("Migration successful.");
 
-// swagger + openApi
-if (app.Environment.IsDevelopment())
-{
-	app.MapOpenApi();
-	app.UseSwaggerUI(o =>
+	logger.LogInformation("Starting scheduled job execution...");
+	if (!string.IsNullOrEmpty(scraperToRun))
 	{
-		o.SwaggerEndpoint("/openapi/v1.json", "API v1");
-		o.RoutePrefix = "swagger"; // UI at /swagger
-	});
-}
-
-// map api endpoints
-app.MapControllers();
-
-// Migrate DB (dev only or guarded)
-if (app.Environment.IsDevelopment())
-{
-	using var scope = app.Services.CreateScope();
-	var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-	
-	try
-	{
-		await db.Database.MigrateAsync();
+		logger.LogInformation($"Running scraper: {scraperToRun}");
+		
+		var scraper = factory.CreateScraper(scraperToRun.ToLowerInvariant());
+		await scraper.ScrapeAsync(CancellationToken.None);
 	}
-	catch (Exception ex)
-	{
-		app.Logger.LogError(ex, "Database migration failed");
-	}
-}	
-
-app.Run();
+	logger.LogInformation("Job finished successfully.");
+	Environment.Exit(0);
+}
+catch (Exception ex)
+{
+	logger.LogCritical(ex, "Job execution failed.");
+	Environment.Exit(1);
+}
