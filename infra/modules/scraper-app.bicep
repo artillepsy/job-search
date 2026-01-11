@@ -25,7 +25,7 @@ resource scraperJobs 'Microsoft.App/jobs@2023-05-01' = {
       // }
       registries: [
         {
-          server: containerRegistryName
+          server: '${containerRegistryName}.azurecr.io'
           identity: identityId
         }
       ]
