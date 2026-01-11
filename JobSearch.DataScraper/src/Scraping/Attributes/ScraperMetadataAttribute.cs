@@ -7,6 +7,6 @@ public class ScraperMetadataAttribute : Attribute
 
 	public ScraperMetadataAttribute(string sectionName)
 	{
-		SectionName = sectionName;
+		SectionName = sectionName.ToLowerInvariant();
 	}
 }
