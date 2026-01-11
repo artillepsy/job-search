@@ -25,12 +25,12 @@ resource scraperJobs 'Microsoft.App/jobs@2023-05-01' = [
     properties: {
       environmentId: environmentId
       configuration: {
-        triggerType: 'Schedule'
+        triggerType: 'Manual'
         replicaTimeout: 300
         replicaRetryLimit: 1
-        scheduleTriggerConfig: {
-          cronExpression: config.cron
-        }
+        // scheduleTriggerConfig: {
+        //   cronExpression: config.cron
+        // }
         registries: [
           {
             server: containerRegistryName
