@@ -8,7 +8,7 @@ param identityId string
 var scraperConfigs = [
   {
     name: 'careersinpoland'
-    cron: '0/10 * * * *' // Every 10 minutes
+    cron: '*/10 * * * *' // Every 10 minutes
   }
 ]
 
@@ -26,7 +26,7 @@ resource scraperJobs 'Microsoft.App/jobs@2023-05-01' = [
       environmentId: environmentId
       configuration: {
         triggerType: 'Schedule'
-        replicaTimeout: 1800 // 30 minutes max execution time
+        replicaTimeout: 300
         replicaRetryLimit: 1
         scheduleTriggerConfig: {
           cronExpression: config.cron
