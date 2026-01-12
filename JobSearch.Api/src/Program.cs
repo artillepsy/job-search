@@ -6,6 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(policy =>
+	{
+		policy.AllowAnyOrigin() // For testing, allow everything. 
+			.AllowAnyHeader() // For production, replace with your specific SWA URL.
+			.AllowAnyMethod();
+	});
+});
+
 //db + ef setup
 builder.Services.AddDbContext<AppDbContext>(opt =>
 	opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), 
@@ -36,6 +46,9 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseHttpsRedirection();
 }
+
+// MUST be before app.MapControllers
+app.UseCors();
 
 // map api endpoints
 app.MapControllers();
