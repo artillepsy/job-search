@@ -78,8 +78,6 @@ jobs:
           
           echo "full_image=$IMAGE_TAG" >> $GITHUB_OUTPUT
           
-            # Build the scraper image to ACR to pass it to Bicep
-          
       - name: 'Build API Image via Docker'
         id: build_api_image
         run: |

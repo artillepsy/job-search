@@ -156,6 +156,18 @@ module api './modules/api-app.bicep' = {
     identityId: apiIdentity.outputs.identityId
   }
 }
+// =============================================================================
+// Frontend Static Web App
+// =============================================================================
+// Using 'frontend' as the symbolic name
+module frontend './modules/frontend.bicep' = {
+  name: 'frontend-deploy'
+  scope: resourceGroup()
+  params: {
+    swaName: 'jobsearch-client-prod'
+    location: location
+  }
+}
 
 // =============================================================================
 // Key Vault Secrets Role Assignment
@@ -181,3 +193,5 @@ output keyVaultId string = keyVault.outputs.vaultId
 output keyVaultName string = keyVaultName
 output ContainerRegistryName string = foundation.outputs.containerRegistryName
 output StorageServerName string = storageServerName
+output staticWebAppName string = frontend.outputs.swaName
+output frontendUrl string = frontend.outputs.swaUrl
