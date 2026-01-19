@@ -136,7 +136,7 @@ jobs:
       - name: "Setup Node.js"
         uses: actions/setup-node@v4
         with:
-          node_version: '22'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: job-search-client/package-lock.json
 
@@ -158,9 +158,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ steps.bicep_deploy.outputs.swaDeploymentToken }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "job-search-client"
+          app_location: "/"
           # Matches the 'outputPath' structure in your angular.json
-          output_location: "dist/job-search-client/browser"
+          output_location: "job-search-client/dist/job-search-client/browser"
           skip_app_build: true
 
       - name: "Wait for RBAC propagation"
