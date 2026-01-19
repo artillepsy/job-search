@@ -49,7 +49,7 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
+
       - name: "Register Resource Providers"
         run: |
           az provider register --namespace Microsoft.Web
@@ -57,7 +57,7 @@ jobs:
           az provider register --namespace Microsoft.DBforPostgreSQL
           az provider register --namespace Microsoft.KeyVault
           az provider register --namespace Microsoft.OperationalInsights
-          
+
           # This loop waits until the state is 'Registered'
           while [[ $(az provider show -n Microsoft.Web --query registrationState -o tsv) != "Registered" ]]; do
             echo "Waiting for Microsoft.Web to register..."
@@ -131,6 +131,28 @@ jobs:
             scraperImage=${{ steps.build_scraper_image.outputs.full_image }}
             apiImage=${{ steps.build_api_image.outputs.full_image }}
             deployerPrincipalId=${{ steps.get_oid.outputs.deployer_oid }}
+
+      - name: "Inject API URL, Build, and Deploy Frontend"
+        run: |
+          API_URL="https://${{ steps.bicep_deploy.outputs.apiUri }}/api"
+          echo "Injecting API URL: $API_URL"
+
+          # We target environment.ts because it is the source for production builds
+          sed -i "s|API_URL_PLACEHOLDER|$API_URL|g" job-search-client/src/environments/environment.ts
+
+          cd job-search-client
+          npm install
+          npm run build -- --configuration production
+
+      - name: "Upload to Azure Static Web App"
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ steps.bicep_deploy.outputs.swaDeploymentToken }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "job-search-client"
+          # Matches the 'outputPath' structure in your angular.json
+          output_location: "dist/job-search-client/browser"
 
       - name: "Wait for RBAC propagation"
         run: sleep 30

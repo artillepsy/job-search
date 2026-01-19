@@ -198,3 +198,6 @@ output ContainerRegistryName string = foundation.outputs.containerRegistryName
 output StorageServerName string = storageServerName
 output staticWebAppName string = frontend.outputs.swaName
 output frontendUrl string = frontend.outputs.swaUrl
+output apiUri string = api.outputs.apiFqdn
+@secure()
+output swaDeploymentToken string = frontend.outputs.swaDeploymentToken

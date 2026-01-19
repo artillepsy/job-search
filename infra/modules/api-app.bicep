@@ -46,3 +46,5 @@ resource apiApp 'Microsoft.App/containerApps@2023-05-01' = {
     }
   }
 }
+
+output apiFqdn string = apiApp.properties.configuration.ingress.fqdn
