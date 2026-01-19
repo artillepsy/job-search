@@ -49,6 +49,21 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      - name: "Register Resource Providers"
+        run: |
+          az provider register --namespace Microsoft.Web
+          az provider register --namespace Microsoft.App
+          az provider register --namespace Microsoft.DBforPostgreSQL
+          az provider register --namespace Microsoft.KeyVault
+          az provider register --namespace Microsoft.OperationalInsights
+          
+          # This loop waits until the state is 'Registered'
+          while [[ $(az provider show -n Microsoft.Web --query registrationState -o tsv) != "Registered" ]]; do
+            echo "Waiting for Microsoft.Web to register..."
+            sleep 10
+          done
+          echo "Microsoft.Web is ready"
 
       # Before deploying apps to Azure, we need to deploy the foundation resources first to create ACR
       - name: "Deploy Foundation"
