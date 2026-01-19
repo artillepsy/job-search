@@ -132,16 +132,13 @@ jobs:
             scraperImage=${{ steps.build_scraper_image.outputs.full_image }}
             apiImage=${{ steps.build_api_image.outputs.full_image }}
             deployerPrincipalId=${{ steps.get_oid.outputs.deployer_oid }}
-
-      #temp check
-      - name: Check Token Presence
-        run: |
-          if [ -z "${{ steps.bicep_deploy.outputs.swaDeploymentToken }}" ]; then
-            echo "TOKEN IS EMPTY"
-            exit 1
-          else
-            echo "TOKEN IS CAPTURED SUCCESSFULLY" # It will show as *** in logs
-          fi
+      
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node_version: '22'
+          cache: 'npm'
+          cache-dependency-path: job-search-client/package-lock.json
 
       - name: "Inject API URL, Build, and Deploy Frontend"
         run: |
@@ -164,6 +161,7 @@ jobs:
           app_location: "job-search-client"
           # Matches the 'outputPath' structure in your angular.json
           output_location: "dist/job-search-client/browser"
+          skip_app_build: true
 
       - name: "Wait for RBAC propagation"
         run: sleep 30
