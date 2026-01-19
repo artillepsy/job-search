@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import {environment} from '../../../../environments/environment';
 
 export interface LoginResponse {
   ok: boolean;
   userId?: string;
   username?: string;
   token?: string;
-};
+}
 
 @Injectable({
   providedIn: 'root',
@@ -21,17 +22,17 @@ export class LoginService {
 
   get userToken() {
     return this._user?.token;
-  } 
+  }
 
   logIn(username: string, password: string) {
-    const url = `/api/users/login`;
+    const url = `${environment.apiUrl}/users/login`;
     this._http.post<LoginResponse>(url, {username, password}).subscribe({
       next: (response) => {
         this._user = response;
       },
       error: (err) => {
         console.error('Login error', err);
-      },  
+      },
       complete: () => {
         console.log('complete');
       },

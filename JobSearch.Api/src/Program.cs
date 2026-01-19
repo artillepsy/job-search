@@ -11,7 +11,10 @@ builder.Services.AddCors(options =>
 {
 	options.AddDefaultPolicy(policy =>
 	{
-		policy.AllowAnyOrigin() // For testing, allow everything. 
+		policy.WithOrigins(
+				"http://localhost:4200" // For local testing
+				// azure swa url
+			)
 			.AllowAnyHeader() // For production, replace with your specific SWA URL.
 			.AllowAnyMethod();
 	});
