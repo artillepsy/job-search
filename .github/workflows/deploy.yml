@@ -151,6 +151,10 @@ jobs:
           cd job-search-client
           npm install
           npm run build -- --configuration production
+          
+          # Debug: Show what was built
+          echo "Build output at:"
+          find . -name "index.html" | head -5
 
       - name: "Upload to Azure Static Web App"
         uses: Azure/static-web-apps-deploy@v1
@@ -159,9 +163,9 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "job-search-client"
-          output_location: "dist/job-search-client/browser"
-          skip_app_build: false
-
+          app_artifact_location: "job-search-client/dist/job-search-client/browser"
+          skip_app_build: true
+      
       - name: "Wait for RBAC propagation"
         run: sleep 30
 
