@@ -60,7 +60,6 @@ jobs:
           parameters: >
             prefix=jobsearch 
             location=northeurope
-            swaLocation=westeurope
 
       - name: "Build Scraper Image via Docker"
         id: build_scraper_image
@@ -113,6 +112,7 @@ jobs:
             prefix=jobsearch
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
             location=northeurope
+            swaLocation=westeurope
             scraperImage=${{ steps.build_scraper_image.outputs.full_image }}
             apiImage=${{ steps.build_api_image.outputs.full_image }}
             deployerPrincipalId=${{ steps.get_oid.outputs.deployer_oid }}
