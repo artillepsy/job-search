@@ -1,6 +1,7 @@
 using JobSearch.Api.Services;
 using JobSearch.Data;
 using JobSearch.Data.Entities;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,13 @@ builder.Services.AddCors(options =>
 			.AllowAnyHeader() // For production, replace with your specific SWA URL.
 			.AllowAnyMethod();
 	});
+});
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+	options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+	options.KnownIPNetworks.Clear();
+	options.KnownProxies.Clear();
 });
 
 //db + ef setup
@@ -33,6 +41,9 @@ builder.Services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntit
 builder.Services.AddSingleton<ITokenService, DevTokenService>();
 
 var app = builder.Build();
+app.UseForwardedHeaders(); // Always first when behind a proxy (Azure Container Apps)
+app.UseRouting(); // Must come first to handle the request path
+app.UseCors(); // Must come before MapOpenApi/Controllers to handle Preflight (OPTIONS) requests
 
 // Add Swagger UI to test it in Production
 app.MapOpenApi();
@@ -47,10 +58,6 @@ if (app.Environment.IsDevelopment())
 	app.UseHttpsRedirection();
 }
 
-// MUST be before app.MapControllers
-app.UseCors();
-
 // map api endpoints
 app.MapControllers();
-
 app.Run();
