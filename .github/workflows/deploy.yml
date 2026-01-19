@@ -123,6 +123,7 @@ jobs:
         with:
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./infra/main.bicep
+          failOnStdErr: false
           parameters: >
             prefix=jobsearch
             dbPassword=${{ secrets.AZURE_DB_PASSWORD }}
