@@ -132,12 +132,12 @@ jobs:
             scraperImage=${{ steps.build_scraper_image.outputs.full_image }}
             apiImage=${{ steps.build_api_image.outputs.full_image }}
             deployerPrincipalId=${{ steps.get_oid.outputs.deployer_oid }}
-      
+
       - name: "Setup Node.js"
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version: "22"
+          cache: "npm"
           cache-dependency-path: job-search-client/package-lock.json
 
       - name: "Inject API URL, Build, and Deploy Frontend"
@@ -158,10 +158,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ steps.bicep_deploy.outputs.swaDeploymentToken }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "/"
-          # Matches the 'outputPath' structure in your angular.json
-          output_location: "job-search-client/dist/job-search-client/browser"
-          skip_app_build: true
+          app_location: "job-search-client"
+          output_location: "dist/job-search-client/browser"
+          skip_app_build: false
 
       - name: "Wait for RBAC propagation"
         run: sleep 30

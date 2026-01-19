@@ -11,6 +11,14 @@ resource swa 'Microsoft.Web/staticSites@2023-12-01' = {
   properties: {}
 }
 
+resource swaSettings 'Microsoft.Web/staticSites/config@2023-12-01' = {
+  parent: swa
+  name: 'appsettings'
+  properties: {
+    ENGINE_NODE_VERSION: '22'
+  }
+}
+
 @description('The deployment token for the Static Web App')
 output swaDeploymentToken string = swa.listSecrets().properties.apiKey
 output swaName string = swa.name
