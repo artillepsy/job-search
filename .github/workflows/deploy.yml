@@ -7,102 +7,103 @@ concurrency:
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 permissions:
   id-token: write
   contents: read
-  
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout code'
+      - name: "Checkout code"
         uses: actions/checkout@v4
-        
-      - name: 'Setup .NET'
+
+      - name: "Setup .NET"
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
-          
-      - name: 'Restore dependencies'
+          dotnet-version: "10.0.x"
+
+      - name: "Restore dependencies"
         run: dotnet restore
-          
-      - name: 'Build Solution'
+
+      - name: "Build Solution"
         run: dotnet build --no-restore
 
-      - name: 'Run All Tests'
+      - name: "Run All Tests"
         run: dotnet test --no-build --verbosity normal
-  
+
   build-and-deploy:
     needs: test
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: 'Checkout code'
+      - name: "Checkout code"
         uses: actions/checkout@v4
 
-      - name: 'Login to Azure'
+      - name: "Login to Azure"
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      
-      # Before deploying apps to Azure, we need to deploy the foundation resources first to create ACR    
-      - name: 'Deploy Foundation'
+
+      # Before deploying apps to Azure, we need to deploy the foundation resources first to create ACR
+      - name: "Deploy Foundation"
         id: foundation_deploy
         uses: azure/arm-deploy@v2
         with:
           resourceGroupName: ${{ secrets.AZURE_RG }}
           template: ./infra/modules/foundation.bicep
-          parameters: > 
+          parameters: >
             prefix=jobsearch 
             location=northeurope
-      
-      - name: 'Build Scraper Image via Docker'
+            swaLocation=westeurope
+
+      - name: "Build Scraper Image via Docker"
         id: build_scraper_image
         run: |
           # Get the ACR name from the Foundation deployment outputs
           ACR_NAME=${{ steps.foundation_deploy.outputs.containerRegistryName }}
           ACR_SERVER=$ACR_NAME.azurecr.io
           IMAGE_TAG="$ACR_SERVER/scraper:${{ github.sha }}"
-          
+
           # Login to Docker using Azure CLI credentials
           az acr login --name $ACR_NAME
-          
+
           # Build from Solution Root to include shared projects
           docker build -t $IMAGE_TAG -f JobSearch.DataScraper/Dockerfile .
           docker push $IMAGE_TAG
-          
+
           echo "full_image=$IMAGE_TAG" >> $GITHUB_OUTPUT
-          
-      - name: 'Build API Image via Docker'
+
+      - name: "Build API Image via Docker"
         id: build_api_image
         run: |
           # Get the ACR name from the Foundation deployment outputs
           ACR_NAME=${{ steps.foundation_deploy.outputs.containerRegistryName }}
           ACR_SERVER=$ACR_NAME.azurecr.io
           IMAGE_TAG="$ACR_SERVER/api:${{ github.sha }}"
-          
+
           # Login to Docker using Azure CLI credentials
           az acr login --name $ACR_NAME
-          
+
           # Build from Solution Root to include shared projects
           docker build -t $IMAGE_TAG -f JobSearch.Api/Dockerfile .
           docker push $IMAGE_TAG
-          
+
           echo "full_image=$IMAGE_TAG" >> $GITHUB_OUTPUT
-          
-      - name: 'Get Deployer Object ID'
+
+      - name: "Get Deployer Object ID"
         id: get_oid
         run: |
           # This command automatically retrieves the OID of the logged-in Service Principal
           OID=$(az ad sp show --id ${{ secrets.AZURE_CLIENT_ID }} --query id -o tsv)
           echo "deployer_oid=$OID" >> $GITHUB_OUTPUT
 
-      - name: 'Deploy Main Infrastructure'
+      - name: "Deploy Main Infrastructure"
         id: bicep_deploy
         uses: azure/arm-deploy@v2
         with:
@@ -115,11 +116,11 @@ jobs:
             scraperImage=${{ steps.build_scraper_image.outputs.full_image }}
             apiImage=${{ steps.build_api_image.outputs.full_image }}
             deployerPrincipalId=${{ steps.get_oid.outputs.deployer_oid }}
-            
-      - name: 'Wait for RBAC propagation'
-        run: sleep 30 
-            
-      - name: 'Set/Update Azure Key Vault Secrets'
+
+      - name: "Wait for RBAC propagation"
+        run: sleep 30
+
+      - name: "Set/Update Azure Key Vault Secrets"
         run: |
           KV_NAME=${{ steps.bicep_deploy.outputs.keyVaultName }}
           az keyvault secret set --vault-name "$KV_NAME" --name "usa-jobs-api-key" --value "${{ secrets.USA_JOBS_API_KEY }}"

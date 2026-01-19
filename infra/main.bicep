@@ -3,6 +3,8 @@
 // =============================================================================
 @description('The location of all resources')
 param location string = resourceGroup().location
+@description('The location of the Static Web App. Can be different from other resources')
+param swaLocation string = resourceGroup().location
 @description('Key Vault name')
 param keyVaultName string = 'kv-data-${uniqueString(resourceGroup().id)}'
 @description('Scraper container image. Built via Docker and passed through CLI')
@@ -156,6 +158,7 @@ module api './modules/api-app.bicep' = {
     identityId: apiIdentity.outputs.identityId
   }
 }
+
 // =============================================================================
 // Frontend Static Web App
 // =============================================================================
@@ -165,7 +168,7 @@ module frontend './modules/frontend.bicep' = {
   scope: resourceGroup()
   params: {
     swaName: 'jobsearch-client-prod'
-    location: location
+    location: swaLocation
   }
 }
 
