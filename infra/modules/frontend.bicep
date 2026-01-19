@@ -12,7 +12,6 @@ resource swa 'Microsoft.Web/staticSites@2023-12-01' = {
 }
 
 @description('The deployment token for the Static Web App')
-@secure()
 output swaDeploymentToken string = swa.listSecrets().properties.apiKey
 output swaName string = swa.name
 output swaUrl string = 'https://${swa.properties.defaultHostname}'

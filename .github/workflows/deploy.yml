@@ -136,8 +136,10 @@ jobs:
       - name: Check Token Presence
         run: |
           if [ -z "${{ steps.bicep_deploy.outputs.swaDeploymentToken }}" ]; then
-            echo "TOKEN IS EMPTY - Check Bicep ID and Output name"
+            echo "TOKEN IS EMPTY"
             exit 1
+          else
+            echo "TOKEN IS CAPTURED SUCCESSFULLY" # It will show as *** in logs
           fi
 
       - name: "Inject API URL, Build, and Deploy Frontend"
