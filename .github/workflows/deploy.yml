@@ -132,6 +132,14 @@ jobs:
             apiImage=${{ steps.build_api_image.outputs.full_image }}
             deployerPrincipalId=${{ steps.get_oid.outputs.deployer_oid }}
 
+      #temp check
+      - name: Check Token Presence
+        run: |
+          if [ -z "${{ steps.bicep_deploy.outputs.swaDeploymentToken }}" ]; then
+            echo "TOKEN IS EMPTY - Check Bicep ID and Output name"
+            exit 1
+          fi
+
       - name: "Inject API URL, Build, and Deploy Frontend"
         run: |
           API_URL="https://${{ steps.bicep_deploy.outputs.apiUri }}/api"
