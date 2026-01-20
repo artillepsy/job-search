@@ -11,10 +11,12 @@
   gap: 0.25rem;
 
   .top-panel {
-    background-color: rgb(71, 120, 250);
+    background-color: rgb(228, 228, 228);
     //backdrop-filter: blur(10px);
-    box-shadow: 0 1px 10px 6px rgba(0, 0, 0, 0.3);
-    height: 6.5rem;
+    //box-shadow: 0 1px 10px 6px rgba(0, 0, 0, 0.3);
+    height: 3.5rem;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   }
 
   .middle-panel {
