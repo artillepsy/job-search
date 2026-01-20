@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/guards/auth-guard';
-import { JobItemsComponent } from './features/jobs/components/job-items/job-items.component';
+import { JobItemsBoardComponent } from './features/jobs/components/job-items-board/job-items-board.component';
 import { LoginComponent } from './core/auth/components/login/login.component';
 import { JobsPageComponent } from './features/jobs/components/page/jobs-page.component';
 

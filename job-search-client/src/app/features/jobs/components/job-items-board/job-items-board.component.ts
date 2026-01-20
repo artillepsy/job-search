@@ -1,6 +1,6 @@
 import { Component, effect, inject, input, OnInit } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { JobItemComponent } from '../item/job-item.component';
+import { JobItemComponent } from '../job-item/job-item.component';
 import {JobResponse, JobsService} from '../../services/jobs.service';
 import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
@@ -8,13 +8,13 @@ import { Job } from '../../models/job.model';
 import { JobSearchParams } from '../../models/job-search.params.model';
 
 @Component({
-  selector: 'app-job-items',
+  selector: 'app-job-items-board',
   imports: [ButtonModule, JobItemComponent, FormsModule, Paginator],
-  templateUrl: './job-items.component.html',
-  styleUrl: './job-items.component.scss',
+  templateUrl: './job-items-board.component.html',
+  styleUrl: './job-items-board.component.scss',
 })
 //cache search results, page
-export class JobItemsComponent implements OnInit {
+export class JobItemsBoardComponent implements OnInit {
   private _jobsService = inject(JobsService);
 
   searchParams = input<JobSearchParams | undefined>(undefined);
