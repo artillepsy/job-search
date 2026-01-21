@@ -5,7 +5,7 @@ import { ScrollPanelPreset } from './components/scroll-panel.preset';
 
 export const CustomThemePreset = definePreset(Aura, {
   primitive: {
-    primary: palette('#cc2828'), // Creates {primary.500}, {primary.600}, etc. // make darker
+    primary: palette('#c62121'), // Creates {primary.500}, {primary.600}, etc. // make darker
     surface: palette('#64748b'), // Standard grays
     success: palette('#00ff88'), // Use for your green buttons
   },

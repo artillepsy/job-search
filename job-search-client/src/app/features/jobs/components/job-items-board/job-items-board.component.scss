@@ -16,6 +16,10 @@
         transparent 100%
     );*/
 
+    ::ng-deep .p-scrollpanel-bar { // makes scrollbar always visible
+        opacity: 1 !important;
+    }
+
     .jobs-container {
       display: flex;
       flex-direction: column;
