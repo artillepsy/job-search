@@ -1,6 +1,5 @@
 using JobSearch.Data;
 using JobSearch.Data.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +8,17 @@ namespace JobSearch.Api.Controllers;
 //[Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class JobsController : ControllerBase
+public class JobsController(AppDbContext db) : ControllerBase
 {
-	private readonly AppDbContext _db;
+	public record JobSearchDto(
+		string? Title, 
+		string? Location, 
+		bool? IsSalaryVisible,
+		bool? IsRemote
+		// add salary range and currency (?)
+	);
 
-	public record JobSearchDto(string Title);
-	public record JobPostingDto(
+	private record JobPostingDto(
 		int id,
 		string Title, 
 		string CompanyName, 
@@ -23,16 +27,8 @@ public class JobsController : ControllerBase
 		string? Currency,
 		string Location,
 		DateTime CreatedAt);
-	
-	public JobsController(AppDbContext db)
-	{
-		_db = db;
-	}
-	
-	// todo: paged results
+
 	// todo: preload next page
-	// todo: max results limit (in config file)
-	//[AllowAnonymous]
 	[HttpGet("get-all")]
 	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs(
 		[FromQuery] int pageNumber = 1, 
@@ -41,7 +37,7 @@ public class JobsController : ControllerBase
 		pageNumber = pageNumber < 1 ? 1 : pageNumber;
 		pageSize = pageSize > 100 ? 100 : pageSize;
 		
-		IQueryable<JobEntity> query = _db.Jobs;
+		IQueryable<JobEntity> query = db.Jobs;
 		var totalRecords = await query.CountAsync();
 		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 		
@@ -60,18 +56,6 @@ public class JobsController : ControllerBase
 				j.CreatedAt))
 			.ToListAsync();
 		
-		Console.WriteLine("========================================");
-		Console.WriteLine($"SERVER LOG: {DateTime.Now:T}");
-		Console.WriteLine($"Request: Page {pageNumber}, Size {pageSize}");
-		Console.WriteLine($"Database: Total Records = {totalRecords}");
-		Console.WriteLine($"Result: Returning {jobs.Count} jobs");
-    
-		foreach (var job in jobs)
-		{
-			Console.WriteLine($" -> [JOB] {job.Title} at {job.CompanyName}");
-		}
-		Console.WriteLine("========================================");
-		
 		return Ok(new {
 			TotalPages = totalPages,
 			PageNumber = pageNumber,
@@ -84,15 +68,32 @@ public class JobsController : ControllerBase
 		});
 	}
 	
-	//[AllowAnonymous]
 	[HttpGet("get")]
 	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs([FromQuery] JobSearchDto dto)
 	{
-		IQueryable<JobEntity> query = _db.Jobs;
+		IQueryable<JobEntity> query = db.Jobs;
 		
-		if (!string.IsNullOrWhiteSpace(dto.Title))
+		if (!string.IsNullOrWhiteSpace(dto.Title)) // Title or Company name
 		{
-			query = query.Where(j => j.Title.Contains(dto.Title));
+			string search = dto.Title.ToLower();
+			query = query.Where(j => j.Title.ToLower().Contains(search) || j.CompanyName.ToLower().Contains(search));
+		}
+		
+		if (!string.IsNullOrWhiteSpace(dto.Location)) // Location
+		{
+			query = query.Where(j => j.Location != null && j.Location.ToLower().Contains(dto.Location.ToLower()));
+		}
+		
+		if (dto.IsSalaryVisible.HasValue) // Is salary visible
+		{
+			query = dto.IsSalaryVisible.Value 
+				? query.Where(j => j.SalaryMin != null) 
+				: query.Where(j => j.SalaryMin == null);
+		}
+		
+		if (dto.IsRemote.HasValue) // Is remote
+		{
+			query = query.Where(j => j.IsRemote == dto.IsRemote.Value); 
 		}
 		
 		var jobs = await query.ToListAsync();
