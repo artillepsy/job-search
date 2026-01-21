@@ -6,5 +6,5 @@ export interface Job {
   salaryMin?: number;
   salaryMax?: number;
   currency?: string;
-  createdAt: Date;
+  createdAt: string | Date;
 }

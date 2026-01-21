@@ -22,6 +22,23 @@ export class JobItemComponent {
     }
     return 'Salary hidden'
   });
+  daysAgoText = computed(() => {
+    let rawDate = this.job().createdAt;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate day counting
+
+    const createdDateOnly = new Date(rawDate);
+    createdDateOnly.setHours(0, 0, 0, 0);
+
+    const timeDiff = today.getTime() - createdDateOnly.getTime();
+    const days = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+    // 3. Return the formatted string
+    if (days === 0) return 'Today';
+    if (days === 1) return 'Yesterday';
+    return `${days} days ago`;
+  });
 
   public apply(): void {
     //alert(`Thank you for your interest in the ${this.job.title} position at ${this.job.companyName}.

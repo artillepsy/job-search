@@ -1,17 +1,11 @@
 <div class="main-container" (click)="apply()">
   <div class="top-container">
-    <p class="title-text">{{ job().title }}</p>
-    <p>{{ formattedSalary() }}</p>
+    <p class="title-text" [title]="job().title">{{ job().title }}</p>
+    <p class="salary-text">{{ formattedSalary() }}</p>
   </div>
   <div class="bottom-container">
-    <p><i class="pi pi-briefcase"></i>{{ job().companyName }}</p>
-    <p class="location-text" [title]="job().location">
-      <i class="pi pi-map-marker"></i>{{ job().location }}
-    </p>
-    @if (isPostedToday()) {
-      <p>Today</p>
-    } @else {
-      <p>{{ getPostingDays() }} days ago</p>
-    }
+    <p class="company-text" [title]="job().companyName"><i class="pi pi-briefcase"></i>{{ job().companyName }}</p>
+    <p class="location-text" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}
+    <p class="date-text">{{ daysAgoText() }}</p>
   </div>
 </div>
