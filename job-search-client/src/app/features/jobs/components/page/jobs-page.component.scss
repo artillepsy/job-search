@@ -1,4 +1,5 @@
 :host {
+  background-color: rgb(244, 244, 244);
   width: 100%;
   height: 100%;
 
@@ -7,7 +8,7 @@
   flex-direction: column;
 
   .top-panel {
-    background-color: rgb(255, 67, 67);
+    background-color: rgb(200, 34, 34);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
     height: 3.5rem;

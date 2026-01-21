@@ -1,3 +1,10 @@
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer primeng {
+  // Filled in by PrimeNG
+}
+
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -8,6 +15,11 @@ html, body {
 }
 
 body {
-  color: var(--text-color, #000);
-  background: var(--surface-0, #fff);
+  color: var(--p-text-color);
+  background: var(--p-surface-0);
+
+  font-family: var(--p-font-family); // PrimeNG font family; defined in custom theme preset
+  font-size: var(--p-font-size-md);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

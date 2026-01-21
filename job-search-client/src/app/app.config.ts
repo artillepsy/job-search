@@ -9,6 +9,7 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import Aura from '@primeuix/themes/aura';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CustomThemePreset } from './theme/theme.preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +18,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     providePrimeNG({
       theme: {
-        preset: Aura,
+        preset: CustomThemePreset,
+        options: {
+          darkModeSelector: false,
+          cssLayer: {
+            name: 'primeng',
+            order: 'tailwind-base, primeng, tailwind-utilities'
+          }
+        }
       },
     }),
     provideHttpClient(),
