@@ -20,7 +20,7 @@ export class JobItemComponent {
         return `${salaryMin}-${salaryMax} ${currency}`;
       }
     }
-    return 'Salary hidden'
+    return ''
   });
   daysAgoText = computed(() => {
     let rawDate = this.job().createdAt;

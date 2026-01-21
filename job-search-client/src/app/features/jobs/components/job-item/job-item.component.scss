@@ -3,49 +3,48 @@
   .main-container {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: #fff;
-    height: 100%;
-    transform: scale(0.99);
+
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
 
     &:active {
       transform: scale(0.98);
     }
+  }
 
-    .top-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid #eee;
-      margin-bottom: 0.75rem;
+  .top-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem
+  }
 
-      .title-text {
-        white-space: nowrap;      // Prevents text from wrapping to a new line
-        overflow: hidden;         // Hides the text that doesn't fit
-        text-overflow: ellipsis;  // Adds the "..."
-        width: 100%;
-        display: block;
-      }
+  .title-text {
+    flex: 1;
+    text-align: left;
 
-      p:first-child {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #333;
-        margin: 0;
-      }
+    font-size: 1.1rem;
+    font-weight: 550;
+    color: #333;
 
-      p:last-child {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #ff9c9c;
-        margin: 0;
-      }
-    }
+    border-right: 1px solid #ddd;
+
+    white-space: nowrap;      // Prevents text from wrapping to a new line
+    overflow: hidden;         // Hides the text that doesn't fit
+    text-overflow: ellipsis;
+  }
+
+  .salary-text {
+    text-align: right;
+
+    font-size: 1rem;
+    color: #6dd666;
+  }
+
 
     .bottom-container {
       display: flex;
@@ -91,7 +90,7 @@
         }
       }
     }
-  }
+
 }
 
 
