@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JobSearch.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260121120025_InitialCreate")]
+    [Migration("20260121151305_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -46,6 +46,10 @@ namespace JobSearch.Data.Migrations
                     b.Property<string>("Currency")
                         .HasColumnType("text")
                         .HasColumnName("currency");
+
+                    b.Property<bool>("IsRemote")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_remote");
 
                     b.Property<string>("Location")
                         .HasColumnType("text")

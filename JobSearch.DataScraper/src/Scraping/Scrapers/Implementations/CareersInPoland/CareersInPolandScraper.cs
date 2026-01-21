@@ -98,6 +98,7 @@ public class CareersInPolandScraper : ScraperBase
 				SalaryMin = salary.min,
 				SalaryMax = salary.max,
 				Currency = salary.currency,
+				IsRemote = data.RemoteRecruitment,
 				Location = location.Location,
 				Title = data.Title,
 				Url = location.FullUrl,

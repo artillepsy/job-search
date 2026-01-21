@@ -44,6 +44,10 @@ namespace JobSearch.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("currency");
 
+                    b.Property<bool>("IsRemote")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_remote");
+
                     b.Property<string>("Location")
                         .HasColumnType("text")
                         .HasColumnName("location");

@@ -60,6 +60,8 @@ public class JobData
 	public string EmployerName { get; set; }
 	[JsonPropertyName("salary")]
 	public string Salary { get; set; }
+	[JsonPropertyName("remote_recruitment")]
+	public bool RemoteRecruitment { get; set; }
 	
 	[JsonPropertyName("locations")]
 	public List<JobLocation> Locations { get; set; }
@@ -72,6 +74,7 @@ public class JobData
 			$"- WorkTime: {WorkTime}\n" +
 			$"- EmployerName: {EmployerName}\n" +
 			$"- Salary: {Salary}\n" +
+			$"- RemoteRecruitment: {RemoteRecruitment}\n" +
 			string.Join("\n", Locations);
 	}
 }
