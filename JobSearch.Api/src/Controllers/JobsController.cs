@@ -21,7 +21,8 @@ public class JobsController : ControllerBase
 		decimal? SalaryMin,
 		decimal? SalaryMax,
 		string? Currency,
-		string Location);
+		string Location,
+		DateTime CreatedAt);
 	
 	public JobsController(AppDbContext db)
 	{
@@ -55,7 +56,8 @@ public class JobsController : ControllerBase
 				j.SalaryMin,
 				j.SalaryMax,
 				j.Currency,
-				j.Location))
+				j.Location,
+				j.CreatedAt))
 			.ToListAsync();
 		
 		Console.WriteLine("========================================");
