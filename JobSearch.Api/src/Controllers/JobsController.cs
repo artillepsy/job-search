@@ -47,47 +47,7 @@ public class JobsController : ControllerBase
 		               ?? throw new Exception("JobSettings section not found in appsettings.json");
 	}
 
-	// todo: preload next page
-	[HttpGet("get-all")]
-	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs(
-		[FromQuery] int pageNumber = 1, 
-		[FromQuery] int pageSize = 20) // Default page size
-	{
-		pageNumber = pageNumber < 1 ? 1 : pageNumber;
-		pageSize = pageSize > _jobSettings.PageSizeMax ? _jobSettings.PageSizeMax : pageSize;
-		
-		IQueryable<JobEntity> query = _db.Jobs;
-		var totalRecords = await query.CountAsync();
-		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
-		
-		var jobs = await query
-			.OrderByDescending(j => j.CreatedAt) // change order based on filters
-			.Skip((pageNumber - 1) * pageSize)
-			.Take(pageSize)
-			.Select(j => new JobPostingDto(
-				j.Id,
-				j.Title, 
-				j.CompanyName, 
-				j.SalaryMin,
-				j.SalaryMax,
-				j.Currency,
-				j.Location,
-				j.IsRemote,
-				j.CreatedAt))
-			.ToListAsync();
-		
-		return Ok(new {
-			TotalPages = totalPages,
-			PageNumber = pageNumber,
-			PageSize = pageSize,
-			
-			TotalRecords = totalRecords,
-			ReturnRecords = jobs.Count,
-			
-			Jobs = jobs
-		});
-	}
-
+	// To get all jobs, dto with default params can be sent
 	[HttpGet("get")]
 	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs([FromQuery] JobSearchDto dto)
 	{
@@ -122,7 +82,6 @@ public class JobsController : ControllerBase
 		var totalRecords = await query.CountAsync();
 		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
-		// 4. Apply Pagination and Projection
 		var jobs = await query
 			.OrderByDescending(j => j.CreatedAt)
 			.Skip((pageNumber - 1) * pageSize)
@@ -138,8 +97,7 @@ public class JobsController : ControllerBase
 				j.IsRemote,
 				j.CreatedAt))
 			.ToListAsync();
-
-		// 5. Return the same metadata structure as get-all for frontend consistency
+		
 		return Ok(new {
 			TotalPages = totalPages,
 			PageNumber = pageNumber,
