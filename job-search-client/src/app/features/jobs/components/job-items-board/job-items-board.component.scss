@@ -7,15 +7,15 @@
   .jobs-scroll-panel {
     flex: 1;
     min-height: 0;
+  }
 
-    .jobs-container {
-      display: flex;
-      flex-direction: column;
+  .jobs-container {
+    display: flex;
+    flex-direction: column;
 
-      margin-left: 0.75rem;
-      margin-right: 0.75rem;
-      gap: 0.25rem;
-    }
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    gap: 0.25rem;
   }
 
   .paginator-container {

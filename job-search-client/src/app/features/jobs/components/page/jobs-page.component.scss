@@ -1,3 +1,5 @@
+@import 'variables';
+
 :host {
   background-color: rgb(244, 244, 244);
   width: 100%;
@@ -24,6 +26,7 @@
   }
 
   .left-container {
+    min-width: $mobile-width-breakpoint;
     width: 50%;
 
     display: flex;
@@ -38,9 +41,10 @@
     align-items: start;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: $mobile-width-breakpoint) {
     .left-container {
       width: 100%;
+      min-width: unset;
     }
   }
 }
