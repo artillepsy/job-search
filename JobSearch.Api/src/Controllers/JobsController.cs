@@ -8,8 +8,16 @@ namespace JobSearch.Api.Controllers;
 //[Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class JobsController(AppDbContext db) : ControllerBase
+public class JobsController : ControllerBase
 {
+	private readonly AppDbContext _db;
+	private readonly JobSettings _jobSettings;
+	private int i = 10;
+	public class JobSettings
+	{
+		public int PageSizeMax { get; set; }
+	}
+	
 	public record JobSearchDto(
 		string? Title, 
 		string? Location, 
@@ -26,18 +34,26 @@ public class JobsController(AppDbContext db) : ControllerBase
 		decimal? SalaryMax,
 		string? Currency,
 		string Location,
+		bool IsRemote,
 		DateTime CreatedAt);
+
+	public JobsController(AppDbContext db , IConfiguration config)
+	{
+		_db = db;
+		_jobSettings = config.GetSection("JobSettings").Get<JobSettings>() 
+		               ?? throw new Exception("JobSettings section not found in appsettings.json");
+	}
 
 	// todo: preload next page
 	[HttpGet("get-all")]
 	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs(
 		[FromQuery] int pageNumber = 1, 
-		[FromQuery] int pageSize = 100)
+		[FromQuery] int pageSize = 20) // Default page size
 	{
 		pageNumber = pageNumber < 1 ? 1 : pageNumber;
-		pageSize = pageSize > 100 ? 100 : pageSize;
+		pageSize = pageSize > _jobSettings.PageSizeMax ? _jobSettings.PageSizeMax : pageSize;
 		
-		IQueryable<JobEntity> query = db.Jobs;
+		IQueryable<JobEntity> query = _db.Jobs;
 		var totalRecords = await query.CountAsync();
 		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 		
@@ -53,6 +69,7 @@ public class JobsController(AppDbContext db) : ControllerBase
 				j.SalaryMax,
 				j.Currency,
 				j.Location,
+				j.IsRemote,
 				j.CreatedAt))
 			.ToListAsync();
 		
@@ -67,11 +84,17 @@ public class JobsController(AppDbContext db) : ControllerBase
 			Jobs = jobs
 		});
 	}
-	
+
 	[HttpGet("get")]
-	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs([FromQuery] JobSearchDto dto)
+	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs(
+		[FromQuery] JobSearchDto dto,
+		[FromQuery] int pageNumber = 1,
+		[FromQuery] int pageSize = 20)
 	{
-		IQueryable<JobEntity> query = db.Jobs;
+		pageNumber = pageNumber < 1 ? 1 : pageNumber;
+		pageSize = pageSize > _jobSettings.PageSizeMax ? _jobSettings.PageSizeMax : pageSize;
+		
+		IQueryable<JobEntity> query = _db.Jobs;
 		
 		if (!string.IsNullOrWhiteSpace(dto.Title)) // Title or Company name
 		{
@@ -96,42 +119,34 @@ public class JobsController(AppDbContext db) : ControllerBase
 			query = query.Where(j => j.IsRemote == dto.IsRemote.Value); 
 		}
 		
-		var jobs = await query.ToListAsync();
-		return Ok(jobs);
+		var totalRecords = await query.CountAsync();
+		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+		// 4. Apply Pagination and Projection
+		var jobs = await query
+			.OrderByDescending(j => j.CreatedAt)
+			.Skip((pageNumber - 1) * pageSize)
+			.Take(pageSize)
+			.Select(j => new JobPostingDto(
+				j.Id,
+				j.Title, 
+				j.CompanyName, 
+				j.SalaryMin,
+				j.SalaryMax,
+				j.Currency,
+				j.Location,
+				j.IsRemote,
+				j.CreatedAt))
+			.ToListAsync();
+
+		// 5. Return the same metadata structure as get-all for frontend consistency
+		return Ok(new {
+			TotalPages = totalPages,
+			PageNumber = pageNumber,
+			PageSize = pageSize,
+			TotalRecords = totalRecords,
+			ReturnRecords = jobs.Count,
+			Jobs = jobs
+		});
 	}
-
-	//make it dev only + add date randomizer
-	//todo: add user token as a required field, remove [allowAnonymous]
-	/*[AllowAnonymous]
-	[HttpPost("post")]
-	public async Task<ActionResult> PostJob([FromBody] JobPostingDto[] dtoList)
-	{
-		var jobs = new List<JobEntity>();
-		
-		foreach (var dto in dtoList)
-		{
-			var job = new JobEntity()
-			{
-				Title = dto.Title,
-				CompanyName = dto.CompanyName,
-				Salary = dto.Salary,
-				Location = dto.Location,
-				CreatedAt = DateTime.UtcNow,
-			};
-			jobs.Add(job);
-		}
-		
-		await _db.Jobs.AddRangeAsync(jobs);
-
-		try
-		{
-			await _db.SaveChangesAsync();
-		}
-		catch (DbUpdateException ex)
-		{
-			return Conflict(new { error = $"Unable to post a job, error: {ex.Message}" });
-		}
-
-		return Ok();
-	}*/
 }
