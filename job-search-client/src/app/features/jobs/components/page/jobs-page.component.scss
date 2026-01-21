@@ -8,8 +8,8 @@
   flex-direction: column;
 
   .top-panel {
-    background-color: rgb(198, 33, 33);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgb(33, 140, 198);
+    //border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
     height: 3.5rem;
     flex-shrink: 0;
@@ -37,11 +37,11 @@
         align-items: start;
       }
 
-      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      //border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    .right-container {
+    /*.right-container {
       width: 50%;
-    }
+    }*/
   }
 }

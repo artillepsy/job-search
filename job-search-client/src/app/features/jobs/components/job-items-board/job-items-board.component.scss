@@ -8,32 +8,12 @@
     flex: 1;
     min-height: 0;
 
-    /*mask-image: linear-gradient(
-        to bottom,
-        transparent 0%,
-        black 0.35rem,
-        black calc(100% - 0.7rem),
-        transparent 100%
-    );*/
-
-    ::ng-deep .p-scrollpanel-bar { // makes scrollbar always visible
-        opacity: 1 !important;
-    }
-
     .jobs-container {
       display: flex;
       flex-direction: column;
 
       margin-left: 0.75rem;
       margin-right: 0.75rem;
-
-      app-job-item:first-child {
-        margin-top: 0.55rem;
-      }
-
-      app-job-item:last-child {
-        margin-bottom: 0.55rem;
-      }
     }
   }
 

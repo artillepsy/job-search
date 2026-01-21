@@ -2,12 +2,12 @@ import Aura from '@primeuix/themes/aura';
 import { definePreset, palette } from '@primeuix/themes';
 import { ButtonPreset } from './components/button.preset';
 import { ScrollPanelPreset } from './components/scroll-panel.preset';
+import { PaginatorPreset } from './components/paginator.preset';
 
 export const CustomThemePreset = definePreset(Aura, {
   primitive: {
-    primary: palette('#c62121'), // Creates {primary.500}, {primary.600}, etc. // make darker
+    primary: palette('#218cc6'), // Creates {primary.500}, {primary.600}, etc.
     surface: palette('#64748b'), // Standard grays
-    success: palette('#00ff88'), // Use for your green buttons
   },
   semantic: {
     fontFamily: "'Inter', sans-serif",
@@ -28,5 +28,6 @@ export const CustomThemePreset = definePreset(Aura, {
   components: {
     button: ButtonPreset,
     scrollpanel: ScrollPanelPreset,
+    paginator: PaginatorPreset,
   },
 });
