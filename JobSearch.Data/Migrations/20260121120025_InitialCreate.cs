@@ -21,8 +21,9 @@ namespace JobSearch.Data.Migrations
                     title = table.Column<string>(type: "text", nullable: false),
                     company_name = table.Column<string>(type: "text", nullable: false),
                     location = table.Column<string>(type: "text", nullable: true),
-                    is_salary_visible = table.Column<bool>(type: "boolean", nullable: false),
-                    salary = table.Column<string>(type: "text", nullable: false),
+                    salary_min = table.Column<decimal>(type: "numeric", nullable: true),
+                    salary_max = table.Column<decimal>(type: "numeric", nullable: true),
+                    currency = table.Column<string>(type: "text", nullable: true),
                     website = table.Column<string>(type: "text", nullable: false),
                     url = table.Column<string>(type: "text", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

@@ -40,18 +40,21 @@ namespace JobSearch.Data.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<bool>("IsSalaryVisible")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_salary_visible");
+                    b.Property<string>("Currency")
+                        .HasColumnType("text")
+                        .HasColumnName("currency");
 
                     b.Property<string>("Location")
                         .HasColumnType("text")
                         .HasColumnName("location");
 
-                    b.Property<string>("Salary")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("salary");
+                    b.Property<decimal?>("SalaryMax")
+                        .HasColumnType("numeric")
+                        .HasColumnName("salary_max");
+
+                    b.Property<decimal?>("SalaryMin")
+                        .HasColumnType("numeric")
+                        .HasColumnName("salary_min");
 
                     b.Property<string>("Title")
                         .IsRequired()
