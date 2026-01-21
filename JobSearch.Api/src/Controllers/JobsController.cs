@@ -18,7 +18,9 @@ public class JobsController : ControllerBase
 		int id,
 		string Title, 
 		string CompanyName, 
-		string? Salary,
+		decimal? SalaryMin,
+		decimal? SalaryMax,
+		string? Currency,
 		string Location);
 	
 	public JobsController(AppDbContext db)
@@ -50,7 +52,9 @@ public class JobsController : ControllerBase
 				j.Id,
 				j.Title, 
 				j.CompanyName, 
-				j.Salary,
+				j.SalaryMin,
+				j.SalaryMax,
+				j.Currency,
 				j.Location))
 			.ToListAsync();
 		
@@ -95,7 +99,7 @@ public class JobsController : ControllerBase
 
 	//make it dev only + add date randomizer
 	//todo: add user token as a required field, remove [allowAnonymous]
-	[AllowAnonymous]
+	/*[AllowAnonymous]
 	[HttpPost("post")]
 	public async Task<ActionResult> PostJob([FromBody] JobPostingDto[] dtoList)
 	{
@@ -126,5 +130,5 @@ public class JobsController : ControllerBase
 		}
 
 		return Ok();
-	}
+	}*/
 }

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Scraping.Attributes;
@@ -87,13 +88,16 @@ public class CareersInPolandScraper : ScraperBase
 		foreach (var data in page.JobOffers.Pagination.Data)
 		foreach (var location in data.Locations)
 		{
+			var salary = ParseSalary(data.Salary);
+			
 			var jobModel = new JobEntity()
 			{
 				CompanyName = data.EmployerName,
 				CreatedAt = data.Date.ToUniversalTime(),
 				Website = _config.Website,
-				IsSalaryVisible = !string.IsNullOrEmpty(data.Salary),
-				Salary = data.Salary,
+				SalaryMin = salary.min,
+				SalaryMax = salary.max,
+				Currency = salary.currency,
 				Location = location.Location,
 				Title = data.Title,
 				Url = location.FullUrl,
@@ -110,6 +114,25 @@ public class CareersInPolandScraper : ScraperBase
 		
 		await repository.AddUniqueAsync(jobModels);
 		await repository.RemoveNonExistentAsync(jobModels);
+	}
+
+	private (decimal? min, decimal? max, string? currency) ParseSalary(string? salaryRaw)
+	{
+		if (string.IsNullOrWhiteSpace(salaryRaw))
+		{
+			return (null, null, null);
+		}
+
+		// Pattern: Number - [Optional Number] [Rest of string]
+		var match = Regex.Match(salaryRaw, @"(\d+)\s*-\s*(\d+)?\s*(.*)", RegexOptions.IgnoreCase);
+
+		if (!match.Success) return (null, null, null);
+
+		decimal? min = decimal.TryParse(match.Groups[1].Value, out var minVal) ? minVal : null;
+		decimal? max = decimal.TryParse(match.Groups[2].Value, out var maxVal) ? maxVal : null;
+		string currency = match.Groups[3].Value.Trim().ToUpper();
+
+		return (min, max, currency);
 	}
 
 	#endregion

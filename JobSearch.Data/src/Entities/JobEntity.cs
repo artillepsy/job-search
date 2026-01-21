@@ -8,8 +8,9 @@ public class JobEntity
 	public string CompanyName { get; set; } = "";
 	public string? Location { get; set; }
 
-	public bool IsSalaryVisible { get; set; }
-	public string Salary { get; set; } = "";
+	public decimal? SalaryMin { get; set; }
+	public decimal? SalaryMax { get; set; }
+	public string? Currency { get; set; }
 
 	public string Website { get; set; } = "";
 	
