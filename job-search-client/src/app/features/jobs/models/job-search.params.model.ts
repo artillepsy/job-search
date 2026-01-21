@@ -1,5 +1,8 @@
 export interface JobSearchParams {
   jobTitle?: string;
   country?: string;
-  // filters: params
+  isRemote?: boolean;
+  isSalaryVisible?: boolean;
+  pageNumber: number;
+  pageSize: number;
 }
