@@ -1,4 +1,4 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, computed, input, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { Job } from '../../models/job.model';
 
@@ -10,6 +10,18 @@ import { Job } from '../../models/job.model';
 })
 export class JobItemComponent {
   job = input.required<Job>();
+
+  formattedSalary = computed(() => {
+    const {salaryMin, salaryMax, currency} = this.job();
+    if (salaryMin) { // salary is visible
+      if (!salaryMax || (salaryMin === salaryMax)) {
+        return `${salaryMin} ${currency}`;
+      } else {
+        return `${salaryMin}-${salaryMax} ${currency}`;
+      }
+    }
+    return 'Salary hidden'
+  });
 
   public apply(): void {
     //alert(`Thank you for your interest in the ${this.job.title} position at ${this.job.companyName}.

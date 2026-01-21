@@ -1,14 +1,7 @@
 <div class="main-container" (click)="apply()">
   <div class="top-container">
     <p class="title-text">{{ job().title }}</p>
-
-    @if (job().salaryMin && job().salaryMax) {
-      <p>{{ job().salaryMin }}-{{ job().salaryMax }} {{ job().currency }}</p>
-    } @else if (job().salaryMin){
-      <p>{{ job().salaryMin }} {{ job().currency }}</p>
-    } @else {
-      <p>Salary hidden</p>
-    }
+    <p>{{ formattedSalary() }}</p>
   </div>
   <div class="bottom-container">
     <p><i class="pi pi-briefcase"></i>{{ job().companyName }}</p>
