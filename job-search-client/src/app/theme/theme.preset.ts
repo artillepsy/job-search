@@ -6,8 +6,8 @@ import { PaginatorPreset } from './components/paginator.preset';
 
 export const CustomThemePreset = definePreset(Aura, {
   primitive: {
-    primary: palette('#218cc6'), // Creates {primary.500}, {primary.600}, etc.
-    surface: palette('#64748b'), // Standard grays
+    primary: palette('#5771c5'), // Creates {primary.500}, {primary.600}, etc.
+    surface: palette('#83878c'), // Standard grays
   },
   semantic: {
     fontFamily: "'Inter', sans-serif",
@@ -20,7 +20,8 @@ export const CustomThemePreset = definePreset(Aura, {
           primary: {
             color: '{primary.500}',
             contrastColor: '#ffffff'
-          }
+          },
+
         }
       }
     }
