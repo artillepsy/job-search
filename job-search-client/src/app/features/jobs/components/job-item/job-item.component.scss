@@ -17,7 +17,19 @@
     }
   }
 
+  i { // primeNG icons
+    margin-right: 0.5rem;
+  }
+
   .top-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    border-bottom: 1px solid #ddd;
+  }
+
+  .bottom-container {
     display: flex;
     flex-direction: row;
     gap: 1rem
@@ -27,70 +39,35 @@
     flex: 1;
     text-align: left;
 
-    font-size: 1.1rem;
     font-weight: 550;
     color: #333;
 
-    border-right: 1px solid #ddd;
 
-    white-space: nowrap;      // Prevents text from wrapping to a new line
-    overflow: hidden;         // Hides the text that doesn't fit
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .salary-text {
     text-align: right;
-
-    font-size: 1rem;
     color: #6dd666;
   }
 
+  .company-text {
+    white-space: nowrap;
+  }
 
-    .bottom-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+  .location-text {
+    flex: 1;
 
-      .location-text {
-        white-space: nowrap;      // Prevents text from wrapping to a new line
-        overflow: hidden;         // Hides the text that doesn't fit
-        text-overflow: ellipsis;  // Adds the "..."
-        width: 100%;
-        display: block;
-      }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-      p {
-        font-size: 14px;
-        color: #666;
-        margin: 0;
-
-        display: flex;
-        align-items: center;
-
-        i {
-          margin-right: 4px;
-          font-size: 13px;
-        }
-
-        &:first-child {
-          font-weight: 500;
-          color: #555;
-          margin-right: 8px;
-        }
-
-        &:nth-child(2) {
-          margin-right: auto;
-        }
-
-        &:last-child {
-          font-size: 0.8rem;
-          color: #999;
-          font-style: italic;
-        }
-      }
-    }
-
+  .date-text {
+    white-space: nowrap;
+  }
 }
 
 
