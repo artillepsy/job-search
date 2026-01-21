@@ -1,8 +1,10 @@
-<div class="jobs-container">
-  @for (job of jobs; track job.id) {
-    <app-job-item [job]="job"></app-job-item>
-  }
-</div>
+<p-scrollPanel class="jobs-scroll-panel">
+  <div class="jobs-container">
+    @for (job of jobs; track job.id) {
+      <app-job-item [job]="job"></app-job-item>
+    }
+  </div>
+</p-scrollPanel>
 <div class="paginator-container">
   <p-paginator [rows]="pageSize"
                [totalRecords]="totalRecords"

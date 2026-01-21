@@ -6,10 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { Job } from '../../models/job.model';
 import { JobSearchParams } from '../../models/job-search.params.model';
+import { ScrollPanel } from 'primeng/scrollpanel';
 
 @Component({
   selector: 'app-job-items-board',
-  imports: [ButtonModule, JobItemComponent, FormsModule, Paginator],
+  imports: [ButtonModule, JobItemComponent, FormsModule, Paginator, ScrollPanel],
   templateUrl: './job-items-board.component.html',
   styleUrl: './job-items-board.component.scss',
 })
@@ -23,7 +24,7 @@ export class JobItemsBoardComponent implements OnInit {
 
   totalPages = 0;
   pageNumber = 0;
-  pageSize = 10;
+  pageSize = 23;
   totalRecords = 0;
 
   constructor() {
@@ -69,10 +70,9 @@ export class JobItemsBoardComponent implements OnInit {
 
   // filters as params
   loadJobs() {
-    this._jobsService.getAllJobs(this.pageNumber, this.pageSize)
-      .subscribe((res: JobResponse) => {
-        this.jobs = res.jobs;
-        this.totalRecords = res.totalRecords;
-      });
+    this._jobsService.getAllJobs(this.pageNumber, this.pageSize).subscribe((res: JobResponse) => {
+      this.jobs = res.jobs;
+      this.totalRecords = res.totalRecords;
+    });
   }
 }
