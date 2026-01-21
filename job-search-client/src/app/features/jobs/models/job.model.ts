@@ -3,6 +3,8 @@ export interface Job {
   title: string;
   companyName: string;
   location: string;
-  salary?: string;
+  salaryMin?: number;
+  salaryMax?: number;
+  currency?: string;
   createdAt: Date;
 }
