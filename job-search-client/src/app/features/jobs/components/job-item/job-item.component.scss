@@ -1,3 +1,5 @@
+@import 'variables';
+
 :host {
   .main-container {
     display: flex;
@@ -57,6 +59,7 @@
   }
 
   .salary-text {
+    font-weight: $themed-font-weight;
     text-align: right;
     color: #6dd666;
   }

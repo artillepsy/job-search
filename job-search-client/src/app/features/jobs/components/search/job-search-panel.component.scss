@@ -1,28 +1,23 @@
-:host {
-  width: 100%;
+@import 'variables';
 
+:host {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 
-  gap: 0.55rem;
-  margin: 0.75rem;
+  margin: 0.5rem 0.75rem;
+  gap: 0.3rem;
 
   .search-bar {
     width: 40%;
   }
 
-  ::ng-deep {
-    .search-button {
-
-      display: inline-block;
-      width: 6rem;
-
-      .p-button {
-        width: 100%; // Makes the actual button fill the 300px
-      }
-    }
+  .results-text {
+    margin-left: auto;
+    white-space: nowrap;
+    color: $themed-text-color;
+    font-weight: $themed-font-weight;
   }
 }
 

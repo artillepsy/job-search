@@ -12,15 +12,16 @@ export class JobItemComponent {
   job = input.required<Job>();
 
   formattedSalary = computed(() => {
-    const {salaryMin, salaryMax, currency} = this.job();
-    if (salaryMin) { // salary is visible
-      if (!salaryMax || (salaryMin === salaryMax)) {
+    const { salaryMin, salaryMax, currency } = this.job();
+    if (salaryMin) {
+      // salary is visible
+      if (!salaryMax || salaryMin === salaryMax) {
         return `${salaryMin} ${currency}`;
       } else {
-        return `${salaryMin}-${salaryMax} ${currency}`;
+        return `${salaryMin} - ${salaryMax} ${currency}`;
       }
     }
-    return ''
+    return '';
   });
   formattedIsRemote = computed(() => {
     const isRemote = this.job().isRemote;
