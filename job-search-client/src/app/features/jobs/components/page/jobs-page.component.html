@@ -1,15 +1,12 @@
-<div class="top-panel"></div>
-<div class="bottom-panel">
-  <div class="left-container">
-    <div class="search-panel">
-      <app-search-panel (searchChange)="updateSearchParams($event)"></app-search-panel>
-      @if (isFiltersShown) {
-        <app-filters-dropdown></app-filters-dropdown>
-      }
-    </div>
+<div class="top-container">
+  <div class="search-panel">
+    <app-search-panel (searchChange)="updateSearchParams($event)"></app-search-panel>
+  </div>
+</div>
+<div class="bottom-container">
+  <div class="jobs-board-panel">
     <app-job-items-board [searchParams]="searchParams()"></app-job-items-board>
   </div>
-  <div class="right-container"></div>
 </div>
 
 

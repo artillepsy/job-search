@@ -2,8 +2,9 @@ export const ScrollPanelPreset = {
   colorScheme: {
     light: {
       bar: {
-        borderRadius: '0px',
-        background: '{surface.300}',
+        size: '0.35rem',
+        borderRadius: '1rem',
+        background: '{surface.400}',
       },
     },
   },

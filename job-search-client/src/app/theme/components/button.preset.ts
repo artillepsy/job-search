@@ -1,6 +1,6 @@
 export const ButtonPreset = {
   root: {
-    borderRadius: '5px',
+    borderRadius: '1rem',
   },
   colorScheme: {
     light: {
@@ -14,8 +14,8 @@ export const ButtonPreset = {
           background: '{success.500}',
           color: '#ffffff',
           hoverBackground: '{success.400}',
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 };

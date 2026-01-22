@@ -4,7 +4,9 @@ export const PaginatorPreset = {
   },
   navButton: {
     hoverBackground: '{surface.300}', // Darker gray hover
-    selectedBackground: '{primary.100}', // Darker gray hover
-    borderRadius: '5px',
+    selectedBackground: '{surface.600}', // Darker gray hover
+    borderRadius: '1rem',
+    selectedColor: '#ffffff',
+    fontWeight: 'bold',
   },
 };

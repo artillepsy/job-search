@@ -1,14 +1,28 @@
 <div class="main-container" (click)="apply()">
-  <div class="top-container">
-    <p class="title-text" [title]="job().title">{{ job().title }}</p>
-    <p class="salary-text">{{ formattedSalary() }}</p>
+
+
+  <div class="logo-container">
+    <img src="/placeholder.png" alt="Company Logo" class="logo">
   </div>
-  <div class="bottom-container">
-    <p class="company-text" [title]="job().companyName"><i class="pi pi-building"></i>{{ job().companyName }}</p>
-    @if (job().isRemote) {
-      <p class="remote-text"><i class="pi pi-briefcase"></i>Remote</p>
-    }
-    <p class="location-text" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
-    <p class="date-text">{{ daysAgoText() }}</p>
+
+
+  <div class="job-info-container">
+    <div class="top-container">
+      <p class="title-text" [title]="job().title">{{ job().title }}</p>
+      <p class="salary-text">{{ formattedSalary() }}</p>
+    </div>
+
+    <div class="middle-container">
+      <p class="company-text" [title]="job().companyName"><i class="pi pi-building"></i>{{ job().companyName }}</p>
+      @if (job().isRemote) {
+        <p class="remote-text"><i class="pi pi-briefcase"></i>Remote</p>
+      }
+      <p class="location-text" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
+    </div>
+
+    <div class="bottom-container">
+      <p class="date-text">{{ daysAgoText() }}</p>
+    </div>
   </div>
+
 </div>

@@ -4,6 +4,9 @@
   // Filled in by PrimeNG
 }
 
+:root {
+  --main-font: 'Inter', sans-serif;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -18,8 +21,11 @@ body {
   color: var(--p-text-color);
   background: var(--p-surface-0);
 
-  font-family: var(--p-font-family); // PrimeNG font family; defined in custom theme preset
-  font-size: var(--p-font-size-md);
+  font-family: var(--main-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.p-component {
+  font-family: var(--main-font) !important;
 }
