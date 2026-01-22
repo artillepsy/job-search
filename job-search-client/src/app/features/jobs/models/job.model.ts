@@ -3,6 +3,7 @@ export interface Job {
   title: string;
   companyName: string;
   location: string;
+  isRemote?: boolean;
   salaryMin?: number;
   salaryMax?: number;
   currency?: string;

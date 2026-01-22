@@ -1,10 +1,10 @@
 :host {
-
   .main-container {
     display: flex;
     flex-direction: column;
     cursor: pointer;
 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: white;
@@ -12,9 +12,15 @@
     padding-left: 1rem;
     padding-right: 1rem;
 
-    &:active {
-      transform: scale(0.98);
+    &:hover {
+      background-color: #fffaf1;
+
+      .title-text {
+        color: #d95300;
+      }
     }
+
+    transition: background-color 0.4s;
   }
 
   i { // primeNG icons
@@ -46,6 +52,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    transition: color 0.4s;
   }
 
   .salary-text {
@@ -54,6 +62,10 @@
   }
 
   .company-text {
+    white-space: nowrap;
+  }
+
+  .remote-text {
     white-space: nowrap;
   }
 
@@ -67,6 +79,8 @@
 
   .date-text {
     white-space: nowrap;
+    font-size: 0.8rem;
+    align-content: center;
   }
 }
 

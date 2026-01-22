@@ -13,10 +13,7 @@ import { FiltersDropdownComponent } from '../filters/filters-dropdown.component'
 export class JobsPageComponent {
   isFiltersShown = false;
 
-  searchParams = signal<JobSearchParams>({
-    jobTitle: '',
-    country: '',
-  });
+  searchParams = signal<JobSearchParams>({});
 
   updateSearchParams(params: JobSearchParams) {
     this.searchParams.set(params);

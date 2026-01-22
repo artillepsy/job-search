@@ -23,7 +23,7 @@ export class JobsService {
     const params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
-    return this._http.get<JobResponse>(`${environment.apiUrl}/jobs/get-all`, { params });
+    return this._http.get<JobResponse>(`${environment.apiUrl}/jobs/get`, { params });
   }
 
   getJobsByTitle(title: string): Observable<Job[]> {

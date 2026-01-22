@@ -22,6 +22,14 @@ export class JobItemComponent {
     }
     return ''
   });
+  formattedIsRemote = computed(() => {
+    const isRemote = this.job().isRemote;
+    if (isRemote !== null) {
+      return isRemote ? 'Remote' : 'On-site';
+    }
+    return '';
+  });
+
   daysAgoText = computed(() => {
     let rawDate = this.job().createdAt;
 

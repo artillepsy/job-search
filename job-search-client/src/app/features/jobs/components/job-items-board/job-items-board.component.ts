@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, OnInit } from '@angular/core';
+import { Component, effect, ElementRef, inject, input, OnInit, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { JobItemComponent } from '../job-item/job-item.component';
 import {JobResponse, JobsService} from '../../services/jobs.service';
@@ -38,7 +38,7 @@ export class JobItemsBoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._jobsService.getAllJobs(1, 100).subscribe((data: JobResponse) => {
+    this._jobsService.getAllJobs(1, this.pageSize).subscribe((data: JobResponse) => {
       this.jobs = data.jobs;
       this.totalRecords = data.totalRecords;
       this.totalPages = data.totalPages;
@@ -47,11 +47,11 @@ export class JobItemsBoardComponent implements OnInit {
 
   //todo: apply filters
   onSearch(params: JobSearchParams) {
-    if (!params.jobTitle) {
+    /*if (!params.jobTitle) {
       //todo: don't search if no input
       this.loadJobs();
       return;
-    }
+    }*/
 
     this.loadJobs(); // todo: use different method instead
     /*this._jobsService.getJobsByTitle(params.jobTitle).subscribe((jobs) => {
@@ -61,6 +61,7 @@ export class JobItemsBoardComponent implements OnInit {
     });*/
   }
 
+  // change everything to filtered search. To get all, unnecessary fields should remain empty
   onPageChange(event: PaginatorState) {
     this.pageNumber = event.page ? event.page + 1 : 1; // page + 1
     this.pageSize = event.rows ?? this.pageSize;

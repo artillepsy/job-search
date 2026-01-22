@@ -6,7 +6,7 @@ import { PaginatorPreset } from './components/paginator.preset';
 
 export const CustomThemePreset = definePreset(Aura, {
   primitive: {
-    primary: palette('#5771c5'), // Creates {primary.500}, {primary.600}, etc.
+    primary: palette('#5e79d3'), // Creates {primary.500}, {primary.600}, etc.
     surface: palette('#83878c'), // Standard grays
   },
   semantic: {
@@ -19,12 +19,11 @@ export const CustomThemePreset = definePreset(Aura, {
         root: {
           primary: {
             color: '{primary.500}',
-            contrastColor: '#ffffff'
+            contrastColor: '#ffffff',
           },
-
-        }
-      }
-    }
+        },
+      },
+    },
   },
   components: {
     button: ButtonPreset,

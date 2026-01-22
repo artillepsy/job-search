@@ -1,19 +1,11 @@
-<p-button icon="pi pi-filter" (click)="onClickFilters()" styleClass="p-button-icon-left" label="Filters"></p-button>
-<p-button icon="pi pi-search" (click)="onClickSearch()" styleClass="p-button-icon-left" label="Search"></p-button>
-<p-floatlabel variant="on">
-  <p-autocomplete [(ngModel)]="inputJobTitle"
-                  [suggestions]="filteredJobs"
-                  (completeMethod)="filterJobs($event)"
-                  [dropdown]="true">
-  </p-autocomplete>
-  <label for="on_label">Job title</label>
-</p-floatlabel>
-<p-floatlabel variant="on">
-  <p-autocomplete [(ngModel)]="inputCountryName"
-                  [suggestions]="filteredCountries"
-                  (completeMethod)="filterCountries($event)"
-                  [dropdown]="true"
-                  optionLabel="name">
-  </p-autocomplete>
-  <label for="on_label">Country</label>
-</p-floatlabel>
+<input type="text" class="search-bar" pInputText
+       [(ngModel)]="inputTitle"
+       [placeholder]="'Search job title or company name'">
+<p-button class="search-button" icon="pi pi-search" (click)="onClickSearch()" styleClass="p-button-icon-left"
+          label="Search"
+          [raised]="true"></p-button>
+<p-button class="filter-button" icon="pi pi-sliders-v" (click)="onClickFilters()" styleClass="p-button-icon-left"
+          [raised]="true" label="Filters"></p-button>
+
+
+

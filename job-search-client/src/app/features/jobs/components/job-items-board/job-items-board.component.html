@@ -1,4 +1,4 @@
-<p-scrollPanel class="jobs-scroll-panel">
+<p-scrollPanel #scrollPanel class="jobs-scroll-panel">
   <div class="jobs-container">
     @for (job of jobs; track job.id) {
       <app-job-item [job]="job"></app-job-item>
