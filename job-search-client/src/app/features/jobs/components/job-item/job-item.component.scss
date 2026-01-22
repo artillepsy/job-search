@@ -4,9 +4,9 @@
   .main-container {
     height: 8rem;
 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    background-color: white;
+    background-color: #ffffff;
     cursor: pointer;
 
     display: flex;
@@ -16,7 +16,7 @@
       .title-text {
       }
 
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
       transform: translateY(-2px);
     }
 

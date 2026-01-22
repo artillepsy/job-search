@@ -16,8 +16,25 @@
 
   ::ng-deep {
     .p-inputtext {
+      border-radius: 2rem;
+      border-width: 2px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.11);
+      background-color: rgba(255, 255, 255, 0.36);
+      border-color: rgba(55, 62, 108, 0.24);
+
+      &:focus {
+        border-color: rgb(255, 126, 126);
+      }
+    }
+
+    .search-button {
       border-radius: 1rem;
-      background-color: #e2e8ea;
+      box-shadow: 2px 4px 16px 4px rgba(0, 0, 0, 0.2);
+
+      .p-button {
+        border-width: 0;
+        background: linear-gradient(to right, #ff0000, #d6006d);
+      }
     }
   }
 }

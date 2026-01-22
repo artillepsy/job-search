@@ -29,5 +29,10 @@ export const CustomThemePreset = definePreset(Aura, {
     button: ButtonPreset,
     scrollpanel: ScrollPanelPreset,
     paginator: PaginatorPreset,
+    inputtext: {
+      root: {
+        focusBorderColor: '#2e2f39',
+      },
+    },
   },
 });

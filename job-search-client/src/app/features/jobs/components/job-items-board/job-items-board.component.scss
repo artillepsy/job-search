@@ -21,13 +21,13 @@
     gap: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 0.5rem;
+    padding-top: 0.75rem;
     padding-bottom: 1.5rem;
 
     mask-image: linear-gradient(to bottom,
       transparent 0%,
-      black 3%,
-      black 90%,
+      black 2%,
+      black 95%,
       transparent 100%
     );
   }
