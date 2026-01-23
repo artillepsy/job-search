@@ -1,6 +1,7 @@
 import { Component, computed, input, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { Job } from '../../models/job.model';
+import { WEBSITE_SOURCE_CONFIG } from '../../../../core/constants/storage.constants';
 
 @Component({
   selector: 'app-job-item',
@@ -11,6 +12,7 @@ import { Job } from '../../models/job.model';
 export class JobItemComponent {
   job = input.required<Job>();
 
+  isSalary = computed(() => this.job().salaryMin !== null);
   formattedSalary = computed(() => {
     const { salaryMin, salaryMax, currency } = this.job();
     if (salaryMin) {
@@ -21,14 +23,7 @@ export class JobItemComponent {
         return `${salaryMin} - ${salaryMax} ${currency}`;
       }
     }
-    return '';
-  });
-  formattedIsRemote = computed(() => {
-    const isRemote = this.job().isRemote;
-    if (isRemote !== null) {
-      return isRemote ? 'Remote' : 'On-site';
-    }
-    return '';
+    return 'Salary hidden';
   });
 
   daysAgoText = computed(() => {
@@ -49,19 +44,12 @@ export class JobItemComponent {
     return `${days} days ago`;
   });
 
+  srcMetadata = computed(() => {
+    const sourceKey = this.job().website; // This is the string like 'CareersInPoland'
+    return WEBSITE_SOURCE_CONFIG[sourceKey] || null;
+  });
+
   public apply(): void {
-    //alert(`Thank you for your interest in the ${this.job.title} position at ${this.job.companyName}.
-    //Our HR team will contact you soon!`);
-  }
-
-  isPostedToday() {
-    return this.getPostingDays() === 0;
-  }
-
-  getPostingDays() {
-    const today = new Date();
-    const createdAt = new Date(this.job().createdAt);
-    const timeDiff = today.getTime() - createdAt.getTime();
-    return Math.floor(timeDiff / (1000 * 3600 * 24));
+    window.open(this.job().url, '_blank');
   }
 }
