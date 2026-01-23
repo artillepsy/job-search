@@ -4,34 +4,30 @@
   .main-container {
     height: 8rem;
 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     background-color: #ffffff;
-    cursor: pointer;
+    //cursor: pointer;
 
     display: flex;
+    align-items: flex-start;
     flex-direction: column;
-
-    padding: 1rem;
-    gap: 0.5rem;
-
-    &:hover {
-      .title-text {
-      }
-
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-      transform: translateY(-2px);
-    }
-
-    &:active {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      transform: translateY(3px);
-    }
+    padding: 0.3rem 0.5rem 0.2rem;
 
     transition: box-shadow 0.2s, transform 0.2s;
+
+    /*&:hover {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+      transform: translateY(-2px);
+    }*/
+
+    /*&:active {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transform: translateY(3px);
+    }*/
   }
 
-  .top-container, .middle-container, .bottom-container {
+  .header-container, .job-info-container, .important-container, .interactable-container {
     flex: 1 1 auto;
 
     display: flex;
@@ -43,57 +39,74 @@
     overflow: hidden;
   }
 
+  .important-container {
+    border-bottom: 1px solid #e7e8ed;
+  }
+
   ::ng-deep {
     i {
       margin-right: 0.2rem;
-      color: #ff8484;
+      color: #a4aac0;
     }
   }
 
-  .title-text, .salary-text, .company-text, .remote-text, .location-text, .date-text {
+  .title-text, .salary-text, .remote-text, .location-text, .company-text, .website-link, .date-text {
     margin: 0;
   }
 
   .title-text {
     flex: 1;
-    text-align: left;
 
     font-weight: 700;
     color: #1e293b;
 
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    transition: color 0.4s;
   }
 
   .salary-text {
-    font-weight: 550;
     text-align: right;
-    color: #3dbc22;
+
+    &.visible {
+      font-weight: 550;
+      color: #3dbc22;
+    }
+
+    &.hidden {
+      font-weight: 300;
+      color: #a6a6a6;
+    }
   }
 
-  .company-text {
-    white-space: nowrap;
-    font-weight: 300;
-  }
-
-  .remote-text {
-    white-space: nowrap;
-    font-weight: 300;
-  }
-
-  .location-text {
-    flex: 1;
-
+  .remote-text, .location-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: 300;
 
     min-width: 0;
+    max-width: 20rem;
+  }
+
+  .company-text {
+    flex: 1;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+
+  .website-metadata {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+  }
+
+  .website-link {
+    white-space: nowrap;
+    color: #688ab1;
+    text-decoration: none;
+    font-size: 0.8rem;
   }
 
   .date-text {

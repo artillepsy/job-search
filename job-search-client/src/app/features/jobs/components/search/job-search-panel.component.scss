@@ -51,7 +51,7 @@
     }
   }
 
-  .search-button {
+  /*.search-button {
     border-radius: 1rem;
     outline: none;
     border-width: 0;
@@ -70,9 +70,9 @@
       color: white;
     }
 
-    /*&:hover {
+    !*&:hover {
       animation: backgroundMove 5s ease-in-out infinite;
-    }*/
+    }*!
 
     &:active {
       transform: scale(0.9);
@@ -89,7 +89,7 @@
         background-position: 0 0;
       }
     }
-  }
+  }*/
 }
 
 

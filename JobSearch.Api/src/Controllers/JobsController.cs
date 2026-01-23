@@ -38,6 +38,8 @@ public class JobsController : ControllerBase
 		string? Currency,
 		string Location,
 		bool IsRemote,
+		string Website,
+		string Url,
 		DateTime CreatedAt);
 
 	public JobsController(AppDbContext db , IConfiguration config)
@@ -95,6 +97,8 @@ public class JobsController : ControllerBase
 				j.Currency,
 				j.Location,
 				j.IsRemote,
+				j.Website,
+				j.Url,
 				j.CreatedAt))
 			.ToListAsync();
 		

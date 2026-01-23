@@ -1,18 +1,26 @@
-<div class="main-container" (click)="apply()">
-  <div class="top-container">
+<div class="main-container">
+
+  <div class="header-container">
     <p class="title-text" [title]="job().title">{{ job().title }}</p>
-    <p class="salary-text">{{ formattedSalary() }}</p>
+    <p class="salary-text" [class.visible]="isSalary()" [class.hidden]="!isSalary()">{{ formattedSalary() }}</p>
   </div>
 
-  <div class="middle-container">
-    <p class="company-text" [title]="job().companyName"><i class="pi pi-building"></i>{{ job().companyName }}</p>
+  <div class="job-info-container">
     @if (job().isRemote) {
       <p class="remote-text"><i class="pi pi-briefcase"></i>Remote</p>
     }
     <p class="location-text" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
   </div>
 
-  <div class="bottom-container">
+  <div class="important-container">
+    <p class="company-text" [title]="job().companyName">{{ job().companyName }}</p>
     <p class="date-text">{{ daysAgoText() }}</p>
   </div>
-</div>
+
+  <div class="interactable-container">
+    <div class="website-metadata">
+      <img [src]="srcMetadata().logoPath" [alt]="srcMetadata().displayName" class="website-logo"/>
+      <a [href]="srcMetadata()?.websiteUrl" target="_blank" class="website-link">{{ srcMetadata()?.displayName }}</a>
+    </div>
+    <p-button label="Apply" icon="pi pi-external-link" (onClick)="apply()" styleClass="p-button-sm"></p-button>
+  </div>
