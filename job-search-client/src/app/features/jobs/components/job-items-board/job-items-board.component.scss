@@ -1,3 +1,5 @@
+@import 'variables';
+
 :host {
   display: block;
   height: 100%;
@@ -10,12 +12,15 @@
   }
 
   .jobs-container {
+    width: 100%;
+
     flex: 1;
     overflow-y: auto;
     min-height: 0;
 
     display: flex;
     flex-direction: column;
+    align-items: center;
 
 
     gap: 0.5rem;
@@ -32,9 +37,28 @@
     );
   }
 
+  .job-item {
+    min-width: $mobile-width-breakpoint;
+    width: 50%;
+  }
+
+
+  ::ng-deep .p-paginator-page {
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+  }
+
+
   .paginator-container {
     flex-shrink: 0;
-    margin-top: -1.5rem;
+    margin-top: -1rem;
+  }
+
+  @media (max-width: $mobile-width-breakpoint) {
+    .job-item {
+      width: 100%;
+      min-width: unset;
+    }
   }
 }
 

@@ -1,7 +1,8 @@
 @import 'variables';
 
 :host {
-  background: linear-gradient(to bottom right, #f4fffd, #f2fff1);
+  //background: linear-gradient(to bottom right, #f4fffd, #f2fff1);
+  background-color: #edf2f8;
 
   width: 100%;
   height: 100%;
@@ -11,15 +12,12 @@
   flex-direction: column;
 
   .top-container {
-    /* background-color: #ededed;
-     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
     height: 3.5rem;
     flex-shrink: 0;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
-
   }
 
   .bottom-container {
@@ -31,17 +29,18 @@
     justify-content: center;
   }
 
-  .search-panel {
-    display: flex;
+  .jobs-board-panel {
+    width: 100%;
   }
 
-  .jobs-board-panel, .search-panel {
+  .search-panel {
+    display: flex;
     min-width: $mobile-width-breakpoint;
     width: 50%;
   }
 
   @media (max-width: $mobile-width-breakpoint) {
-    .jobs-board-panel, .search-panel {
+    .search-panel {
       width: 100%;
       min-width: unset;
     }

@@ -1,11 +1,14 @@
-<input type="text" class="search-bar" pInputText
+<button class="filter-button" (click)="onClickFilters()">
+  <i class="pi pi-sliders-v"></i>
+</button>
+<input type="text" class="search-bar"
        [(ngModel)]="inputTitle"
        [placeholder]="'Search job title or company name'">
-<p-button class="search-button" icon="pi pi-search" (click)="onClickSearch()" styleClass="p-button-icon-left"
-          label="Search"
-          [raised]="true"></p-button>
-<!--<p-button class="filter-button" icon="pi pi-sliders-v" (click)="onClickFilters()" styleClass="p-button-icon-left"
-          [raised]="true" label="Filters"></p-button>-->
+<button class="search-button" (click)="onClickSearch()">
+  <i class="pi pi-search"></i>
+  Search
+</button>
+
 <!--<p class="results-text">1004389 results</p>-->
 
 

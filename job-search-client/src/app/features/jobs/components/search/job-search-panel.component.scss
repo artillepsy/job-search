@@ -12,28 +12,81 @@
 
   .search-bar {
     width: 40%;
-  }
+    border-radius: 2rem;
+    border-width: 2px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+    background-color: rgb(255, 255, 255);
+    border-color: rgba(55, 62, 108, 0.24);
+    transition: all 0.2s ease;
+    padding: 0.5rem 1rem;
+    outline: none;
 
-  ::ng-deep {
-    .p-inputtext {
-      border-radius: 2rem;
-      border-width: 2px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.11);
-      background-color: rgba(255, 255, 255, 0.36);
-      border-color: rgba(55, 62, 108, 0.24);
-
-      &:focus {
-        border-color: rgb(255, 126, 126);
-      }
+    &:hover {
+      border-color: rgba(55, 62, 108, 0.4);
     }
 
-    .search-button {
-      border-radius: 1rem;
-      box-shadow: 2px 4px 16px 4px rgba(0, 0, 0, 0.2);
+    &:focus {
+      border-color: rgb(255, 0, 0);
+    }
+  }
 
-      .p-button {
-        border-width: 0;
-        background: linear-gradient(to right, #ff0000, #d6006d);
+  .filter-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: rgba(55, 62, 108, 0.4);
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #ff0000;
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+
+  .search-button {
+    border-radius: 1rem;
+    outline: none;
+    border-width: 0;
+    background: linear-gradient(to right, #ff1111, #ff27cc);
+    background-size: 200% auto;
+    transition: all 0.2s ease;
+    padding: 0.5rem 1rem;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    animation: backgroundMove 10s ease-in-out infinite;
+
+    i {
+      color: white;
+    }
+
+    /*&:hover {
+      animation: backgroundMove 5s ease-in-out infinite;
+    }*/
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    @keyframes backgroundMove {
+      0% {
+        background-position: 0 0;
+      }
+      50% {
+        background-position: 100% 0;
+      }
+      100% {
+        background-position: 0 0;
       }
     }
   }

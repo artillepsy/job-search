@@ -1,7 +1,9 @@
 <div class="main-container">
   <div class="jobs-container">
     @for (job of jobs; track job.id) {
-      <app-job-item [job]="job"></app-job-item>
+      <div class="job-item">
+        <app-job-item [job]="job"></app-job-item>
+      </div>
     }
   </div>
   <div class="paginator-container">
