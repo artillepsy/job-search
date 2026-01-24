@@ -10,26 +10,6 @@
 
   gap: 0.5rem;
 
-  .search-bar {
-    width: 40%;
-    border-radius: 2rem;
-    border-width: 2px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
-    background-color: rgb(255, 255, 255);
-    border-color: rgba(55, 62, 108, 0.24);
-    transition: all 0.2s ease;
-    padding: 0.5rem 1rem;
-    outline: none;
-
-    &:hover {
-      border-color: rgba(55, 62, 108, 0.4);
-    }
-
-    &:focus {
-      border-color: rgb(255, 0, 0);
-    }
-  }
-
   .filter-button {
     background: none;
     border: none;
@@ -39,7 +19,7 @@
     transition: all 0.2s ease;
 
     &:hover {
-      color: #ff0000;
+      color: $main-color;
     }
 
     &:active {
@@ -51,45 +31,37 @@
     }
   }
 
-  /*.search-button {
-    border-radius: 1rem;
-    outline: none;
-    border-width: 0;
-    background: linear-gradient(to right, #ff1111, #ff27cc);
-    background-size: 200% auto;
+  .search-bar {
+    width: 40%;
+    border-radius: 2rem;
+    border-width: 2px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
+    background-color: rgb(255, 255, 255);
+    border-color: rgba(55, 62, 108, 0.24);
     transition: all 0.2s ease;
     padding: 0.5rem 1rem;
-    color: white;
-    cursor: pointer;
-    font-size: 1.1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    outline: none;
 
-    animation: backgroundMove 10s ease-in-out infinite;
-
-    i {
-      color: white;
+    &:hover, &:focus {
+      border-color: $main-color;
     }
+  }
 
-    !*&:hover {
-      animation: backgroundMove 5s ease-in-out infinite;
-    }*!
+  ::ng-deep .search-button {
+    .p-button {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
 
-    &:active {
-      transform: scale(0.9);
-    }
-
-    @keyframes backgroundMove {
-      0% {
-        background-position: 0 0;
+      &:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       }
-      50% {
-        background-position: 100% 0;
-      }
-      100% {
-        background-position: 0 0;
+
+      &:active {
+        transform: scale(0.9);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
     }
-  }*/
+  }
 }
 
 

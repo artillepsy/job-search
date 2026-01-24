@@ -5,14 +5,14 @@
     height: 8rem;
 
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    border-radius: 1rem;
     background-color: #ffffff;
     //cursor: pointer;
 
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    padding: 0.3rem 0.5rem 0.2rem;
+    padding: 0.5rem 0.75rem 0.2rem;
 
     transition: box-shadow 0.2s, transform 0.2s;
 
@@ -90,7 +90,6 @@
   }
 
   .company-text {
-    flex: 1;
     white-space: nowrap;
     font-weight: 400;
   }
@@ -116,6 +115,23 @@
     font-weight: 300;
 
     text-align: right;
+  }
+
+  ::ng-deep .apply-button .p-button {
+    background: transparent;
+    border-color: transparent;
+    color: $main-color;
+    box-shadow: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: $main-color;
+      color: #ffffff;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
   }
 }
 
