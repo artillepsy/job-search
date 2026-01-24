@@ -10,4 +10,9 @@ export const WEBSITE_SOURCE_CONFIG: Record<string, SourceMetadata> = {
     websiteUrl: 'https://www.careersinpoland.com',
     logoPath: 'logos/careers-in-poland-logo.ico',
   },
+  UsaJobs: {
+    displayName: 'USAJOBS',
+    websiteUrl: 'https://developer.usajobs.gov/',
+    logoPath: 'logos/usajobs-logo.png',
+  },
 };
