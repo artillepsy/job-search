@@ -27,8 +27,10 @@ public static class ServiceCollectionExtensions
 		{
 			var apiKey = configuration["USAJobs:ApiKey"];
 			var email = configuration["USAJobs:Email"];
-        
-			client.DefaultRequestHeaders.Add("User-Agent", email); 
+			
+			client.BaseAddress = new Uri("https://data.usajobs.gov/api/");
+			client.DefaultRequestHeaders.TryAddWithoutValidation("Host", "data.usajobs.gov");
+			client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", email);
 			client.DefaultRequestHeaders.Add("Authorization-Key", apiKey);
 			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		});

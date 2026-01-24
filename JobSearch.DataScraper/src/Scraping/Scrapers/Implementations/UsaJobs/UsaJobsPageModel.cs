@@ -51,7 +51,7 @@ public class MatchedObjectDescriptor
 	public string OrganizationName { get; set; }
 	public bool RemoteIndicator { get; set; }
 	public DateTime PublicationStartDate { get; set; }
-	public PositionRemuneration PositionRemuneration { get; set; }
+	public List<PositionRemuneration> PositionRemuneration { get; set; }
 
 	public override string ToString()
 	{
@@ -68,8 +68,8 @@ public class MatchedObjectDescriptor
 
 public class PositionRemuneration
 {
-	public int MinimumRange { get; set; }
-	public int MaximumRange { get; set; }
+	public string MinimumRange { get; set; }
+	public string MaximumRange { get; set; }
 
 	public override string ToString()
 	{

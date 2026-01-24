@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Scraping.Attributes;
@@ -82,14 +83,21 @@ public class UsaJobsScraper : ScraperBase
 		foreach (var item in page.SearchResult.SearchResultItems)
 		{
 			var desc = item.MatchedObjectDescriptor;
+			decimal? salaryMin = null, salaryMax = null;
+
+			if (desc.PositionRemuneration.Count > 0)
+			{
+				salaryMin = decimal.Parse(desc.PositionRemuneration[0].MinimumRange);
+				salaryMax = decimal.Parse(desc.PositionRemuneration[0].MaximumRange);
+			}
 			
 			var jobModel = new JobEntity()
 			{
 				CompanyName = desc.OrganizationName,
 				CreatedAt = desc.PublicationStartDate.ToUniversalTime(),
 				Website = _config.Website,
-				SalaryMin = desc.PositionRemuneration.MinimumRange,
-				SalaryMax = desc.PositionRemuneration.MaximumRange,
+				SalaryMin = salaryMin,
+				SalaryMax = salaryMax,
 				Currency = "USD",
 				IsRemote = desc.RemoteIndicator,
 				Location = desc.PositionLocationDisplay,
@@ -147,14 +155,20 @@ public class UsaJobsScraper : ScraperBase
 
 	private async Task<UsaJobsPageModel> GetPageAsync(int page, CancellationToken ct)
 	{
-		var url = $"{_config.BaseUrl}{page}";
+		var url = $"{_config.BaseUrl}?Page={page}"; // todo: results per page 
 
 		var response = await _httpClient.GetAsync(url, ct);
 		response.EnsureSuccessStatusCode();
 
 		var jsonString = await response.Content.ReadAsStringAsync(ct);
 
-		var model = JsonSerializer.Deserialize<UsaJobsPageModel>(jsonString) ??
+		var options = new JsonSerializerOptions
+		{
+			PropertyNameCaseInsensitive = true,
+			NumberHandling = JsonNumberHandling.AllowReadingFromString // This would solve the "92108" vs int issue
+		};
+		
+		var model = JsonSerializer.Deserialize<UsaJobsPageModel>(jsonString, options) ??
 		            throw new InvalidOperationException();
 		
 		//_logger.LogInformation($"json model: {model}\nsize: {MemoryHelper.GetSerializedSize(model)}");
