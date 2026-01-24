@@ -5,12 +5,13 @@ In order to create/update tables, there are a few commands that should be execut
 [x] dotnet ef migrations add InitialCreate -p JobSearch.Data -s JobSearch.DataScraper
 [x] dotnet ef database update -p JobSearch.Data -s JobSearch.DataScraper
 
-To run the scraper for UsaJobs locally:
+To run scrapers locally:
 
 [x] dotnet user-secrets set --project JobSearch.DataScraper "USAJobs:ApiKey" "your-actual-api-key"
 [x] dotnet user-secrets set --project JobSearch.DataScraper "USAJobs:Email" "your-email@example.com"
+[x] dotnet user-secrets set --project JobSearch.DataScraper "CareersInPoland:Email" "your-email@example.com"
 
-To change scraper to run locally:
+To set a scraper to run locally:
 
 [x] Go to JobSearch.DataScraper/Properties/launchSettings.json
 [x] Set "commandLineArgs": "--scraper <current-scraper>",
