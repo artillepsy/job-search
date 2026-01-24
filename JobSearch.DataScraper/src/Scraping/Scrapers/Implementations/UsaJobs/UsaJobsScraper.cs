@@ -1,16 +1,13 @@
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Scraping.Attributes;
-using JobSearch.DataScraper.Scraping.Services;
 using JobSearch.DataScraper.Utils;
 
-namespace JobSearch.DataScraper.Scraping.Scrapers.Implementations.CareersInPoland;
+namespace JobSearch.DataScraper.Scraping.Scrapers.Implementations.UsaJobs;
 
-//todo: add chunks of data with higher load, but since there are tens of pages only, optimization can wait
-[ScraperMetadata("CareersInPoland")]
-public class CareersInPolandScraper : ScraperBase
+[ScraperMetadata("UsaJobs")]
+public class UsaJobsScraper : ScraperBase
 {
 	private readonly HttpClient _httpClient;
 	private readonly Config _config;
@@ -26,8 +23,8 @@ public class CareersInPolandScraper : ScraperBase
 		public int SearchIntervalMax { get; set; }
 	}
 
-	public CareersInPolandScraper(
-		ILogger<CareersInPolandScraper> logger, 
+	public UsaJobsScraper(
+		ILogger<UsaJobsScraper> logger, 
 		IHttpClientFactory httpClientFactory, 
 		IConfiguration section, 
 		IServiceScopeFactory scopeFactory) : base(logger, httpClientFactory, scopeFactory)
@@ -50,7 +47,7 @@ public class CareersInPolandScraper : ScraperBase
 		try
 		{
 			var pageModels = await GetAllPagesAsync(ct);
-			result.RecordsScraped = pageModels.Sum(m => m.JobOffers.Pagination.Data.Count);
+			result.RecordsScraped = pageModels.Sum(m => m.SearchResult.SearchResultCount);
 			result.IsSuccess = true;
 			await CacheJobModelsAsync(pageModels);
 			
@@ -77,28 +74,27 @@ public class CareersInPolandScraper : ScraperBase
 
 	#region Models Caching
 
-	private async Task CacheJobModelsAsync(IEnumerable<CareersInPolandPageModel> pageModels)
+	private async Task CacheJobModelsAsync(IEnumerable<UsaJobsPageModel> pageModels)
 	{
 		var jobModels = new List<JobEntity>();
 
 		foreach (var page in pageModels)
-		foreach (var data in page.JobOffers.Pagination.Data)
-		foreach (var location in data.Locations)
+		foreach (var item in page.SearchResult.SearchResultItems)
 		{
-			var salary = ParseSalary(data.Salary);
+			var desc = item.MatchedObjectDescriptor;
 			
 			var jobModel = new JobEntity()
 			{
-				CompanyName = data.EmployerName,
-				CreatedAt = data.Date.ToUniversalTime(),
+				CompanyName = desc.OrganizationName,
+				CreatedAt = desc.PublicationStartDate.ToUniversalTime(),
 				Website = _config.Website,
-				SalaryMin = salary.min,
-				SalaryMax = salary.max,
-				Currency = salary.currency,
-				IsRemote = data.RemoteRecruitment,
-				Location = location.Location,
-				Title = data.Title,
-				Url = location.FullUrl,
+				SalaryMin = desc.PositionRemuneration.MinimumRange,
+				SalaryMax = desc.PositionRemuneration.MaximumRange,
+				Currency = "USD",
+				IsRemote = desc.RemoteIndicator,
+				Location = desc.PositionLocationDisplay,
+				Title = desc.PositionTitle,
+				Url = desc.PositionURI,
 			};
 			jobModels.Add(jobModel);
 		}
@@ -114,32 +110,13 @@ public class CareersInPolandScraper : ScraperBase
 		await repository.RemoveNonExistentAsync(jobModels);
 	}
 
-	private (decimal? min, decimal? max, string? currency) ParseSalary(string? salaryRaw)
-	{
-		if (string.IsNullOrWhiteSpace(salaryRaw))
-		{
-			return (null, null, null);
-		}
-
-		// Pattern: Number - [Optional Number] [Rest of string]
-		var match = Regex.Match(salaryRaw, @"(\d+)\s*-\s*(\d+)?\s*(.*)", RegexOptions.IgnoreCase);
-
-		if (!match.Success) return (null, null, null);
-
-		decimal? min = decimal.TryParse(match.Groups[1].Value, out var minVal) ? minVal : null;
-		decimal? max = decimal.TryParse(match.Groups[2].Value, out var maxVal) ? maxVal : null;
-		string currency = match.Groups[3].Value.Trim().ToUpper();
-
-		return (min, max, currency);
-	}
-
 	#endregion
 	
 	#region Pagination
 
-	private async Task<List<CareersInPolandPageModel>> GetAllPagesAsync(CancellationToken ct)
+	private async Task<List<UsaJobsPageModel>> GetAllPagesAsync(CancellationToken ct)
 	{
-		var pageModels = new List<CareersInPolandPageModel>();
+		var pageModels = new List<UsaJobsPageModel>();
 		var currPage = _config.PageStartIndex;
 
 		while (!ct.IsCancellationRequested)
@@ -152,7 +129,7 @@ public class CareersInPolandScraper : ScraperBase
 				$"of size {MemoryHelper.GetSerializedSize(pageModel)} B received. " +
 				$"Total size: {MemoryHelper.GetSerializedSize(pageModels)} B");
 
-			if (pageModel.JobOffers.Pagination.IsLastPage)
+			if (currPage == /*pageModel.SearchResult.UserArea.NumberOfPages*/ 3)
 			{
 				break;
 			}
@@ -168,7 +145,7 @@ public class CareersInPolandScraper : ScraperBase
 		return pageModels;
 	}
 
-	private async Task<CareersInPolandPageModel> GetPageAsync(int page, CancellationToken ct)
+	private async Task<UsaJobsPageModel> GetPageAsync(int page, CancellationToken ct)
 	{
 		var url = $"{_config.BaseUrl}{page}";
 
@@ -177,7 +154,7 @@ public class CareersInPolandScraper : ScraperBase
 
 		var jsonString = await response.Content.ReadAsStringAsync(ct);
 
-		var model = JsonSerializer.Deserialize<CareersInPolandPageModel>(jsonString) ??
+		var model = JsonSerializer.Deserialize<UsaJobsPageModel>(jsonString) ??
 		            throw new InvalidOperationException();
 		
 		//_logger.LogInformation($"json model: {model}\nsize: {MemoryHelper.GetSerializedSize(model)}");

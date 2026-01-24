@@ -9,19 +9,16 @@ public abstract class ScraperBase : IScraper
 {
 	protected readonly IServiceScopeFactory _scopeFactory;
 	protected readonly ILogger<ScraperBase> _logger;
-	protected readonly IUrlHashService _urlHashService;
 	protected readonly IHttpClientFactory _httpClientFactory;
 	protected bool _isRunning = false;
 
 	protected ScraperBase(
 		ILogger<ScraperBase> logger, 
 		IHttpClientFactory httpClientFactory, 
-		IUrlHashService urlHashService, 
 		IServiceScopeFactory scopeFactory)
 	{
 		_logger = logger;
 		_httpClientFactory = httpClientFactory;
-		_urlHashService = urlHashService;
 		_scopeFactory = scopeFactory;
 	}
 
