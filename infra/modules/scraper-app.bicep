@@ -61,7 +61,7 @@ resource scraperJobs 'Microsoft.App/jobs@2023-05-01' = [
                 value: usaJobsApiKey
               }
               {
-                name: 'USAJobs__Email'
+                name: 'Scrapers__Email'
                 value: usaJobsEmail
               }
             ]

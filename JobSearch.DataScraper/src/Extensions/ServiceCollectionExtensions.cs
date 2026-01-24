@@ -11,11 +11,10 @@ public static class ServiceCollectionExtensions
 		this IServiceCollection services,
 		IConfiguration configuration)
 	{
-
+		var email = configuration["Scrapers:Email"];
+		
 		services.AddHttpClient("CareersInPoland", client =>
 		{
-			var email = configuration["USAJobs:Email"];
-			
 			client.DefaultRequestHeaders.UserAgent.ParseAdd($"Mozilla/5.0 (compatible; JobScraper/1.0; +{email})");
 			client.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 			client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9,pl-PL;q=0.8");
@@ -26,7 +25,6 @@ public static class ServiceCollectionExtensions
 		services.AddHttpClient("UsaJobs", client =>
 		{
 			var apiKey = configuration["USAJobs:ApiKey"];
-			var email = configuration["USAJobs:Email"];
 			
 			client.BaseAddress = new Uri("https://data.usajobs.gov/api/");
 			client.DefaultRequestHeaders.TryAddWithoutValidation("Host", "data.usajobs.gov");

@@ -70,9 +70,11 @@ public class PositionRemuneration
 {
 	public string MinimumRange { get; set; }
 	public string MaximumRange { get; set; }
+	public string Description { get; set; } // implement this in DB
+	
 
 	public override string ToString()
 	{
-		return $"{MinimumRange} - {MaximumRange}";
+		return $"{MinimumRange} - {MaximumRange} / {Description}";
 	}
 }

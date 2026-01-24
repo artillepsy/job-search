@@ -8,8 +8,7 @@ In order to create/update tables, there are a few commands that should be execut
 To run scrapers locally:
 
 [x] dotnet user-secrets set --project JobSearch.DataScraper "USAJobs:ApiKey" "your-actual-api-key"
-[x] dotnet user-secrets set --project JobSearch.DataScraper "USAJobs:Email" "your-email@example.com"
-[x] dotnet user-secrets set --project JobSearch.DataScraper "CareersInPoland:Email" "your-email@example.com"
+[x] dotnet user-secrets set --project JobSearch.DataScraper "Scrapers:Email" "your-email@example.com"
 
 To set a scraper to run locally:
 

@@ -22,6 +22,8 @@ public class UsaJobsScraper : ScraperBase
 		public int PageStartIndex { get; set; }
 		public int SearchIntervalMin { get; set; }
 		public int SearchIntervalMax { get; set; }
+		
+		public int ResultsPerPage { get; set; }
 	}
 
 	public UsaJobsScraper(
@@ -137,7 +139,7 @@ public class UsaJobsScraper : ScraperBase
 				$"of size {MemoryHelper.GetSerializedSize(pageModel)} B received. " +
 				$"Total size: {MemoryHelper.GetSerializedSize(pageModels)} B");
 
-			if (currPage == /*pageModel.SearchResult.UserArea.NumberOfPages*/ 3)
+			if (currPage == pageModel.SearchResult.UserArea.NumberOfPages)
 			{
 				break;
 			}
@@ -155,7 +157,7 @@ public class UsaJobsScraper : ScraperBase
 
 	private async Task<UsaJobsPageModel> GetPageAsync(int page, CancellationToken ct)
 	{
-		var url = $"{_config.BaseUrl}?Page={page}"; // todo: results per page 
+		var url = $"{_config.BaseUrl}?Page={page}&ResultsPerPage={_config.ResultsPerPage}"; // todo: results per page 
 
 		var response = await _httpClient.GetAsync(url, ct);
 		response.EnsureSuccessStatusCode();
