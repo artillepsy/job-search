@@ -4,6 +4,10 @@ param environmentId string
 param dbConnectionString string
 param image string
 param identityId string
+@secure()
+param usaJobsApiKey string
+@secure()
+param usaJobsEmail string
 
 var scraperConfigs = [
   {
@@ -51,6 +55,14 @@ resource scraperJobs 'Microsoft.App/jobs@2023-05-01' = [
               {
                 name: 'ConnectionStrings__DefaultConnection'
                 value: dbConnectionString
+              }
+              {
+                name: 'USAJobs__ApiKey'
+                value: usaJobsApiKey
+              }
+              {
+                name: 'USAJobs__Email'
+                value: usaJobsEmail
               }
             ]
             resources: {

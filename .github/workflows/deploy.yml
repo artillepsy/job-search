@@ -132,6 +132,8 @@ jobs:
             scraperImage=${{ steps.build_scraper_image.outputs.full_image }}
             apiImage=${{ steps.build_api_image.outputs.full_image }}
             deployerPrincipalId=${{ steps.get_oid.outputs.deployer_oid }}
+            usaJobsApiKey=${{ secrets.USAJOBS_API_KEY }}
+            usaJobsEmail=${{ secrets.USAJOBS_EMAIL }}
 
       - name: "Setup Node.js"
         uses: actions/setup-node@v4
@@ -151,11 +153,11 @@ jobs:
           cd job-search-client
           npm install
           npm run build -- --configuration production
-          
+
           # Debug: Show what was built
           echo "Build output at:"
           find . -name "index.html" | head -5
-          
+
           # Move the built files to where Azure expects them
           mv dist/job-search-client/browser ../built-app
 
@@ -167,7 +169,7 @@ jobs:
           action: "upload"
           app_location: "built-app"
           skip_app_build: true
-      
+
       - name: "Wait for RBAC propagation"
         run: sleep 30
 

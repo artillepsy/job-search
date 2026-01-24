@@ -18,6 +18,10 @@ param deployerPrincipalId string
 @description('Database admin password. Passed through CLI')
 @secure()
 param dbPassword string
+@secure()
+param usaJobsApiKey string
+@secure()
+param usaJobsEmail string
 
 // =============================================================================
 // Modules
@@ -140,6 +144,8 @@ module scraper './modules/scraper-app.bicep' = {
     dbConnectionString: dbConnectionString
     image: scraperImage
     identityId: scraperIdentity.outputs.identityId
+    usaJobsApiKey: usaJobsApiKey
+    usaJobsEmail: usaJobsEmail
   }
 }
 
