@@ -18,7 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 		.UseSnakeCaseNamingConvention());
 
 builder.Services.AddScrapers(builder.Configuration);
-builder.Services.AddScraperHttpClient();
+builder.Services.AddScrapersHttpClients(builder.Configuration);
 builder.Services.AddSingleton<IUrlHashService, UrlHashSha1Service>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
