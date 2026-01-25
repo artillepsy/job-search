@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Scraping.Attributes;
@@ -128,7 +127,7 @@ public class ArbeitnowScraper : ScraperBase
 				$"of size {MemoryHelper.GetSerializedSize(pageModel)} B received. " +
 				$"Total size: {MemoryHelper.GetSerializedSize(pageModels)} B");
 
-			if (string.IsNullOrEmpty(pageModel.NextPageLink))
+			if (currPage == 3 /*string.IsNullOrEmpty(pageModel.NextPageLink)*/) // todo: change 
 			{
 				break;
 			}
