@@ -28,4 +28,4 @@ We aim to be a "good citizen" of the web:
 - **Frontend:** Angular
 - **Backend:** ASP.NET Core
 - **Database:** PostgreSQL
-- **API Integrations:** USAJobs, Adzuna, Remotive, etc.
+- **API Integrations:** USAJobs, Arbeitnow, CareersInPoland, etc.
