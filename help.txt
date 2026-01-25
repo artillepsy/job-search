@@ -14,3 +14,7 @@ To set a scraper to run locally:
 
 [x] Go to JobSearch.DataScraper/Properties/launchSettings.json
 [x] Set "commandLineArgs": "--scraper <current-scraper>",
+
+If there's a problem with Azure hosted DB connection, try to add the IP of the current network to the firewall rules.
+
+When deploying DB migrations to Azure, make sure that everything works correctly (check scraper jobs)
