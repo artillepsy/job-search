@@ -11,12 +11,12 @@ public class UnixDateTimeConverter : JsonConverter<DateTime>
 			throw new JsonException("Expected number for Unix timestamp.");
 
 		long unixTime = reader.GetInt64();
-		return DateTimeOffset.FromUnixTimeSeconds(unixTime).DateTime;
+		return DateTimeOffset.FromUnixTimeSeconds(unixTime).UtcDateTime;
 	}
 
 	public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
 	{
-		long unixTime = ((DateTimeOffset)value).ToUnixTimeSeconds();
+		long unixTime = new DateTimeOffset(value.ToUniversalTime()).ToUnixTimeSeconds();
 		writer.WriteNumberValue(unixTime);
 	}
 }
