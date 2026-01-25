@@ -12,7 +12,12 @@ export const WEBSITE_SOURCE_CONFIG: Record<string, SourceMetadata> = {
   },
   UsaJobs: {
     displayName: 'USAJOBS',
-    websiteUrl: 'https://developer.usajobs.gov/',
+    websiteUrl: 'https://www.usajobs.gov',
     logoPath: 'logos/usajobs-logo.png',
+  },
+  Arbeitnow: {
+    displayName: 'Arbeitnow',
+    websiteUrl: 'https://www.arbeitnow.com',
+    logoPath: 'logos/arbeitnow-logo.png',
   },
 };
