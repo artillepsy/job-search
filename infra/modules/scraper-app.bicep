@@ -12,7 +12,11 @@ param usaJobsEmail string
 var scraperConfigs = [
   {
     name: 'careersinpoland'
-    cron: '0/10 * * * *' // Every 10 minutes
+    cron: '0 0 * * *' // Daily at midnight
+  }
+  {
+    name: 'usajobs'
+    cron: '0 * * * *' // Hourly
   }
 ]
 
