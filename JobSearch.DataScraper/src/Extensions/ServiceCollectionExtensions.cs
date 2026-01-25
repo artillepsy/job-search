@@ -12,15 +12,13 @@ public static class ServiceCollectionExtensions
 		IConfiguration configuration)
 	{
 		var email = configuration["Scrapers:Email"];
-		
-		services.AddHttpClient("CareersInPoland", client =>
+		if (email == null)
 		{
-			client.DefaultRequestHeaders.UserAgent.ParseAdd($"Mozilla/5.0 (compatible; JobScraper/1.0; +{email})");
-			client.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-			client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9,pl-PL;q=0.8");
-			client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
-			client.Timeout = TimeSpan.FromSeconds(30);
-		});
+			throw new ArgumentNullException(nameof(email));
+		}
+		
+		AddDefaultHttpClient(services, "CareersInPoland", email);
+		AddDefaultHttpClient(services, "Arbeitnow", email);
 
 		services.AddHttpClient("UsaJobs", client =>
 		{
@@ -33,6 +31,18 @@ public static class ServiceCollectionExtensions
 			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		});
 		return services;
+	}
+
+	private static void AddDefaultHttpClient(IServiceCollection services, string name, string email)
+	{
+		services.AddHttpClient(name, client =>
+		{
+			client.DefaultRequestHeaders.UserAgent.ParseAdd($"Mozilla/5.0 (compatible; JobScraper/1.0; +{email})");
+			client.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9,pl-PL;q=0.8");
+			client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+			client.Timeout = TimeSpan.FromSeconds(30);
+		});
 	}
 
 	public static void AddScrapers(this IServiceCollection services, IConfiguration configuration)
