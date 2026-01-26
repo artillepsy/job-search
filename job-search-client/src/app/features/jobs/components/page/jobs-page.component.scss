@@ -48,12 +48,12 @@
       font-size: 2rem;
       font-weight: $font-weight-logo;
       color: $logo-text-color;
+      text-shadow: $text-shadow-normal;
     }
 
     .logo-icon {
       height: 100%;
       aspect-ratio: 1 / 1;
-      //transform: rotate(90deg);
 
       background-color: $logo-icon-color;
       mask: url('/logo.svg') no-repeat center;
