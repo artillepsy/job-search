@@ -127,7 +127,7 @@ public class ArbeitnowScraper : ScraperBase
 				$"of size {MemoryHelper.GetSerializedSize(pageModel)} B received. " +
 				$"Total size: {MemoryHelper.GetSerializedSize(pageModels)} B");
 
-			if (currPage == 3 /*string.IsNullOrEmpty(pageModel.NextPageLink)*/) // todo: change 
+			if (string.IsNullOrEmpty(pageModel.NextPageLink))
 			{
 				break;
 			}
