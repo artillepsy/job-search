@@ -23,7 +23,7 @@ export class JobItemComponent {
         return `${salaryMin} - ${salaryMax} ${currency}`;
       }
     }
-    return 'Salary hidden';
+    return 'Salary negotiable';
   });
 
   daysAgoText = computed(() => {

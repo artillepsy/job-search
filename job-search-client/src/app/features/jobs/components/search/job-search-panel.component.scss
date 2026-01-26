@@ -34,17 +34,26 @@
   .search-bar {
     width: 40%;
     border-radius: 2rem;
-    border-width: 2px;
+    border-width: 0;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
     background-color: rgb(255, 255, 255);
     border-color: rgba(55, 62, 108, 0.24);
     transition: all 0.2s ease;
-    padding: 0.5rem 1rem;
+    padding: 0.55rem 1rem;
     outline: none;
+    color: $text-color-main;
+    font-size: 1rem;
 
-    &:hover, &:focus {
-      border-color: $main-color;
+    &::placeholder {
+      color: $text-color-non-important;
+      font-size: 0.9rem;
     }
+
+
+    /*&:hover, &:focus {
+      border-width: 2px;
+      border-color: $search-bar-color-active;
+    }*/
   }
 
   ::ng-deep .search-button {

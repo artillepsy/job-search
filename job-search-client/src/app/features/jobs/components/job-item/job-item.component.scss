@@ -1,25 +1,12 @@
 @import 'variables';
 
 :host {
-
-  --text-color-main: #19252e;
-  --text-color-secondary: #2c3e50;
-  --text-color-non-important: #6b7f93;
-  --text-color-salary-visible: #36d105;
-  --text-color-website-link: #688ab1;
-
-  --font-weight-main: 650;
-  --font-weight-secondary: 450;
-  --font-weight-non-important: 330;
-
-  --font-size-website-link: 0.8rem;
-
   .job-item-rows {
     height: 9rem;
 
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
     border-radius: 1rem;
-    background-color: #ffffff;
+    background-color: white;
 
     display: flex;
     align-items: flex-start;
@@ -49,7 +36,7 @@
   ::ng-deep {
     i {
       margin-right: 0.2rem;
-      color: #a4aac0;
+      color: $text-color-non-important;
     }
   }
 
@@ -64,42 +51,42 @@
 
   #title {
     flex: 1;
-    color: var(--text-color-main);
-    font-weight: var(--font-weight-main);
+    color: $text-color-main;
+    font-weight: $font-weight-main;
   }
 
   #date {
-    color: var(--text-color-secondary);
-    font-weight: var(--font-weight-non-important);
+    color: $text-color-secondary;
+    font-weight: $font-weight-non-important;
   }
 
   .text .extra-info {
-    color: var(--text-color-secondary);
-    font-weight: var(--font-weight-non-important);
+    color: $text-color-secondary;
+    font-weight: $font-weight-non-important;
   }
 
   #company-name {
     flex: 1;
-    color: var(--text-color-secondary);
-    font-weight: var(--font-weight-secondary);
+    color: $text-color-secondary;
+    font-weight: $font-weight-secondary;
   }
 
   #salary {
     &.visible {
-      color: var(--text-color-salary-visible);
-      font-weight: var(--font-weight-secondary);
+      color: $text-color-salary-visible;
+      font-weight: $font-weight-secondary;
     }
 
     &.hidden {
-      color: var(--text-color-non-important);
-      font-weight: var(--font-weight-non-important);
+      color: $text-color-non-important;
+      font-weight: $font-weight-non-important;
     }
   }
 
   #website-link {
-    color: var(--text-color-website-link);
-    font-size: var(--font-size-website-link);
-    font-weight: var(--font-weight-non-important);
+    color: $text-color-website-link;
+    font-size: $font-size-website-link;
+    font-weight: $font-weight-non-important;
     text-decoration: none;
 
     &:hover {

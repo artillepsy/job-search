@@ -1,6 +1,6 @@
 export const ButtonPreset = {
   root: {
-    borderRadius: '1rem',
+    borderRadius: '2rem',
   },
   colorScheme: {
     light: {
