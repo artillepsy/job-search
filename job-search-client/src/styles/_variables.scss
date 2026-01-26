@@ -1,5 +1,6 @@
 $mobile-width-breakpoint: 700px;
 $main-color: #fd3535;
+$secondary-color: #96aec1;
 
 $text-color-main: #19252e;
 $text-color-secondary: #2c3e50;
@@ -13,5 +14,8 @@ $font-weight-non-important: 330;
 
 $font-size-website-link: 0.8rem;
 
-$search-bar-color-active: #d6d6d6;
 
+$box-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.2);
+$box-shadow-normal-secondary: 0 4px 8px rgba(0, 0, 0, 0.1);
+$box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
+$box-shadow-active: 0 2px 4px rgba(0, 0, 0, 0.1);

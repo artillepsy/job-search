@@ -15,7 +15,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    color: rgba(55, 62, 108, 0.4);
+    color: $secondary-color;
     transition: all 0.2s ease;
 
     &:hover {
@@ -35,9 +35,8 @@
     width: 40%;
     border-radius: 2rem;
     border-width: 0;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.05);
-    background-color: rgb(255, 255, 255);
-    border-color: rgba(55, 62, 108, 0.24);
+    box-shadow: $box-shadow-normal-secondary;
+    background-color: white;
     transition: all 0.2s ease;
     padding: 0.55rem 1rem;
     outline: none;
@@ -49,25 +48,23 @@
       font-size: 0.9rem;
     }
 
-
-    /*&:hover, &:focus {
-      border-width: 2px;
-      border-color: $search-bar-color-active;
-    }*/
+    &:hover, &:focus {
+      box-shadow: $box-shadow-hover;
+    }
   }
 
   ::ng-deep .search-button {
     .p-button {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: $box-shadow-normal;
       transition: all 0.2s ease;
 
       &:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: $box-shadow-hover;
       }
 
       &:active {
         transform: scale(0.9);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: $box-shadow-active;
       }
     }
   }
