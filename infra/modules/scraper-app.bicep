@@ -18,6 +18,10 @@ var scraperConfigs = [
     name: 'usajobs'
     cron: '0 * * * *' // Hourly
   }
+  {
+    name: 'arbeitnow'
+    cron: '0 * * * *' // Hourly
+  }
 ]
 
 resource scraperJobs 'Microsoft.App/jobs@2023-05-01' = [
