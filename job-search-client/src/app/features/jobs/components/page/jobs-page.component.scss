@@ -29,8 +29,30 @@
     justify-content: center;
   }
 
-  .jobs-board-panel {
-    width: 100%;
+  .logo-container {
+    width: 25%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+
+  .logo-container, .buttons-container {
+    width: 25%;
+    display: flex;
+  }
+
+  .logo {
+    padding-left: 0.5rem;
+    font-size: 2rem;
+    font-weight: $font-weight-logo;
+
+    #logo-start {
+      color: $logo-color-start;
+    }
+
+    #logo-end {
+      color: $logo-color-end;
+    }
   }
 
   .search-panel {
@@ -39,7 +61,13 @@
     width: 50%;
   }
 
+  .jobs-board-panel {
+    width: 100%;
+  }
+
   @media (max-width: $mobile-width-breakpoint) {
+
+    // todo: put logo and buttons at the top, search panel at the bottom
     .search-panel {
       width: 100%;
       min-width: unset;
