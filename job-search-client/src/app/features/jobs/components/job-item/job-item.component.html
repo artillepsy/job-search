@@ -1,26 +1,30 @@
-<div class="main-container">
+<div class="job-item-rows">
 
-  <div class="header-container">
-    <p class="title-text" [title]="job().title">{{ job().title }}</p>
-    <p class="date-text">{{ daysAgoText() }}</p>
+  <div class="row">
+    <p class="text" id="title" [title]="job().title">{{ job().title }}</p>
+    <p class="text" id="date">{{ daysAgoText() }}</p>
   </div>
 
-  <div class="job-info-container">
+  <div class="row">
     @if (job().isRemote) {
-      <p class="remote-text"><i class="pi pi-briefcase"></i>Remote</p>
+      <p class="text extra-info"><i class="pi pi-briefcase"></i>Remote</p>
     }
-    <p class="location-text" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
+    <p class="text extra-info" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
   </div>
 
-  <div class="important-container">
-    <p class="company-text" [title]="job().companyName">{{ job().companyName }}</p>
-    <p class="salary-text" [class.visible]="isSalary()" [class.hidden]="!isSalary()">{{ formattedSalary() }}</p>
+  <div class="row with-border">
+    <p class="text" id="company-name" [title]="job().companyName">{{ job().companyName }}</p>
+    <p class="text" id="salary" [class.visible]="isSalary()" [class.hidden]="!isSalary()">{{ formattedSalary() }}</p>
   </div>
 
-  <div class="interactable-container">
+  <div class="row">
     <div class="website-metadata">
       <img [src]="srcMetadata().logoPath" [alt]="srcMetadata().displayName" class="website-logo"/>
-      <a [href]="srcMetadata()?.websiteUrl" target="_blank" class="website-link">{{ srcMetadata()?.displayName }}</a>
+      <a [href]="srcMetadata()?.websiteUrl" target="_blank" class="text"
+         id="website-link">{{ srcMetadata()?.displayName }}</a>
     </div>
-    <p-button class="apply-button" label="Apply" icon="pi pi-external-link" (onClick)="apply()" styleClass="p-button-sm"></p-button>
+    <p-button class="apply-button" label="Apply" icon="pi pi-external-link" (onClick)="apply()"
+              styleClass="p-button-sm"></p-button>
   </div>
+
+</div>

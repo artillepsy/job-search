@@ -1,8 +1,21 @@
 @import 'variables';
 
 :host {
-  .main-container {
-    height: 8rem;
+
+  --text-color-main: #19252e;
+  --text-color-secondary: #2c3e50;
+  --text-color-non-important: #6b7f93;
+  --text-color-salary-visible: #36d105;
+  --text-color-website-link: #688ab1;
+
+  --font-weight-main: 650;
+  --font-weight-secondary: 450;
+  --font-weight-non-important: 330;
+
+  --font-size-website-link: 0.8rem;
+
+  .job-item-rows {
+    height: 9rem;
 
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
     border-radius: 1rem;
@@ -16,7 +29,7 @@
     transition: box-shadow 0.2s, transform 0.2s;
   }
 
-  .header-container, .job-info-container, .important-container, .interactable-container {
+  .row {
     flex: 1 1 auto;
 
     display: flex;
@@ -26,11 +39,12 @@
 
     width: 100%;
     overflow: hidden;
+
+    &.with-border {
+      border-bottom: 1px solid #e7e8ed;
+    }
   }
 
-  .important-container {
-    border-bottom: 1px solid #e7e8ed;
-  }
 
   ::ng-deep {
     i {
@@ -39,52 +53,58 @@
     }
   }
 
-  .title-text, .salary-text, .remote-text, .location-text, .company-text, .website-link, .date-text {
-    margin: 0;
-  }
-
-  .title-text {
-    flex: 1;
-
-    font-weight: 700;
-    color: #1e293b;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .salary-text {
-    text-align: right;
-
-    &.visible {
-      font-weight: 550;
-      color: #3dbc22;
-    }
-
-    &.hidden {
-      font-weight: 300;
-      color: #a6a6a6;
-    }
-  }
-
-  .remote-text, .location-text {
+  .text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: 300;
 
-    min-width: 0;
-    max-width: 10rem;
+    margin: 0;
   }
 
-  .company-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
+  #title {
     flex: 1;
-    font-weight: 400;
+    color: var(--text-color-main);
+    font-weight: var(--font-weight-main);
+  }
+
+  #date {
+    color: var(--text-color-secondary);
+    font-weight: var(--font-weight-non-important);
+  }
+
+  .text .extra-info {
+    color: var(--text-color-secondary);
+    font-weight: var(--font-weight-non-important);
+  }
+
+  #company-name {
+    flex: 1;
+    color: var(--text-color-secondary);
+    font-weight: var(--font-weight-secondary);
+  }
+
+  #salary {
+    &.visible {
+      color: var(--text-color-salary-visible);
+      font-weight: var(--font-weight-secondary);
+    }
+
+    &.hidden {
+      color: var(--text-color-non-important);
+      font-weight: var(--font-weight-non-important);
+    }
+  }
+
+  #website-link {
+    color: var(--text-color-website-link);
+    font-size: var(--font-size-website-link);
+    font-weight: var(--font-weight-non-important);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .website-metadata {
@@ -110,22 +130,6 @@
     }
   }
 
-  .website-link {
-    white-space: nowrap;
-    color: #688ab1;
-    text-decoration: none;
-    font-size: 0.8rem;
-  }
-
-  .date-text {
-    white-space: nowrap;
-    font-size: 0.8rem;
-    align-content: center;
-    font-weight: 300;
-
-    text-align: right;
-  }
-
   ::ng-deep .apply-button .p-button {
     background: transparent;
     border-color: transparent;
@@ -135,7 +139,7 @@
 
     &:hover {
       background: $main-color;
-      color: #ffffff;
+      color: white;
     }
 
     &:active {
