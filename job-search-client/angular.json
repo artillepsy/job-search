@@ -22,11 +22,12 @@
       "prefix": "app",
       "architect": {
         "build": {
-
           "builder": "@angular/build:application",
           "options": {
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": [
+                "src/styles"
+              ]
             },
             "browser": "src/main.ts",
             "polyfills": [
@@ -38,7 +39,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/staticwebapp.config.json"
             ],
             "styles": [
               "primeicons/primeicons.css",
