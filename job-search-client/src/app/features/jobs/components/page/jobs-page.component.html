@@ -1,6 +1,9 @@
 <div class="top-container">
   <div class="logo-container">
-    <div class="logo"><span id="logo-start">JOB</span><span id="logo-end">SOS</span></div>
+    <div class="logo-text">
+      <span>JOBS C</span><i class="logo-icon"></i><span>RE</span>
+    </div>
+    <div class="tagline">Search for jobs across the platforms</div>
   </div>
   <div class="search-panel">
     <app-search-panel (searchChange)="updateSearchParams($event)"></app-search-panel>
@@ -12,5 +15,6 @@
     <app-job-items-board [searchParams]="searchParams()"></app-job-items-board>
   </div>
 </div>
-
+display: flex;
+align-items: center;
 
