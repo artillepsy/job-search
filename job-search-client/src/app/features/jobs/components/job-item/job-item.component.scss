@@ -75,12 +75,15 @@
     font-weight: 300;
 
     min-width: 0;
-    max-width: 20rem;
+    max-width: 10rem;
   }
 
   .company-text {
-    flex: 1;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    flex: 1;
     font-weight: 400;
   }
 
