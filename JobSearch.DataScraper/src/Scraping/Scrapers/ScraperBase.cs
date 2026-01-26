@@ -1,4 +1,3 @@
-using JobSearch.DataScraper.Scraping.Services;
 
 namespace JobSearch.DataScraper.Scraping.Scrapers;
 

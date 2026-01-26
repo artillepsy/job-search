@@ -2,7 +2,6 @@ using JobSearch.Data;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Extensions;
 using JobSearch.DataScraper.Scraping.Scrapers.Factories;
-using JobSearch.DataScraper.Scraping.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +18,6 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 
 builder.Services.AddScrapers(builder.Configuration);
 builder.Services.AddScrapersHttpClients(builder.Configuration);
-builder.Services.AddSingleton<IUrlHashService, UrlHashSha1Service>();
 builder.Services.AddSingleton<IScraperFactory, ScraperFactory>();
 
 using IHost host = builder.Build();

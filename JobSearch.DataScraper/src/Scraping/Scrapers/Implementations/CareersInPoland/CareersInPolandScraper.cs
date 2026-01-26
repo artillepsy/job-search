@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using JobSearch.Data.Entities;
 using JobSearch.DataScraper.Data.Repositories;
 using JobSearch.DataScraper.Scraping.Attributes;
-using JobSearch.DataScraper.Scraping.Services;
 using JobSearch.DataScraper.Utils;
 
 namespace JobSearch.DataScraper.Scraping.Scrapers.Implementations.CareersInPoland;
