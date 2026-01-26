@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div class="jobs-container">
+  <div class="jobs-container" #scrollTarget>
     @for (job of jobs; track job.id) {
       <div class="job-item">
         <app-job-item [job]="job"></app-job-item>

@@ -1,7 +1,7 @@
 import { Component, effect, ElementRef, inject, input, OnInit, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { JobItemComponent } from '../job-item/job-item.component';
-import {JobResponse, JobsService} from '../../services/jobs.service';
+import { JobResponse, JobsService } from '../../services/jobs.service';
 import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { Job } from '../../models/job.model';
@@ -19,6 +19,8 @@ export class JobItemsBoardComponent implements OnInit {
   private _jobsService = inject(JobsService);
 
   searchParams = input<JobSearchParams | undefined>(undefined);
+
+  @ViewChild('scrollTarget') scrollTarget!: ElementRef;
 
   jobs: Job[] = [];
 
@@ -65,6 +67,13 @@ export class JobItemsBoardComponent implements OnInit {
   onPageChange(event: PaginatorState) {
     this.pageNumber = event.page ? event.page + 1 : 1; // page + 1
     this.pageSize = event.rows ?? this.pageSize;
+
+    if (this.scrollTarget) {
+      this.scrollTarget.nativeElement.scrollTo({
+        top: 0,
+        behavior: 'smooth', // Optional: removes the 'jump' and slides up
+      });
+    }
 
     this.loadJobs();
   }
