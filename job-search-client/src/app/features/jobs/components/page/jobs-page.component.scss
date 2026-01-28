@@ -42,7 +42,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     //padding-top: 0.5rem;
 
     .logo-text {
@@ -51,11 +51,8 @@
       font-size: $logo-font-size;
       font-weight: $logo-font-weight-main;
       color: $logo-text-color-main;
-      text-shadow: $logo-text-shadow;
-    }
-
-    #logo {
-      padding-left: 0.3rem;
+      //text-shadow: $logo-text-shadow;
+      filter: $logo-drop-shadow;
     }
 
     .logo-icon {

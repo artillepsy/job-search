@@ -10,14 +10,14 @@ $top-panel-height: 4rem;
 $top-panel-border-bottom: 0px solid #c5c6cd;
 
 // logo
-$logo-font-size: 1.5rem;
+$logo-font-size: 2rem;
 $logo-icon-path: '/logo.svg';
-$logo-font-weight-main: 700;
-$logo-font-weight-secondary: 400;
-$logo-text-color-main: #657581;
-$logo-text-color-secondary: #657581;
+$logo-font-weight-main: 900;
+$logo-font-weight-secondary: 500;
+$logo-text-color-main: #4b6781;
+$logo-text-color-secondary: #4b6781;
 $logo-icon-color: #ff0000;
-$logo-text-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+$logo-drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
 
 // search bar
 $search-bar-bg-color: #ffffff;
