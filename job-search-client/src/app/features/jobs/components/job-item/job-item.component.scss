@@ -5,7 +5,7 @@
     height: 9rem;
 
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-    border-radius: 1rem;
+    border-radius: $job-item-border-radius;
     background-color: $job-item-bg-color;
 
     display: flex;
@@ -119,6 +119,7 @@
   }
 
   ::ng-deep .apply-button .p-button {
+    border-radius: $job-item-apply-button-border-radius;
     background: transparent;
     border-color: transparent;
     color: $main-color;

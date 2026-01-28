@@ -1,11 +1,10 @@
 $mobile-width-breakpoint: 700px;
 $main-color: #fd3535;
-$secondary-color: #96aec1;
-$page-bg-color: #edf2f8;
+$secondary-color: #637380;
+$top-panel-color: #e9eef6;
+$page-bg-color: #e9eef6;
 $job-item-bg-color: #ffffff;
 
-$logo-text-color: #4b6781;
-$logo-icon-color: #ff0000;
 
 $text-color-main: #19252e;
 $text-color-secondary: #395168;
@@ -16,19 +15,43 @@ $text-color-website-link: #688ab1;
 
 $text-icon-color: #b3b3b3;
 
+// Logo
+$logo-icon-path: '/logo.svg';
 
-$font-weight-logo: 900;
+$logo-font-weight-main: 700;
+$logo-font-weight-secondary: 400;
+
+$logo-text-color-main: #657581;
+$logo-text-color-secondary: #657581;
+$logo-icon-color: #ff0000;
+$logo-text-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+
+
+// search bar
+$search-bar-bg-color: #ffffff;
+$search-bar-placeholder-color: #657581;
+$search-bar-input-color: #657581;
+$search-bar-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+$search-bar-border-radius: 1rem;
+
+// search button
+$search-button-bg-color: #ff0000;
+$search-button-border-radius: 1rem;
+
+
+// Job item
+$job-item-border-radius: 1rem;
+$job-item-apply-button-border-radius: 1rem;
+
+
 $font-weight-main: 700;
 $font-weight-secondary: 450;
 $font-weight-non-important: 330;
-
 $font-size-website-link: 0.8rem;
-
 
 $box-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.2);
 $box-shadow-normal-secondary: 0 4px 8px rgba(0, 0, 0, 0.1);
 $box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
 $box-shadow-active: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-$text-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.15);
 

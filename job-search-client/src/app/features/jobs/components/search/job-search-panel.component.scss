@@ -33,18 +33,18 @@
 
   .search-bar {
     width: 40%;
-    border-radius: 2rem;
     border-width: 0;
-    box-shadow: $box-shadow-normal-secondary;
-    background-color: white;
+    border-radius: $search-bar-border-radius;
+    box-shadow: $search-bar-box-shadow;
+    background-color: $search-bar-bg-color;
     transition: all 0.2s ease;
     padding: 0.55rem 1rem;
     outline: none;
-    color: $text-color-main;
+    color: $search-bar-input-color;
     font-size: 1rem;
 
     &::placeholder {
-      color: $text-color-non-important;
+      color: $search-bar-placeholder-color;
       font-size: 0.9rem;
     }
 
@@ -55,7 +55,9 @@
 
   ::ng-deep .search-button {
     .p-button {
+      background-color: $search-button-bg-color;
       box-shadow: $box-shadow-normal;
+      border-radius: $search-bar-border-radius;
       transition: all 0.2s ease;
 
       &:hover {
