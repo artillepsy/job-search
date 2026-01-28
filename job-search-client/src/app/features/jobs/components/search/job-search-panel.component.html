@@ -1,15 +1,20 @@
 <form class="search-form"> <!--submit-->
-  <div class="form-wrapper">
+  <div class="form-wrapper" title="Input job title, company or keywords">
     <i class="pi pi-search form-icon"></i>
-    <input id="keywords" type="text" [placeholder]="'Job title, company or keywords'">
+    <input name="keywords" type="text"
+           [(ngModel)]="inputKeywords"
+           [placeholder]="'Job title, company or keywords'">
+
   </div>
-  <div class="form-wrapper">
+  <div class="form-wrapper" title="Input location">
     <i class="pi pi-map-marker form-icon"></i>
-    <input id="location" type="text" [placeholder]="'location'">
+    <input name="location" type="text"
+           [(ngModel)]="inputLocation"
+           [placeholder]="'location'">
   </div>
   <div class="buttons-wrapper">
-    <button id="filters"><i class="pi pi-sliders-h button-icon"></i></button>
-    <button id="search"><i class="pi pi-search button-icon"></i></button>
+    <button id="filters" title="filters"><i class="pi pi-sliders-h button-icon"></i></button>
+    <button id="search" title="search"><i class="pi pi-search button-icon"></i></button>
   </div>
 </form>
 

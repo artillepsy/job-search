@@ -1,6 +1,6 @@
-// resolution
+// global
 $mobile-width-breakpoint: 700px;
-
+$global-transition: all 0.3s ease;
 // jobs page
 $page-bg-color: #f5f8fa;
 
@@ -20,32 +20,14 @@ $logo-icon-color: #ff0000;
 $logo-text-shadow: 0 4px 8px rgba(0, 0, 0, 0);
 
 // search bar
+$search-bar-bg-color: #ffffff;
 $search-bar-border: 1px solid #c5c6cd;
 $search-bar-border-radius: 1rem;
-
 $search-bar-icons-color-normal: #657581;
-
-
-$search-bar-bg-color: #ffffff;
 $search-bar-input-color-focus: #e8eaf1;
-
 $search-bar-button-icons-color-normal: #657581;
 $search-bar-button-icons-color-hover: #ff0000;
 
-$search-bar-placeholder-color: #657581;
-$search-bar-input-color: #657581;
-$search-bar-filters-button-color: #8b96a3;
-$search-bar-box-shadow-normal: 0 0px 1px #c4c8cf;
-$search-bar-box-shadow-hover: 0 0px 1px #9a9da6;
-
-// search button
-$search-button-bg-color-normal: #ff0000;
-$search-button-bg-color-hover: #ff0000;
-$search-button-bg-color-active: #e10000;
-$search-button-border-radius: 1rem;
-$search-button-box-shadow-normal: 0 0px 10px #c4c8cf;
-$search-button-box-shadow-hover: 0 0px 10px #9a9da6;
-$search-button-box-shadow-active: 0 0px 10px #d4d8df;
 
 // Job item
 $job-item-bg-color: #ffffff;

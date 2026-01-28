@@ -1,9 +1,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#ff0000" stroke="#ff0000">
+<svg width="800px" height="800px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#ff0000" stroke="#ff0000">
 <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier">
-<path fill="#ff0000" d="M256 16A240 240 0 0 0 16 256a240 240 0 0 0 240 240 240 240 0 0 0 240-240A240 240 0 0 0 256 16zm-9 14.73v86.342c-35.304 2.47-124.423 31.35-127.033 129.928H37.605C39.993 81.83 189.513 34.292 247 30.73zm18 .874c.596.158 1.148.33 1.62.52 78.82 31.677 84.33 217.118 77.042 268.052l-36.498-22.813c3.486-34.36-.902-132.647-42.164-156.877V31.604zM41.258 265h85.996c19.485 15.47 77.33 34.583 166.902 25.46l37.7 23.563C163.39 333.03 61.252 291.425 41.26 265z"/>
-</g>
+<g id="SVGRepo_iconCarrier"> <title>sunset 2</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-362.000000, -829.000000)" fill="#ff0000"> <path d="M390,855 L366,855 C365.447,855 365,855.447 365,856 C365,856.553 365.447,857 366,857 L390,857 C390.553,857 391,856.553 391,856 C391,855.447 390.553,855 390,855 L390,855 Z M393,851 L363,851 C362.447,851 362,851.447 362,852 C362,852.553 362.447,853 363,853 L393,853 C393.553,853 394,852.553 394,852 C394,851.447 393.553,851 393,851 L393,851 Z M393.476,849 C393.806,847.72 394,846.384 394,845 C394,836.164 386.837,829 378,829 C369.163,829 362,836.164 362,845 C362,846.384 362.194,847.72 362.524,849 L393.476,849 L393.476,849 Z M383,859 L373,859 C372.447,859 372,859.447 372,860 C372,860.553 372.447,861 373,861 L383,861 C383.553,861 384,860.553 384,860 C384,859.447 383.553,859 383,859 L383,859 Z" id="sunset-2" sketch:type="MSShapeGroup"> </path> </g> </g> </g>
 </svg>

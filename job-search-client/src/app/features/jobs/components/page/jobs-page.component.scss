@@ -19,7 +19,7 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
   }
 
   .bottom-container {
@@ -52,6 +52,10 @@
       font-weight: $logo-font-weight-main;
       color: $logo-text-color-main;
       text-shadow: $logo-text-shadow;
+    }
+
+    #logo {
+      padding-left: 0.5rem;
     }
 
     .logo-icon {

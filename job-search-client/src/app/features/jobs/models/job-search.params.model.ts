@@ -1,5 +1,5 @@
 export interface JobSearchParams {
-  title?: string;
+  keywords?: string;
   location?: string;
   isRemote?: boolean;
   isSalaryVisible?: boolean;

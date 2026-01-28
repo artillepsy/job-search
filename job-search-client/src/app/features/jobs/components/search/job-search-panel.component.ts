@@ -6,10 +6,11 @@ import { JobSearchParams } from '../../models/job-search.params.model';
 import { FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { JobSearchResults } from '../../models/job-search-results.model';
+import { title } from '@primeuix/themes/aura/card';
 
 @Component({
   selector: 'app-search-panel',
-  imports: [AutoComplete, Button, FloatLabel, FormsModule, InputText],
+  imports: [FormsModule],
   templateUrl: './job-search-panel.component.html',
   styleUrl: './job-search-panel.component.scss',
 })
@@ -20,11 +21,13 @@ export class JobSearchPanelComponent {
 
   constructor() {}
 
-  inputTitle: string | null = null;
+  inputKeywords: string | null = null;
+  inputLocation: string | null = null;
 
   onClickSearch() {
     const params: JobSearchParams = {
-      title: this.inputTitle ?? undefined,
+      keywords: this.inputKeywords ?? undefined,
+      location: this.inputLocation ?? undefined,
     };
     this.searchChange.emit(params);
   }
@@ -32,4 +35,6 @@ export class JobSearchPanelComponent {
   onClickFilters() {
     this.filtersChange.emit();
   }
+
+  protected readonly title = title;
 }
