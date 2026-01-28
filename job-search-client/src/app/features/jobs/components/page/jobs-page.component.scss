@@ -42,7 +42,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    padding-left: 0.5rem;
+    padding-left: 1rem;
     //padding-top: 0.5rem;
 
     .logo-text {
@@ -55,7 +55,7 @@
     }
 
     #logo {
-      padding-left: 0.5rem;
+      padding-left: 0.3rem;
     }
 
     .logo-icon {
@@ -91,6 +91,10 @@
     .search-panel {
       width: 100%;
       min-width: unset;
+    }
+
+    .logo-container {
+      display: none;
     }
   }
 }

@@ -1,9 +1,10 @@
 @import 'variables';
 
 :host {
-  .job-item-rows {
+  .job-item {
     height: 9rem;
 
+    border: $job-item-border;
     box-shadow: $job-item-box-shadow;
     border-radius: $job-item-border-radius;
     background-color: $job-item-bg-color;

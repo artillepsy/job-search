@@ -2,12 +2,12 @@
 $mobile-width-breakpoint: 700px;
 $global-transition: all 0.3s ease;
 // jobs page
-$page-bg-color: #f5f8fa;
+$page-bg-color: #edf2f8;
 
 // top panel
-$top-panel-color: #e9eef6;
-$top-panel-height: 3.5rem;
-$top-panel-border-bottom: 1px solid #c5c6cd;
+$top-panel-color: rgba(255, 255, 255, 0);
+$top-panel-height: 4rem;
+$top-panel-border-bottom: 0px solid #c5c6cd;
 
 // logo
 $logo-font-size: 1.5rem;
@@ -21,12 +21,13 @@ $logo-text-shadow: 0 4px 8px rgba(0, 0, 0, 0);
 
 // search bar
 $search-bar-bg-color: #ffffff;
-$search-bar-border: 1px solid #c5c6cd;
+$search-bar-border: 0px solid #c5c6cd;
 $search-bar-border-radius: 1rem;
 $search-bar-icons-color-normal: #657581;
 $search-bar-input-color-focus: #e8eaf1;
 $search-bar-button-icons-color-normal: #657581;
 $search-bar-button-icons-color-hover: #ff0000;
+$search-bar-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 
 
 // Job item
@@ -40,13 +41,15 @@ $job-item-text-color-website-link: #688ab1;
 $job-item-text-icon-color: #b3b3b3;
 
 $job-item-border-bottom: 1px solid #e7e8ed;
-$job-item-border-radius: 1rem;
-$job-item-apply-button-border-radius: 1rem;
+$job-item-border: 0px solid #e7e8ed;
+$job-item-border-radius: 0.5rem;
+
+$job-item-apply-button-border-radius: 0.5rem;
 $job-item-font-weight-main: 700;
 $job-item-font-weight-secondary: 450;
 $job-item-font-weight-non-important: 330;
 $job-item-font-size-website-link: 0.8rem;
-$job-item-box-shadow: 0 10px 20px #d4d8df;
+$job-item-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 
 
 

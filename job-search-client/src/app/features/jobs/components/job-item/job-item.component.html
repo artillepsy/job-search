@@ -1,23 +1,19 @@
-<div class="job-item-rows">
-
+<div class="job-item">
   <div class="row">
     <p class="text" id="title" [title]="job().title">{{ job().title }}</p>
     <p class="text" id="date">{{ daysAgoText() }}</p>
   </div>
-
   <div class="row">
     @if (job().isRemote) {
       <p class="text extra-info"><i class="pi pi-briefcase"></i>Remote</p>
     }
     <p class="text extra-info" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
   </div>
-
-  <div class="row with-border">
+  <div class="row row-with-border">
     <p class="text" id="company-name" [title]="job().companyName">{{ job().companyName }}</p>
     <p class="text" id="salary" [class.visible]="isSalary()" [class.hidden]="!isSalary()">{{ formattedSalary() }}</p>
   </div>
-
-  <div class="row">
+  <div class="row row-bottom">
     <div class="website-metadata">
       <img [src]="srcMetadata().logoPath" [alt]="srcMetadata().displayName" class="website-logo"/>
       <a [href]="srcMetadata()?.websiteUrl" target="_blank" class="text"
@@ -26,5 +22,4 @@
     <p-button class="apply-button" label="Apply" icon="pi pi-external-link" (onClick)="apply()"
               styleClass="p-button-sm"></p-button>
   </div>
-
 </div>
