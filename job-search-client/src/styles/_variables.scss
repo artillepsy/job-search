@@ -22,12 +22,18 @@ $logo-text-shadow: 0 4px 8px rgba(0, 0, 0, 0);
 // search bar
 $search-bar-bg-color: #ffffff;
 $search-bar-border: 0px solid #c5c6cd;
-$search-bar-border-radius: 1rem;
+$search-bar-border-radius: 2rem;
 $search-bar-icons-color-normal: #657581;
 $search-bar-input-color-focus: #e8eaf1;
 $search-bar-button-icons-color-normal: #657581;
 $search-bar-button-icons-color-hover: #ff0000;
 $search-bar-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+// search button
+$search-button-bg-color-normal: #ff0000;
+$search-button-bg-color-active: #c80000;
+$search-button-text-color: #ffffff;
+$search-button-border-radius: 2rem;
 
 
 // Job item
@@ -40,11 +46,12 @@ $job-item-text-color-salary-hidden: #a5a5a5;
 $job-item-text-color-website-link: #688ab1;
 $job-item-text-icon-color: #b3b3b3;
 
+$job-item-height: 9rem;
 $job-item-border-bottom: 1px solid #e7e8ed;
 $job-item-border: 0px solid #e7e8ed;
-$job-item-border-radius: 0.5rem;
+$job-item-border-radius: 1rem;
 
-$job-item-apply-button-border-radius: 0.5rem;
+$job-item-apply-button-border-radius: 1rem;
 $job-item-font-weight-main: 700;
 $job-item-font-weight-secondary: 450;
 $job-item-font-weight-non-important: 330;

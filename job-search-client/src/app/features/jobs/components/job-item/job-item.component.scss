@@ -2,7 +2,7 @@
 
 :host {
   .job-item {
-    height: 9rem;
+    height: $job-item-height;
 
     border: $job-item-border;
     box-shadow: $job-item-box-shadow;

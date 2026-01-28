@@ -61,10 +61,13 @@
     justify-content: center;
     align-items: center;
     gap: 0.25rem;
-    padding-right: 0.25rem;
   }
 
-  button {
+  i.button-icon {
+    font-size: 1.2rem;
+  }
+
+  #filters-button {
     background-color: transparent;
     color: $search-bar-button-icons-color-normal;
     transition: $global-transition;
@@ -73,15 +76,32 @@
 
     cursor: pointer;
 
-    i.button-icon {
-      font-size: 1.2rem;
-    }
-
     &:hover {
       color: $search-bar-button-icons-color-hover;
     }
 
     &:active {
+      transform: scale(0.8);
+    }
+  }
+
+
+  #search-button {
+    background-color: $search-button-bg-color-normal;
+    color: $search-button-text-color;
+    border-radius: $search-button-border-radius;
+    transition: $global-transition;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    border-width: 0;
+    padding: 0.25rem 0.25rem;
+
+    &:hover {
+    }
+
+    &:active {
+      background-color: $search-button-bg-color-active;
       transform: scale(0.8);
     }
   }
