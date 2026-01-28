@@ -157,6 +157,9 @@ jobs:
           # Debug: Show what was built
           echo "Build output at:"
           find . -name "index.html" | head -5
+          
+          # Verify the config file is in the build output
+          ls dist/job-search-client/browser/staticwebapp.config.json
 
           # Move the built files to where Azure expects them
           mv dist/job-search-client/browser ../built-app
