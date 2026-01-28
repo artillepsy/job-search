@@ -6,10 +6,11 @@ $page-bg-color: #f5f8fa;
 
 // top panel
 $top-panel-color: #e9eef6;
-$top-panel-height: 4rem;
-$top-panel-border-bottom: 1px solid #e7e8ed;
+$top-panel-height: 3.5rem;
+$top-panel-border-bottom: 1px solid #c5c6cd;
 
 // logo
+$logo-font-size: 1.5rem;
 $logo-icon-path: '/logo.svg';
 $logo-font-weight-main: 700;
 $logo-font-weight-secondary: 400;
@@ -19,16 +20,28 @@ $logo-icon-color: #ff0000;
 $logo-text-shadow: 0 4px 8px rgba(0, 0, 0, 0);
 
 // search bar
+$search-bar-border: 1px solid #c5c6cd;
+$search-bar-border-radius: 1rem;
+
+$search-bar-icons-color-normal: #657581;
+
+
 $search-bar-bg-color: #ffffff;
+$search-bar-input-color-focus: #e8eaf1;
+
+$search-bar-button-icons-color-normal: #657581;
+$search-bar-button-icons-color-hover: #ff0000;
+
 $search-bar-placeholder-color: #657581;
 $search-bar-input-color: #657581;
-$search-bar-border-radius: 1rem;
 $search-bar-filters-button-color: #8b96a3;
-$search-bar-box-shadow-normal: 0 0px 10px #c4c8cf;
-$search-bar-box-shadow-hover: 0 0px 10px #9a9da6;
+$search-bar-box-shadow-normal: 0 0px 1px #c4c8cf;
+$search-bar-box-shadow-hover: 0 0px 1px #9a9da6;
 
 // search button
-$search-button-bg-color: #ff0000;
+$search-button-bg-color-normal: #ff0000;
+$search-button-bg-color-hover: #ff0000;
+$search-button-bg-color-active: #e10000;
 $search-button-border-radius: 1rem;
 $search-button-box-shadow-normal: 0 0px 10px #c4c8cf;
 $search-button-box-shadow-hover: 0 0px 10px #9a9da6;

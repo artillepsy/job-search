@@ -1,15 +1,17 @@
-<button class="filter-button" (click)="onClickFilters()">
-  <i class="pi pi-sliders-h"></i>
-</button>
-<input type="text" class="search-bar"
-       [(ngModel)]="inputTitle"
-       [placeholder]="'Search by job title, company or keywords'">
-<p-button class="search-button" (click)="onClickSearch()">
-  <i class="pi pi-search"></i>
-  Search
-</p-button>
-
-<!--<p class="results-text">1004389 results</p>-->
+<form class="search-form"> <!--submit-->
+  <div class="form-wrapper">
+    <i class="pi pi-search form-icon"></i>
+    <input id="keywords" type="text" [placeholder]="'Job title, company or keywords'">
+  </div>
+  <div class="form-wrapper">
+    <i class="pi pi-map-marker form-icon"></i>
+    <input id="location" type="text" [placeholder]="'location'">
+  </div>
+  <div class="buttons-wrapper">
+    <button id="filters"><i class="pi pi-sliders-h button-icon"></i></button>
+    <button id="search"><i class="pi pi-search button-icon"></i></button>
+  </div>
+</form>
 
 
 

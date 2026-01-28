@@ -2,72 +2,79 @@
 
 :host {
   flex: 1 1 auto;
-
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
 
-  gap: 0.5rem;
+  form {
+    width: 100%;
+    background-color: $search-bar-bg-color;
+    border: $search-bar-border;
+    border-radius: $search-bar-border-radius;
 
-  .filter-button {
-    background: none;
-    border: none;
-    padding: 0;
+    height: 2.5rem;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+
+    padding: 0.25rem;
+    gap: 0.25rem;
+  }
+
+  .form-wrapper {
+    flex: 1 1 auto;
+    border-radius: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+
+    &:focus-within, &:hover {
+      background-color: $search-bar-input-color-focus;
+    }
+
+    input {
+      flex: 1 1 auto;
+      background-color: transparent;
+      outline: none;
+      border-width: 0;
+    }
+
+    i.form-icon {
+      color: $search-bar-icons-color-normal;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+
+  .buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  button {
+    background-color: transparent;
+    color: $search-bar-button-icons-color-normal;
+    border-width: 0;
+
     cursor: pointer;
-    color: $search-bar-filters-button-color;
-    transition: all 0.2s ease;
+
+    i.button-icon {
+      font-size: 1.2rem;
+    }
 
     &:hover {
-      color: $job-item-apply-button-color;
-    }
-
-    &:active {
-      transform: scale(0.8);
-    }
-
-    i {
-      font-size: 1.5rem;
-    }
-  }
-
-  .search-bar {
-    width: 40%;
-    border-width: 0;
-    border-radius: $search-bar-border-radius;
-    box-shadow: $search-bar-box-shadow-normal;
-    background-color: $search-bar-bg-color;
-    transition: all 0.2s ease;
-    padding: 0.55rem 1rem;
-    outline: none;
-    color: $search-bar-input-color;
-    font-size: 1rem;
-
-    &::placeholder {
-      color: $search-bar-placeholder-color;
-      font-size: 0.9rem;
-    }
-
-    &:hover, &:focus {
-      box-shadow: $search-bar-box-shadow-hover;
-    }
-  }
-
-  ::ng-deep .search-button {
-    .p-button {
-      background-color: $search-button-bg-color;
-      box-shadow: $search-button-box-shadow-normal;
-      border-radius: $search-bar-border-radius;
-      transition: all 0.2s ease;
-
-      &:hover {
-        box-shadow: $search-button-box-shadow-hover;
-      }
-
-      &:active {
-        transform: scale(0.9);
-        box-shadow: $search-button-box-shadow-active;
-      }
+      color: $search-bar-button-icons-color-hover;
     }
   }
 }

@@ -48,7 +48,7 @@
     .logo-text {
       display: inline-flex;
       vertical-align: middle;
-      font-size: 2rem;
+      font-size: $logo-font-size;
       font-weight: $logo-font-weight-main;
       color: $logo-text-color-main;
       text-shadow: $logo-text-shadow;
@@ -73,7 +73,7 @@
   .search-panel {
     display: flex;
     min-width: $mobile-width-breakpoint;
-    width: 50%;
+    width: 25%;
   }
 
   .jobs-board-panel {
