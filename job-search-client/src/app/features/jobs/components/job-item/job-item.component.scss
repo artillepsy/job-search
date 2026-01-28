@@ -4,7 +4,7 @@
   .job-item-rows {
     height: 9rem;
 
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+    box-shadow: $job-item-box-shadow;
     border-radius: $job-item-border-radius;
     background-color: $job-item-bg-color;
 
@@ -44,7 +44,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-weight: 300;
+    font-weight: $job-item-font-weight-non-important;
 
     margin: 0;
   }
@@ -52,42 +52,39 @@
   #title {
     flex: 1;
     color: $text-color-main;
-    font-weight: $font-weight-main;
+    font-weight: $job-item-font-weight-main;
   }
 
   #date {
     font-size: 0.8rem;
     color: $text-color-secondary;
-    font-weight: $font-weight-non-important;
   }
 
   .text .extra-info {
     color: $text-color-secondary;
-    font-weight: $font-weight-non-important;
   }
 
   #company-name {
     flex: 1;
     color: $text-color-secondary;
-    font-weight: $font-weight-secondary;
+    font-weight: $job-item-font-weight-secondary;
   }
 
   #salary {
     &.visible {
       color: $text-color-salary-visible;
-      font-weight: $font-weight-secondary;
+      font-weight: $job-item-font-weight-secondary;
     }
 
     &.hidden {
       color: $text-color-salary-hidden;
-      font-weight: $font-weight-non-important;
+      font-weight: $job-item-font-weight-non-important;
     }
   }
 
   #website-link {
     color: $text-color-website-link;
-    font-size: $font-size-website-link;
-    font-weight: $font-weight-non-important;
+    font-size: $job-item-font-size-website-link;
     text-decoration: none;
 
     &:hover {

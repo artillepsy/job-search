@@ -15,7 +15,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    color: $secondary-color;
+    color: $search-bar-filters-button-color;
     transition: all 0.2s ease;
 
     &:hover {
@@ -35,7 +35,7 @@
     width: 40%;
     border-width: 0;
     border-radius: $search-bar-border-radius;
-    box-shadow: $search-bar-box-shadow;
+    box-shadow: $search-bar-box-shadow-normal;
     background-color: $search-bar-bg-color;
     transition: all 0.2s ease;
     padding: 0.55rem 1rem;
@@ -49,24 +49,24 @@
     }
 
     &:hover, &:focus {
-      box-shadow: $box-shadow-hover;
+      box-shadow: $search-bar-box-shadow-hover;
     }
   }
 
   ::ng-deep .search-button {
     .p-button {
       background-color: $search-button-bg-color;
-      box-shadow: $box-shadow-normal;
+      box-shadow: $search-button-box-shadow-normal;
       border-radius: $search-bar-border-radius;
       transition: all 0.2s ease;
 
       &:hover {
-        box-shadow: $box-shadow-hover;
+        box-shadow: $search-button-box-shadow-hover;
       }
 
       &:active {
         transform: scale(0.9);
-        box-shadow: $box-shadow-active;
+        box-shadow: $search-button-box-shadow-active;
       }
     }
   }

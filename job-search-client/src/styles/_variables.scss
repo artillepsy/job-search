@@ -17,41 +17,37 @@ $text-icon-color: #b3b3b3;
 
 // Logo
 $logo-icon-path: '/logo.svg';
-
 $logo-font-weight-main: 700;
 $logo-font-weight-secondary: 400;
-
 $logo-text-color-main: #657581;
 $logo-text-color-secondary: #657581;
 $logo-icon-color: #ff0000;
 $logo-text-shadow: 0 4px 8px rgba(0, 0, 0, 0);
 
-
 // search bar
 $search-bar-bg-color: #ffffff;
 $search-bar-placeholder-color: #657581;
 $search-bar-input-color: #657581;
-$search-bar-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 $search-bar-border-radius: 1rem;
+$search-bar-filters-button-color: #8b96a3;
+$search-bar-box-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.1);
+$search-bar-box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
 
 // search button
 $search-button-bg-color: #ff0000;
 $search-button-border-radius: 1rem;
-
+$search-button-box-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.2);
+$search-button-box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
+$search-button-box-shadow-active: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 // Job item
 $job-item-border-radius: 1rem;
 $job-item-apply-button-border-radius: 1rem;
+$job-item-font-weight-main: 700;
+$job-item-font-weight-secondary: 450;
+$job-item-font-weight-non-important: 330;
+$job-item-font-size-website-link: 0.8rem;
+$job-item-box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 
-
-$font-weight-main: 700;
-$font-weight-secondary: 450;
-$font-weight-non-important: 330;
-$font-size-website-link: 0.8rem;
-
-$box-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.2);
-$box-shadow-normal-secondary: 0 4px 8px rgba(0, 0, 0, 0.1);
-$box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
-$box-shadow-active: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 
