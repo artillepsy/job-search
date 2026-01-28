@@ -11,7 +11,7 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    padding: 0.5rem 0.75rem 0.2rem;
+    padding: 0.5rem 0.75rem 0.0rem;
 
     transition: box-shadow 0.2s, transform 0.2s;
   }
@@ -28,15 +28,14 @@
     overflow: hidden;
 
     &.with-border {
-      border-bottom: 1px solid #e7e8ed;
+      border-bottom: $job-item-border-bottom;
     }
   }
-
 
   ::ng-deep {
     i {
       margin-right: 0.2rem;
-      color: $text-icon-color;
+      color: $job-item-text-icon-color;
     }
   }
 
@@ -51,39 +50,39 @@
 
   #title {
     flex: 1;
-    color: $text-color-main;
+    color: $job-item-text-color-main;
     font-weight: $job-item-font-weight-main;
   }
 
   #date {
     font-size: 0.8rem;
-    color: $text-color-secondary;
+    color: $job-item-text-color-secondary;
   }
 
   .text .extra-info {
-    color: $text-color-secondary;
+    color: $job-item-text-color-secondary;
   }
 
   #company-name {
     flex: 1;
-    color: $text-color-secondary;
+    color: $job-item-text-color-secondary;
     font-weight: $job-item-font-weight-secondary;
   }
 
   #salary {
     &.visible {
-      color: $text-color-salary-visible;
+      color: $job-item-text-color-salary-visible;
       font-weight: $job-item-font-weight-secondary;
     }
 
     &.hidden {
-      color: $text-color-salary-hidden;
+      color: $job-item-text-color-salary-hidden;
       font-weight: $job-item-font-weight-non-important;
     }
   }
 
   #website-link {
-    color: $text-color-website-link;
+    color: $job-item-text-color-website-link;
     font-size: $job-item-font-size-website-link;
     text-decoration: none;
 
@@ -119,12 +118,12 @@
     border-radius: $job-item-apply-button-border-radius;
     background: transparent;
     border-color: transparent;
-    color: $main-color;
+    color: $job-item-apply-button-color;
     box-shadow: none;
     transition: all 0.2s ease;
 
     &:hover {
-      background: $main-color;
+      background: $job-item-apply-button-color;
       color: white;
     }
 

@@ -1,21 +1,15 @@
+// resolution
 $mobile-width-breakpoint: 700px;
-$main-color: #fd3535;
-$secondary-color: #637380;
+
+// jobs page
+$page-bg-color: #f5f8fa;
+
+// top panel
 $top-panel-color: #e9eef6;
-$page-bg-color: #e9eef6;
-$job-item-bg-color: #ffffff;
+$top-panel-height: 4rem;
+$top-panel-border-bottom: 1px solid #e7e8ed;
 
-
-$text-color-main: #19252e;
-$text-color-secondary: #395168;
-$text-color-non-important: #6b7f93;
-$text-color-salary-visible: #36d105;
-$text-color-salary-hidden: #b3b3b3;
-$text-color-website-link: #688ab1;
-
-$text-icon-color: #b3b3b3;
-
-// Logo
+// logo
 $logo-icon-path: '/logo.svg';
 $logo-font-weight-main: 700;
 $logo-font-weight-secondary: 400;
@@ -30,24 +24,34 @@ $search-bar-placeholder-color: #657581;
 $search-bar-input-color: #657581;
 $search-bar-border-radius: 1rem;
 $search-bar-filters-button-color: #8b96a3;
-$search-bar-box-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.1);
-$search-bar-box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
+$search-bar-box-shadow-normal: 0 0px 10px #c4c8cf;
+$search-bar-box-shadow-hover: 0 0px 10px #9a9da6;
 
 // search button
 $search-button-bg-color: #ff0000;
 $search-button-border-radius: 1rem;
-$search-button-box-shadow-normal: 0 4px 8px rgba(0, 0, 0, 0.2);
-$search-button-box-shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.3);
-$search-button-box-shadow-active: 0 2px 4px rgba(0, 0, 0, 0.1);
+$search-button-box-shadow-normal: 0 0px 10px #c4c8cf;
+$search-button-box-shadow-hover: 0 0px 10px #9a9da6;
+$search-button-box-shadow-active: 0 0px 10px #d4d8df;
 
 // Job item
+$job-item-bg-color: #ffffff;
+$job-item-apply-button-color: #fd3535;
+$job-item-text-color-main: #19252e;
+$job-item-text-color-secondary: #395168;
+$job-item-text-color-salary-visible: #36d105;
+$job-item-text-color-salary-hidden: #a5a5a5;
+$job-item-text-color-website-link: #688ab1;
+$job-item-text-icon-color: #b3b3b3;
+
+$job-item-border-bottom: 1px solid #e7e8ed;
 $job-item-border-radius: 1rem;
 $job-item-apply-button-border-radius: 1rem;
 $job-item-font-weight-main: 700;
 $job-item-font-weight-secondary: 450;
 $job-item-font-weight-non-important: 330;
 $job-item-font-size-website-link: 0.8rem;
-$job-item-box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+$job-item-box-shadow: 0 10px 20px #d4d8df;
 
 
 

@@ -12,8 +12,9 @@
   flex-direction: column;
 
   .top-container {
+    border-bottom: $top-panel-border-bottom;
     background-color: $top-panel-color;
-    height: 4rem;
+    height: $top-panel-height;
     flex-shrink: 0;
 
     display: flex;
