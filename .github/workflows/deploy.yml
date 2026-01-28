@@ -163,6 +163,12 @@ jobs:
 
           # Move the built files to where Azure expects them
           mv dist/job-search-client/browser ../built-app
+        
+      # Debug: Show if the config is present in the build output  
+      - name: "Verify Build Contents"
+        run: |
+          ls -R ../built-app | grep staticwebapp.config.json
+          cat ../built-app/staticwebapp.config.json
 
       - name: "Upload to Azure Static Web App"
         uses: Azure/static-web-apps-deploy@v1
