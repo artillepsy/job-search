@@ -1,7 +1,6 @@
 @import 'variables';
 
 :host {
-  //background: linear-gradient(to bottom right, #f4fffd, #f2fff1);
   background-color: $page-bg-color;
 
   width: 100%;
@@ -13,7 +12,6 @@
 
   .top-container {
     border-bottom: $top-panel-border-bottom;
-    background-color: $top-panel-color;
     height: $top-panel-height;
     flex-shrink: 0;
 
@@ -36,14 +34,13 @@
     display: flex;
   }
 
-  .logo-container {
+  .logo-wrapper {
     width: 25%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
     padding-left: 0.5rem;
-    //padding-top: 0.5rem;
 
     .logo-text {
       display: inline-flex;
@@ -51,7 +48,6 @@
       font-size: $logo-font-size;
       font-weight: $logo-font-weight-main;
       color: $logo-text-color-main;
-      //text-shadow: $logo-text-shadow;
       filter: $logo-drop-shadow;
     }
 
@@ -64,7 +60,7 @@
       mask-size: contain;
     }
 
-    .tagline {
+    .logo-tagline {
       font-size: 0.8rem;
       font-weight: $logo-font-weight-secondary;
       color: $logo-text-color-secondary;

@@ -5,9 +5,9 @@
   </div>
   <div class="row">
     @if (job().isRemote) {
-      <p class="text extra-info"><i class="pi pi-briefcase"></i>Remote</p>
+      <p class="text text-extra-info"><i class="pi pi-briefcase"></i>Remote</p>
     }
-    <p class="text extra-info" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
+    <p class="text text-extra-info" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
   </div>
   <div class="row row-with-border">
     <p class="text" id="company-name" [title]="job().companyName">{{ job().companyName }}</p>

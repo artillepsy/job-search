@@ -28,7 +28,7 @@
     width: 100%;
     overflow: hidden;
 
-    &.with-border {
+    &-with-border {
       border-bottom: $job-item-border-bottom;
     }
   }
@@ -47,6 +47,10 @@
     font-weight: $job-item-font-weight-non-important;
 
     margin: 0;
+
+    &-extra-info {
+      color: $job-item-text-color-secondary;
+    }
   }
 
   #title {
@@ -60,9 +64,6 @@
     color: $job-item-text-color-secondary;
   }
 
-  .text .extra-info {
-    color: $job-item-text-color-secondary;
-  }
 
   #company-name {
     flex: 1;
