@@ -6,18 +6,18 @@ import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { Job } from '../../models/job.model';
 import { JobSearchParams } from '../../models/job-search.params.model';
-import { ScrollPanel } from 'primeng/scrollpanel';
 
 @Component({
   selector: 'app-job-items-board',
-  imports: [ButtonModule, JobItemComponent, FormsModule, Paginator, ScrollPanel],
+  imports: [ButtonModule, JobItemComponent, FormsModule, Paginator],
   templateUrl: './job-items-board.component.html',
   styleUrl: './job-items-board.component.scss',
 })
-//cache search results, page
+// cache search results, page
 export class JobItemsBoardComponent implements OnInit {
   private _jobsService = inject(JobsService);
 
+  // input from parent
   searchParams = input<JobSearchParams | undefined>(undefined);
 
   @ViewChild('scrollTarget') scrollTarget!: ElementRef;
@@ -25,7 +25,7 @@ export class JobItemsBoardComponent implements OnInit {
   jobs: Job[] = [];
 
   totalPages = 0;
-  pageNumber = 0;
+  pageNumber = 1;
   pageSize = 23;
   totalRecords = 0;
 
@@ -35,35 +35,14 @@ export class JobItemsBoardComponent implements OnInit {
         return;
       }
 
-      this.onSearch(this.searchParams()!);
+      this.loadJobs();
     });
   }
 
   ngOnInit() {
-    this._jobsService.getAllJobs(1, this.pageSize).subscribe((data: JobResponse) => {
-      this.jobs = data.jobs;
-      this.totalRecords = data.totalRecords;
-      this.totalPages = data.totalPages;
-    });
+    this.loadJobs();
   }
 
-  //todo: apply filters
-  onSearch(params: JobSearchParams) {
-    /*if (!params.jobTitle) {
-      //todo: don't search if no input
-      this.loadJobs();
-      return;
-    }*/
-
-    this.loadJobs(); // todo: use different method instead
-    /*this._jobsService.getJobsByTitle(params.jobTitle).subscribe((jobs) => {
-      this.jobs = jobs;
-      this.totalRecords = jobs.length;
-      this.updatePagedJobs();
-    });*/
-  }
-
-  // change everything to filtered search. To get all, unnecessary fields should remain empty
   onPageChange(event: PaginatorState) {
     this.pageNumber = event.page ? event.page + 1 : 1; // page + 1
     this.pageSize = event.rows ?? this.pageSize;
@@ -80,9 +59,16 @@ export class JobItemsBoardComponent implements OnInit {
 
   // filters as params
   loadJobs() {
-    this._jobsService.getAllJobs(this.pageNumber, this.pageSize).subscribe((res: JobResponse) => {
+    const params: JobSearchParams = {
+      ...this.searchParams(),
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+    };
+
+    this._jobsService.getJobs(params).subscribe((res: JobResponse) => {
       this.jobs = res.jobs;
       this.totalRecords = res.totalRecords;
+      this.totalPages = res.totalPages;
     });
   }
 }

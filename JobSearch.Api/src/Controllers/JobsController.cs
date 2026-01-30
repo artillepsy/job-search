@@ -12,6 +12,8 @@ public class JobsController : ControllerBase
 {
 	private readonly AppDbContext _db;
 	private readonly JobSettings _jobSettings;
+	private readonly ILogger<JobsController> _logger;
+	
 	private int i = 10;
 	public class JobSettings
 	{
@@ -19,7 +21,7 @@ public class JobsController : ControllerBase
 	}
 	
 	public record JobSearchDto(
-		string? Title, 
+		string? Keywords, 
 		string? Location, 
 		bool? IsSalaryVisible,
 		bool? IsRemote,
@@ -42,11 +44,12 @@ public class JobsController : ControllerBase
 		string Url,
 		DateTime CreatedAt);
 
-	public JobsController(AppDbContext db , IConfiguration config)
+	public JobsController(AppDbContext db , IConfiguration config, ILogger<JobsController> logger)
 	{
 		_db = db;
 		_jobSettings = config.GetSection("JobSettings").Get<JobSettings>() 
 		               ?? throw new Exception("JobSettings section not found in appsettings.json");
+		_logger = logger;
 	}
 
 	// To get all jobs, dto with default params can be sent
@@ -58,15 +61,22 @@ public class JobsController : ControllerBase
 		
 		IQueryable<JobEntity> query = _db.Jobs;
 		
-		if (!string.IsNullOrWhiteSpace(dto.Title)) // Title or Company name
+		if (!string.IsNullOrWhiteSpace(dto.Keywords)) // Title or Company name
 		{
-			string search = dto.Title.ToLower();
-			query = query.Where(j => j.Title.ToLower().Contains(search) || j.CompanyName.ToLower().Contains(search));
+			string search = $"%{dto.Keywords.Trim()}%";
+			query = query.Where(
+				j => EF.Functions.ILike(j.Title, search) || 
+				     EF.Functions.ILike(j.CompanyName, search));
+			
+			_logger.LogInformation($"Keywords: '{search}', query size: {query.Count()}");
 		}
 		
 		if (!string.IsNullOrWhiteSpace(dto.Location)) // Location
 		{
-			query = query.Where(j => j.Location != null && j.Location.ToLower().Contains(dto.Location.ToLower()));
+			string search = $"%{dto.Location.Trim()}%";
+			query = query.Where(j => j.Location != null && EF.Functions.ILike(j.Location, search));
+			
+			_logger.LogInformation($"Location: '{search}', query size: {query.Count()}");
 		}
 		
 		if (dto.IsSalaryVisible.HasValue) // Is salary visible
