@@ -1,17 +1,8 @@
-<div class="top-container">
-  <div class="logo-wrapper">
-    <div class="logo-text">
-      <i class="logo-icon"></i><span>CORE JOBS</span>
-    </div>
-    <!--<div class="logo-tagline">Search for jobs across the platforms</div>-->
-  </div>
-  <div class="search-panel">
-    <app-search-panel (searchChange)="updateSearchParams($event)"></app-search-panel>
-  </div>
-  <div class="buttons-container"></div>
+<div class="top-panel">
+  <div class="logo"><i></i><span>CORE JOBS</span></div>
+  <app-search-panel class="search-panel" (searchChange)="updateSearchParams($event)"></app-search-panel>
+  <div class="top-buttons"></div>
 </div>
-<div class="bottom-container">
-  <div class="jobs-board-panel">
-    <app-job-items-board [searchParams]="searchParams()"></app-job-items-board>
-  </div>
+<div class="main-panel">
+  <app-job-items-board class="jobs-board-panel" [searchParams]="searchParams()"></app-job-items-board>
 </div>

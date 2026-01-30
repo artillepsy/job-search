@@ -10,7 +10,7 @@
   justify-content: center;
   flex-direction: column;
 
-  .top-container {
+  .top-panel {
     border-bottom: $top-panel-border-bottom;
     height: $top-panel-height;
     flex-shrink: 0;
@@ -20,7 +20,7 @@
     justify-content: space-between;
   }
 
-  .bottom-container {
+  .main-panel {
     flex: 1 1 auto;
     overflow: hidden;
 
@@ -29,47 +29,39 @@
     justify-content: center;
   }
 
-  .buttons-container {
+  .logo {
+    flex: 1 1 auto;
     width: 25%;
-    display: flex;
-  }
 
-  .logo-wrapper {
-    width: 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
+    display: inline-flex;
+    justify-content: start;
+    align-items: center;
+
     padding-left: 0.5rem;
+    gap: 0.2rem;
 
-    .logo-text {
-      display: inline-flex;
-      vertical-align: middle;
-      font-size: $logo-font-size;
-      font-weight: $logo-font-weight-main;
-      color: $logo-text-color-main;
-      filter: $logo-drop-shadow;
-    }
+    font-size: $logo-font-size;
+    font-weight: $logo-font-weight-main;
+    color: $logo-text-color-main;
+    filter: $logo-drop-shadow;
 
-    .logo-icon {
-      height: 100%;
+    i {
+      height: $logo-icon-height;
       aspect-ratio: 1 / 1;
 
       background-color: $logo-icon-color;
       mask: url($logo-icon-path) no-repeat center;
       mask-size: contain;
     }
-
-    .logo-tagline {
-      font-size: 0.8rem;
-      font-weight: $logo-font-weight-secondary;
-      color: $logo-text-color-secondary;
-    }
   }
 
   .search-panel {
-    display: flex;
+    width: 25%;
     min-width: $mobile-width-breakpoint;
+  }
+
+  .top-buttons {
+    flex: 1 1 auto;
     width: 25%;
   }
 
