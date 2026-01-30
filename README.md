@@ -3,7 +3,7 @@
 Welcome to **Job Search**, a centralized platform designed to help job seekers discover opportunities across various industries in one streamlined interface.
 
 ## Live Demo
-Test the application and see it in action here: **[Website](https://salmon-meadow-0d94e0103.1.azurestaticapps.net)**. This demo is hosted on Azure Static Web Apps.
+Test the application and see it in action here: <a href="https://salmon-meadow-0d94e0103.1.azurestaticapps.net" target="_blank">Website</a>.
 > **Note:** The demo is currently in development and may not be fully functional. Please wait a few seconds for the VM hosting the website to start.
 
 ## About the Project
