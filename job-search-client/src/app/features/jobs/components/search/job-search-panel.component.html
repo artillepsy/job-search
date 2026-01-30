@@ -1,20 +1,37 @@
 <form class="search-form" (ngSubmit)="onClickSearch()">
-  <div class="form-wrapper" title="Input job title, company or keywords">
-    <i class="pi pi-search form-icon"></i>
-    <input name="keywords" type="text"
-           [(ngModel)]="inputKeywords"
-           [placeholder]="'Job title, company or keywords'">
+  <div class="search-form__group" title="Input job title, company or keywords">
+    <i class="pi pi-search search-form__input-icon"></i>
+    <input
+      class="search-form__input"
+      name="keywords"
+      type="text"
+      [(ngModel)]="inputKeywords"
+      [placeholder]="'Job title, company or keywords'">
+  </div>
 
+  <div class="search-form__group" title="Input location">
+    <i class="pi pi-map-marker search-form__input-icon"></i>
+    <input
+      class="search-form__input"
+      name="location"
+      type="text"
+      [(ngModel)]="inputLocation"
+      [placeholder]="'Location'">
   </div>
-  <div class="form-wrapper" title="Input location">
-    <i class="pi pi-map-marker form-icon"></i>
-    <input name="location" type="text"
-           [(ngModel)]="inputLocation"
-           [placeholder]="'Location'">
-  </div>
-  <div class="buttons-wrapper">
-    <button type="button" id="filters-button" title="filters"><i class="pi pi-sliders-h button-icon"></i></button>
-    <button type="submit" id="search-button" title="search"><i class="pi pi-search button-icon"></i></button>
+
+  <div class="search-form__actions">
+    <button
+      class="search-form__button search-form__button--filters"
+      type="button"
+      title="filters">
+      <i class="pi pi-sliders-h search-form__button-icon"></i>
+    </button>
+    <button
+      class="search-form__button search-form__button--search"
+      type="submit"
+      title="search">
+      <i class="pi pi-search search-form__button-icon"></i>
+    </button>
   </div>
 </form>
 
