@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobSearchPanelComponent } from './job-search-panel.component';
+import { JobSearchBarComponent } from './job-search-bar.component';
 
-describe('JobSearchPanelComponent', () => {
-  let component: JobSearchPanelComponent;
-  let fixture: ComponentFixture<JobSearchPanelComponent>;
+describe('JobSearchBarComponent', () => {
+  let component: JobSearchBarComponent;
+  let fixture: ComponentFixture<JobSearchBarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JobSearchPanelComponent],
+      imports: [JobSearchBarComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(JobSearchPanelComponent);
+    fixture = TestBed.createComponent(JobSearchBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

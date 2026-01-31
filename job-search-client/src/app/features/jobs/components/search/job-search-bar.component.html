@@ -22,6 +22,7 @@
   <div class="search-form__actions">
     <button
       class="search-form__button search-form__button--filters"
+      [class.search-form__button--filters--panel-visible]="filtersVisible()"
       type="button"
       title="filters"
       (click)="onClickFilters()">

@@ -1,3 +1,6 @@
+// Color palette (shared)
+$primary-color: #ff0000;
+
 // global
 $mobile-width-breakpoint: 700px;
 $global-transition: all 0.3s ease;
@@ -14,46 +17,49 @@ $logo--icon-height: 2rem;
 $logo--icon-path: '/logo.svg';
 $logo--font-weight-main: 900;
 $logo--text-color-main: #4b6781;
-$logo--icon-color: #ff0000;
+$logo--icon-color: $primary-color;
 $logo--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
 
 // search bar
-$search-bar--bg-color: #ffffff;
-$search-bar--border: 0px solid #c5c6cd;
-$search-bar--border-radius: 2rem;
-$search-bar--icons-color-normal: #657581;
-$search-bar--input-color-focus: #e8eaf1;
-$search-bar--button-icons-color-normal: #657581;
-$search-bar--button-icons-color-hover: #ff0000;
-$search-bar--box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+$job-search-bar--bg-color: #ffffff;
+$job-search-bar--border: 0px solid #c5c6cd;
+$job-search-bar--border-radius: 2rem;
+$job-search-bar--icons-color-normal: #657581;
+$job-search-bar--input-color-focus: #e8eaf1;
+$job-search-bar--button-icons-color-normal: #657581;
+$job-search-bar--button-icons-color-hover: $primary-color;
+$job-search-bar--box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 
 // search button
-$search-button--bg-color-normal: #ff0000;
-$search-button--bg-color-active: #c80000;
-$search-button--text-color: #ffffff;
-$search-button--border-radius: 2rem;
+$job-search-button--bg-color-normal: $primary-color;
+$job-search-button--bg-color-active: #c80000;
+$job-search-button--text-color: #ffffff;
+$job-search-button--border-radius: 2rem;
+
+// filters button
+$job-filters-button--bg-color--panel-visible: $primary-color;
 
 // Job item
-$job-item--bg-color: #ffffff;
-$job-item--apply-button-color: #fd3535;
-$job-item--text-color-main: #19252e;
-$job-item--text-color-secondary: #395168;
-$job-item--text-color-salary-visible: #36d105;
-$job-item--text-color-salary-hidden: #a5a5a5;
-$job-item--text-color-website-link: #688ab1;
-$job-item--text-icon-color: #b3b3b3;
+$job-card--bg-color: #ffffff;
+$job-card--apply-button-color: $primary-color;
+$job-card--text-color-main: #19252e;
+$job-card--text-color-secondary: #395168;
+$job-card--text-color-salary-visible: #36d105;
+$job-card--text-color-salary-hidden: #a5a5a5;
+$job-card--text-color-website-link: #688ab1;
+$job-card--text-icon-color: #b3b3b3;
 
-$job-item--height: 9rem;
-$job-item--border-bottom: 1px solid #e7e8ed;
-$job-item--border: 0px solid #e7e8ed;
-$job-item--border-radius: 1rem;
+$job-card--height: 9rem;
+$job-card--border-bottom: 1px solid #e7e8ed;
+$job-card--border: 0px solid #e7e8ed;
+$job-card--border-radius: 1rem;
 
-$job-item--apply-button-border-radius: 1rem;
-$job-item--font-weight-main: 700;
-$job-item--font-weight-secondary: 450;
-$job-item--font-weight-non-important: 330;
-$job-item--font-size-website-link: 0.8rem;
-$job-item--box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+$job-card--apply-button-border-radius: 1rem;
+$job-card--font-weight-main: 700;
+$job-card--font-weight-secondary: 450;
+$job-card--font-weight-non-important: 330;
+$job-card--font-size-website-link: 0.8rem;
+$job-card--box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 
 
 

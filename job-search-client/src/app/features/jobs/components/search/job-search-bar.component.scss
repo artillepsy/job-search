@@ -5,15 +5,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .search-form {
   width: 100%;
-  background-color: $search-bar--bg-color;
-  border: $search-bar--border;
-  border-radius: $search-bar--border-radius;
-  box-shadow: $search-bar--box-shadow;
+  background-color: $job-search-bar--bg-color;
+  border: $job-search-bar--border;
+  border-radius: $job-search-bar--border-radius;
+  box-shadow: $job-search-bar--box-shadow;
 
   height: 2.5rem;
   overflow: hidden;
@@ -39,7 +38,7 @@
     transition: $global-transition;
 
     &:focus-within, &:hover {
-      background-color: $search-bar--input-color-focus;
+      background-color: $job-search-bar--input-color-focus;
     }
   }
 
@@ -52,7 +51,7 @@
   }
 
   &__input-icon {
-    color: $search-bar--icons-color-normal;
+    color: $job-search-bar--icons-color-normal;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -71,15 +70,19 @@
 
   &__button--filters {
     background-color: transparent;
-    color: $search-bar--button-icons-color-normal;
+    color: $job-search-bar--button-icons-color-normal;
     transition: $global-transition;
 
     border-width: 0;
 
     cursor: pointer;
 
+    &--panel-visible {
+      color: $job-filters-button--bg-color--panel-visible
+    }
+
     &:hover {
-      color: $search-bar--button-icons-color-hover;
+      color: $job-search-bar--button-icons-color-hover;
     }
 
     &:active {
@@ -88,9 +91,9 @@
   }
 
   &__button--search {
-    background-color: $search-button--bg-color-normal;
-    color: $search-button--text-color;
-    border-radius: $search-button--border-radius;
+    background-color: $job-search-button--bg-color-normal;
+    color: $job-search-button--text-color;
+    border-radius: $job-search-button--border-radius;
     transition: $global-transition;
     width: 2rem;
     height: 2rem;
@@ -99,7 +102,7 @@
     padding: 0.25rem 0.25rem;
 
     &:active {
-      background-color: $search-button--bg-color-active;
+      background-color: $job-search-button--bg-color-active;
       transform: scale(0.8);
     }
   }

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FiltersPanelComponent } from './filters-panel.component';
+import { JobCardComponent } from './job-card.component';
 
-describe('FiltersPanelComponent', () => {
-  let component: FiltersPanelComponent;
-  let fixture: ComponentFixture<FiltersPanelComponent>;
+describe('JobComponent', () => {
+  let component: JobCardComponent;
+  let fixture: ComponentFixture<JobCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FiltersPanelComponent],
+      imports: [JobCardComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FiltersPanelComponent);
+    fixture = TestBed.createComponent(JobCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

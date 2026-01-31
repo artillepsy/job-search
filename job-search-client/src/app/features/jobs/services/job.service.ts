@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Job } from '../models/job.model';
 import { environment } from '../../../../environments/environment';
-import { JobSearchParams } from '../models/job-search.params.model';
+import { JobSearchParams } from '../models/job-search-params.model';
 
 export interface JobResponse {
   totalPages: number;
@@ -17,7 +17,7 @@ export interface JobResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class JobsService {
+export class JobService {
   private _http = inject(HttpClient);
 
   getJobs(params: JobSearchParams): Observable<JobResponse> {

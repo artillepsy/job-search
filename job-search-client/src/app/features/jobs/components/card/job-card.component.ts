@@ -4,12 +4,12 @@ import { Job } from '../../models/job.model';
 import { WEBSITE_SOURCE_CONFIG } from '../../../../core/constants/storage.constants';
 
 @Component({
-  selector: 'app-job-item',
+  selector: 'app-job-card',
   imports: [ButtonModule],
-  templateUrl: './job-item.component.html',
-  styleUrl: './job-item.component.scss',
+  templateUrl: './job-card.component.html',
+  styleUrl: './job-card.component.scss',
 })
-export class JobItemComponent {
+export class JobCardComponent {
   job = input.required<Job>();
 
   isSalary = computed(() => this.job().salaryMin !== null);

@@ -1,0 +1,18 @@
+<div class="job-board">
+  <div class="job-board__scroll" #scrollTarget>
+    @for (job of jobs; track job.id) {
+      <app-job-card class="job-board__item" [job]="job"></app-job-card>
+    }
+  </div>
+  <p-paginator
+    class="job-board__paginator"
+    [first]="(pageNumber - 1) * pageSize"
+    [rows]="pageSize"
+    [totalRecords]="totalRecords"
+    [pageLinkSize]="5"
+    (onPageChange)="onPageChange($event)">
+  </p-paginator>
+</div>
+
+
+
