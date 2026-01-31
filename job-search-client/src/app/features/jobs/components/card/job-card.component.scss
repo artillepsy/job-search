@@ -1,11 +1,11 @@
 @import 'variables';
 
 @mixin row--display {
-  flex: 1 1 auto;
+  width: 100%;
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
 
   gap: 1rem;
@@ -18,87 +18,76 @@
 }
 
 :host {
-  height: 9rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   border-radius: 1rem;
-  background-color: $job-card-background-color;
-
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
+  background-color: job-card("bg-c");
 
   transition: $transition-global;
 
   .job-card {
+    width: 100%; // This is critical: the block must fill the host
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 0.5rem;
+
+    gap: 0.5rem;
+
     &__icon {
-      margin-right: 0.2rem;
-      color: $job-card--icon--text-color;
+      color: job-card("icon-c");
 
       &--in-button {
-        margin-right: 0;
+        margin-right: 0.2rem;
         color: inherit;
       }
     }
 
     &__header {
       @include row--display;
-
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-      padding-top: 0.5rem;
     }
 
     &__title {
       @include text--display-no-overflow;
 
-      font-weight: $job-card--title--font-weight;
-      color: $job-card--title--text-color;
+      font-weight: job-card("title-fw");
+      color: job-card("title-tc");
       flex: 1 1 auto;
     }
 
     &__date {
-      @include text--display-no-overflow;
-
-      font-size: $job-card--date--font-size;
-      font-weight: $job-card--date--font-weight;
-      color: $job-card--date--text-color;
+      white-space: nowrap;
+      font-size: job-card("date-fs");
+      font-weight: job-card("date-fw");
+      color: job-card("date-tc");
     }
 
     &__details {
       @include row--display;
-
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
     }
 
     &__remote {
       @include text--display-no-overflow;
-
-      font-weight: $job-card--remote--font-weight;
-      color: $job-card--remote--text-color;
+      font-weight: job-card("remote-fw");
+      color: job-card("remote-tc");
     }
 
     &__location {
       @include text--display-no-overflow;
-
-      font-weight: $job-card--location--font-weight;
-      color: $job-card--location--text-color;
+      font-weight: job-card("location-fw");
+      color: job-card("location-tc");
     }
 
     &__body {
       @include row--display;
-
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-
-      border-bottom: $job-card--body--border-bottom;
     }
 
     &__company {
       @include text--display-no-overflow;
-
-      font-weight: $job-card--company--font-weight;
-      color: $job-card--company--text-color;
+      font-weight: job-card("company-fw");
+      color: job-card("company-tc");
       flex: 1;
     }
 
@@ -106,22 +95,20 @@
       @include text--display-no-overflow;
 
       &--visible {
-        font-weight: $job-card--salary--visible--font-weight;
-        color: $job-card--salary--visible--text-color;
+        font-weight: job-card("salary-visible-fw");
+        color: job-card("salary-visible-tc");
       }
 
       &--hidden {
-        font-weight: $job-card--salary--hidden--font-weight;
-        color: $job-card--salary--hidden--text-color;
+        font-weight: job-card("salary-hidden-fw");
+        color: job-card("salary-hidden-tc");
       }
     }
 
     &__footer {
       @include row--display;
-
-      // no padding-right because of the apply button at the right corner
-      padding-left: 0.5rem;
-      padding-bottom: 0.2rem;
+      border-top: job-card("footer-border");
+      padding-top: 0.5rem;
     }
 
     &__source {
@@ -149,8 +136,8 @@
 
     &__source-link {
       @include text--display-no-overflow;
-      color: $job-card--link--text-color;
-      font-size: $job-card--link--font-size;
+      color: job-card("link-tc");
+      font-size: job-card("link-fs");
 
       text-decoration: none;
 
@@ -161,20 +148,21 @@
 
     &__apply-button {
       flex-shrink: 0;
-      border-radius: $job-card--apply-button--border-radius;
-      background: $job-card--apply-button--normal--background-color;
-      color: $job-card--apply-button--normal--text-color;
+      border-radius: job-card("apply-btn-radius");
+      background: job-card("apply-btn-bg-c-normal");
+      color: job-card("apply-btn-tc-normal");
       transition: $transition-global;
       border-color: transparent;
+      cursor: pointer;
 
       &:hover {
-        background: $job-card--apply-button--hover--background-color;
-        color: $job-card--apply-button--hover--text-color;
+        background: job-card("apply-btn-bg-c-hover");
+        color: job-card("apply-btn-tc-hover");
       }
 
       &:active {
-        background: $job-card--apply-button--active--background-color;
-        color: $job-card--apply-button--active--text-color;
+        background: job-card("apply-btn-bg-c-active");
+        color: job-card("apply-btn-tc-active");
         transform: scale(0.9);
       }
     }
