@@ -35,6 +35,8 @@ export class JobBoardComponent implements OnInit {
         return;
       }
 
+      this.pageNumber = 1;
+      this.scrollToTop();
       this.loadJobs();
     });
   }
@@ -47,14 +49,14 @@ export class JobBoardComponent implements OnInit {
     this.pageNumber = event.page ? event.page + 1 : 1; // page + 1
     this.pageSize = event.rows ?? this.pageSize;
 
-    if (this.scrollTarget) {
-      this.scrollTarget.nativeElement.scrollTo({
-        top: 0,
-        behavior: 'smooth', // Optional: removes the 'jump' and slides up
-      });
-    }
-
+    this.scrollToTop();
     this.loadJobs();
+  }
+
+  scrollToTop() {
+    if (this.scrollTarget) {
+      this.scrollTarget.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   // filters as params
