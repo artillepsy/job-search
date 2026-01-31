@@ -1,9 +1,11 @@
 // Color palette (shared)
 $primary-color: #ff0000;
+$primary-color--hover: #c80000;
+$primary-color--active: #ae0000;
 
 // global
-$mobile-width-breakpoint: 700px;
-$global-transition: all 0.3s ease;
+$width-breakpoint-mobile: 700px;
+$transition-global: all 0.3s ease;
 // jobs page
 $page-bg-color: #edf2f8;
 
@@ -39,27 +41,43 @@ $job-search-button--border-radius: 2rem;
 // filters button
 $job-filters-button--bg-color--panel-visible: $primary-color;
 
-// Job item
-$job-card--bg-color: #ffffff;
-$job-card--apply-button-color: $primary-color;
-$job-card--text-color-main: #19252e;
-$job-card--text-color-secondary: #395168;
-$job-card--text-color-salary-visible: #36d105;
-$job-card--text-color-salary-hidden: #a5a5a5;
-$job-card--text-color-website-link: #688ab1;
-$job-card--text-icon-color: #b3b3b3;
+// job card
+$job-card-background-color: #ffffff;
 
-$job-card--height: 9rem;
-$job-card--border-bottom: 1px solid #e7e8ed;
-$job-card--border: 0px solid #e7e8ed;
-$job-card--border-radius: 1rem;
+$job-card--icon--text-color: #b3b3b3;
 
-$job-card--apply-button-border-radius: 1rem;
-$job-card--font-weight-main: 700;
-$job-card--font-weight-secondary: 450;
-$job-card--font-weight-non-important: 330;
-$job-card--font-size-website-link: 0.8rem;
-$job-card--box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+$job-card--title--font-weight: 700;
+$job-card--title--text-color: #19252e;
 
+$job-card--date--font-size: 0.8rem;
+$job-card--date--font-weight: 300;
+$job-card--date--text-color: #19252e;
 
+$job-card--remote--font-weight: 500;
+$job-card--remote--text-color: #19252e;
 
+$job-card--location--font-weight: 500;
+$job-card--location--text-color: #19252e;
+
+$job-card--body--border-bottom: 1px solid #e7e8ed;
+
+$job-card--company--font-weight: 500;
+$job-card--company--text-color: #19252e;
+
+$job-card--salary--visible--font-weight: 500;
+$job-card--salary--visible--text-color: #36d105;
+$job-card--salary--hidden--font-weight: 300;
+$job-card--salary--hidden--text-color: #a5a5a5;
+
+$job-card--link--font-size: 0.8rem;
+$job-card--link--text-color: #688ab1;
+
+$job-card--apply-button--border-radius: 1rem;
+$job-card--apply-button--normal--background-color: transparent;
+$job-card--apply-button--normal--text-color: $primary-color;
+
+$job-card--apply-button--hover--background-color: $primary-color;
+$job-card--apply-button--hover--text-color: #ffffff;
+
+$job-card--apply-button--active--background-color: $primary-color--active;
+$job-card--apply-button--active--text-color: #ffffff;

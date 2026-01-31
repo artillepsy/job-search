@@ -35,7 +35,7 @@
     align-items: center;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-    transition: $global-transition;
+    transition: $transition-global;
 
     &:focus-within, &:hover {
       background-color: $job-search-bar--input-color-focus;
@@ -71,7 +71,7 @@
   &__button--filters {
     background-color: transparent;
     color: $job-search-bar--button-icons-color-normal;
-    transition: $global-transition;
+    transition: $transition-global;
 
     border-width: 0;
 
@@ -94,7 +94,7 @@
     background-color: $job-search-button--bg-color-normal;
     color: $job-search-button--text-color;
     border-radius: $job-search-button--border-radius;
-    transition: $global-transition;
+    transition: $transition-global;
     width: 2rem;
     height: 2rem;
     cursor: pointer;

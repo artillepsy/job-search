@@ -1,7 +1,7 @@
 import { Component, computed, input, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { Job } from '../../models/job.model';
 import { WEBSITE_SOURCE_CONFIG } from '../../../../core/constants/storage.constants';
+import { JobInfo } from '../../models/job-info.model';
 
 @Component({
   selector: 'app-job-card',
@@ -10,11 +10,12 @@ import { WEBSITE_SOURCE_CONFIG } from '../../../../core/constants/storage.consta
   styleUrl: './job-card.component.scss',
 })
 export class JobCardComponent {
-  job = input.required<Job>();
+  jobInfo = input.required<JobInfo>();
 
-  isSalary = computed(() => this.job().salaryMin !== null);
+  isSalaryVisible = computed(() => this.jobInfo().salaryMin !== null);
+
   formattedSalary = computed(() => {
-    const { salaryMin, salaryMax, currency } = this.job();
+    const { salaryMin, salaryMax, currency } = this.jobInfo();
     if (salaryMin) {
       // salary is visible
       if (!salaryMax || salaryMin === salaryMax) {
@@ -27,7 +28,7 @@ export class JobCardComponent {
   });
 
   daysAgoText = computed(() => {
-    let rawDate = this.job().createdAt;
+    let rawDate = this.jobInfo().createdAt;
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate day counting
@@ -45,11 +46,11 @@ export class JobCardComponent {
   });
 
   srcMetadata = computed(() => {
-    const sourceKey = this.job().website; // This is the string like 'CareersInPoland'
+    const sourceKey = this.jobInfo().website; // This is the string like 'CareersInPoland'
     return WEBSITE_SOURCE_CONFIG[sourceKey] || null;
   });
 
   public apply(): void {
-    window.open(this.job().url, '_blank');
+    window.open(this.jobInfo().url, '_blank');
   }
 }

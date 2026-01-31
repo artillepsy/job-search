@@ -4,7 +4,7 @@ import { JobCardComponent } from '../card/job-card.component';
 import { JobResponse, JobService } from '../../services/job.service';
 import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
-import { Job } from '../../models/job.model';
+import { JobInfo } from '../../models/job-info.model';
 import { JobSearchParams } from '../../models/job-search-params.model';
 
 @Component({
@@ -22,7 +22,7 @@ export class JobBoardComponent implements OnInit {
 
   @ViewChild('scrollTarget') scrollTarget!: ElementRef;
 
-  jobs: Job[] = [];
+  jobs: JobInfo[] = [];
 
   totalPages = 0;
   pageNumber = 1;

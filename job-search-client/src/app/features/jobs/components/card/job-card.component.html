@@ -1,25 +1,41 @@
-<div class="job-item">
-  <div class="row">
-    <p class="text" id="title" [title]="job().title">{{ job().title }}</p>
-    <p class="text" id="date">{{ daysAgoText() }}</p>
+<div class="job-card">
+  <div class="job-card__header">
+    <span class="job-card__title" [title]="jobInfo().title">{{ jobInfo().title }}</span>
+    <span class="job-card__date">{{ daysAgoText() }}</span>
   </div>
-  <div class="row">
-    @if (job().isRemote) {
-      <p class="text text-extra-info"><i class="pi pi-briefcase"></i>Remote</p>
+
+  <div class="job-card__details">
+    @if (jobInfo().isRemote) {
+      <span class="job-card__remote">
+        <i class="job-card__icon pi pi-briefcase"></i>
+        Remote
+      </span>
     }
-    <p class="text text-extra-info" [title]="job().location"><i class="pi pi-map-marker"></i>{{ job().location }}</p>
+    <span class="job-card__location" [title]="jobInfo().location">
+      <i class="job-card__icon pi pi-map-marker"></i>
+      {{ jobInfo().location }}
+    </span>
   </div>
-  <div class="row row-with-border">
-    <p class="text" id="company-name" [title]="job().companyName">{{ job().companyName }}</p>
-    <p class="text" id="salary" [class.visible]="isSalary()" [class.hidden]="!isSalary()">{{ formattedSalary() }}</p>
+
+  <div class="job-card__body">
+    <span class="job-card__company" [title]="jobInfo().companyName">{{ jobInfo().companyName }}</span>
+    <span class="job-card__salary"
+          [class.job-card__salary--visible]="isSalaryVisible()"
+          [class.job-card__salary--hidden]="!isSalaryVisible()">
+      {{ formattedSalary() }}
+    </span>
   </div>
-  <div class="row row-bottom">
-    <div class="website-metadata">
-      <img [src]="srcMetadata().logoPath" [alt]="srcMetadata().displayName" class="website-logo"/>
-      <a [href]="srcMetadata()?.websiteUrl" target="_blank" class="text"
-         id="website-link">{{ srcMetadata()?.displayName }}</a>
+
+  <div class="job-card__footer">
+    <div class="job-card__source">
+      <img class="job-card__source-logo" [src]="srcMetadata().logoPath" [alt]="srcMetadata().displayName"/>
+      <a class="job-card__source-link" [href]="srcMetadata()?.websiteUrl" target="_blank">
+        {{ srcMetadata()?.displayName }}
+      </a>
     </div>
-    <p-button class="apply-button" label="Apply" icon="pi pi-external-link" (onClick)="apply()"
-              styleClass="p-button-sm"></p-button>
+    <button class="job-card__apply-button" (click)="apply()">
+      <i class="job-card__icon job-card__icon--in-button pi pi-external-link"></i>
+      <span>Apply</span>
+    </button>
   </div>
 </div>

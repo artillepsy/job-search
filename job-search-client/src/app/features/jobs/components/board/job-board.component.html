@@ -1,7 +1,7 @@
 <div class="job-board">
   <div class="job-board__scroll" #scrollTarget>
     @for (job of jobs; track job.id) {
-      <app-job-card class="job-board__item" [job]="job"></app-job-card>
+      <app-job-card class="job-board__card" [jobInfo]="job"></app-job-card>
     }
   </div>
   <p-paginator

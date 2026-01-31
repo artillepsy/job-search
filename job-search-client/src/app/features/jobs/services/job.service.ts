@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Job } from '../models/job.model';
 import { environment } from '../../../../environments/environment';
 import { JobSearchParams } from '../models/job-search-params.model';
+import { JobInfo } from '../models/job-info.model';
 
 export interface JobResponse {
   totalPages: number;
@@ -11,7 +11,7 @@ export interface JobResponse {
   pageSize: number;
   totalRecords: number;
   returnRecords: number;
-  jobs: Job[];
+  jobs: JobInfo[];
 }
 
 @Injectable({

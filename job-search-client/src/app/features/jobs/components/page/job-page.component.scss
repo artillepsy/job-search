@@ -31,7 +31,7 @@
     padding-left: 0.5rem;
     gap: 0.2rem;
 
-    @media (max-width: $mobile-width-breakpoint) {
+    @media (max-width: $width-breakpoint-mobile) {
       display: none;
     }
   }
@@ -56,9 +56,9 @@
     /* Stay fixed at 25%, do not grow, do not shrink */
     flex: 0 0 35%;
 
-    min-width: $mobile-width-breakpoint;
+    min-width: $width-breakpoint-mobile;
 
-    @media (max-width: $mobile-width-breakpoint) {
+    @media (max-width: $width-breakpoint-mobile) {
       flex: 0 0 100%;
       padding: 0 0.5rem;
       min-width: unset;
@@ -71,7 +71,7 @@
     display: flex;
     justify-content: flex-end;
 
-    @media (max-width: $mobile-width-breakpoint) {
+    @media (max-width: $width-breakpoint-mobile) {
       display: none;
     }
   }
