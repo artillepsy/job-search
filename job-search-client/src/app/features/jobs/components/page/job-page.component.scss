@@ -37,19 +37,19 @@
   }
 
   &__logo-icon {
-    height: $logo--icon-height;
+    height: logo("icon-h");
     aspect-ratio: 1 / 1;
 
-    background-color: $logo--icon-color;
-    mask: url($logo--icon-path) no-repeat center;
+    background-color: logo("icon-c");
+    mask: url(logo("icon-path")) no-repeat center;
     mask-size: contain;
   }
 
   &__logo-text {
-    font-size: $logo--font-size;
-    font-weight: $logo--font-weight-main;
-    color: $logo--text-color-main;
-    filter: $logo--drop-shadow;
+    font-size: logo("fs");
+    font-weight: logo("fw");
+    color: logo("tc");
+    filter: logo("shadow");
   }
 
   &__search {

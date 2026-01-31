@@ -11,40 +11,48 @@ $page-bg-color: #edf2f8;
 $top-panel--height: 4rem;
 $top-panel--border-bottom: 0px solid #c5c6cd;
 
-// logo
-$logo--font-size: 1.5rem;
-$logo--icon-height: 2rem;
-$logo--icon-path: '/logo.svg';
-$logo--font-weight-main: 900;
-$logo--text-color-main: #4b6781;
-$logo--icon-color: $primary-color;
-$logo--drop-shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
 
-// search bar
-$job-search-bar--bg-color: #ffffff;
-$job-search-bar--border: 0px solid #c5c6cd;
-$job-search-bar--border-radius: 2rem;
-$job-search-bar--icons-color-normal: #657581;
-$job-search-bar--input-color-focus: #e8eaf1;
-$job-search-bar--button-icons-color-normal: #657581;
-$job-search-bar--button-icons-color-hover: $primary-color;
-$job-search-bar--box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+$logo: (
+  fs: 1.5rem,
+  fw: 900,
+  tc: #4b6781,
+  icon-h: 2rem,
+  icon-path: '/logo.svg',
+  icon-c: $primary-color,
+  shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2)),
+);
 
-// search button
-$job-search-button--bg-color-normal: $primary-color;
-$job-search-button--bg-color-active: #c80000;
-$job-search-button--text-color: #ffffff;
-$job-search-button--border-radius: 2rem;
+@function logo($key) {
+  @return map-get($logo, $key);
+}
 
-// filters button
-$job-filters-button--bg-color--panel-visible: $primary-color;
+$job-search: (
+  bg-c: #ffffff,
+  border: 0px solid #c5c6cd,
+  radius: 2rem,
+  shadow: 0 10px 20px rgba(0, 0, 0, 0.1),
+  icon-c: #657581,
+  input-bg-c-focus: #e8eaf1,
+  //
+  search-btn-bg-c-normal: $primary-color,
+  search-btn-bg-c-active: #c80000,
+  search-btn-tc: #ffffff,
+  search-btn-radius: 2rem,
+  //
+  filter-btn-tc-normal: #657581,
+  filter-btn-tc-visible: $primary-color
+);
 
-// job card
+@function job-search($key) {
+  @return map-get($job-search, $key);
+}
+
+
 $job-card: (
   bg-c: #ffffff,
   icon-c: #b3b3b3,
   footer-border: 1px solid #e7e8ed,
-  //
+  // font weights
   title-fw: 700,
   date-fw: 300,
   remote-fw: 500,
@@ -52,10 +60,10 @@ $job-card: (
   company-fw: 500,
   salary-visible-fw: 500,
   salary-hidden-fw: 300,
-  //
+  // font sizes
   date-fs: 0.8rem,
   link-fs: 0.8rem,
-  //
+  // text colors
   title-tc: #19252e,
   date-tc: #19252e,
   remote-tc: #19252e,
