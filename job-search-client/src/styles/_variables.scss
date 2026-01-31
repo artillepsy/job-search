@@ -50,36 +50,17 @@ $job-search: (
 
 $job-card: (
   bg-c: #ffffff,
-  icon-c: #b3b3b3,
+  icon-c: #000000,
   footer-border: 1px solid #e7e8ed,
-  // font weights
-  title-fw: 700,
-  date-fw: 300,
-  remote-fw: 500,
-  location-fw: 500,
-  company-fw: 500,
-  salary-visible-fw: 500,
-  salary-hidden-fw: 300,
-  // font sizes
-  date-fs: 0.8rem,
-  link-fs: 0.8rem,
-  // text colors
-  title-tc: #19252e,
-  date-tc: #19252e,
-  remote-tc: #19252e,
-  location-tc: #19252e,
-  company-tc: #19252e,
-  link-tc: #1c5f95,
-  salary-visible-tc: #36d105,
-  salary-hidden-tc: #a5a5a5,
-  //
-  apply-btn-radius: 1rem,
-  apply-btn-bg-c-normal: transparent,
-  apply-btn-bg-c-hover: $primary-color,
-  apply-btn-bg-c-active: #c80000,
-  apply-btn-tc-normal: $primary-color,
-  apply-btn-tc-hover: #ffffff,
-  apply-btn-tc-active: #ffffff,
+  fw: 400,
+  fs: 0.8rem,
+  tc: #19252e,
+  title-fw: 500,
+  title-tc: #155681,
+  title-tc-hover: #dc6326,
+  salary-visible-tc: #2bb100,
+  tag-radius: 1rem,
+  tag-remote-bg-c: #ededf3
 );
 
 @function job-card($key) {

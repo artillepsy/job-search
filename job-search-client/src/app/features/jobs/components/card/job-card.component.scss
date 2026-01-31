@@ -1,7 +1,8 @@
 @import 'variables';
 
-@mixin row--display {
+%row {
   width: 100%;
+  min-height: 1.5rem;
 
   display: flex;
   flex-direction: row;
@@ -11,10 +12,25 @@
   gap: 1rem;
 }
 
-@mixin text--display-no-overflow {
+%truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+%default-text {
+  font-size: job-card("fs");
+  font-weight: job-card("fw");
+  color: job-card("tc");
+}
+
+%tag {
+  border-radius: job-card("tag-radius");
+  background-color: job-card("tag-remote-bg-c");
+  padding-top: 0.2rem;
+  padding-right: 0.4rem;
+  padding-bottom: 0.2rem;
+  padding-left: 0.4rem;
 }
 
 :host {
@@ -32,83 +48,80 @@
     flex-direction: column;
     justify-content: space-between;
 
-    padding: 0.5rem;
-
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.3rem;
+    padding-left: 0.5rem;
     gap: 0.5rem;
 
     &__icon {
       color: job-card("icon-c");
 
-      &--in-button {
-        margin-right: 0.2rem;
+      &--in-title {
         color: inherit;
       }
     }
 
+    //---------------
     &__header {
-      @include row--display;
+      @extend %row;
     }
 
     &__title {
-      @include text--display-no-overflow;
-
-      font-weight: job-card("title-fw");
+      @extend %truncate;
       color: job-card("title-tc");
+
       flex: 1 1 auto;
-    }
+      cursor: pointer;
+      text-decoration: none;
 
-    &__date {
-      white-space: nowrap;
-      font-size: job-card("date-fs");
-      font-weight: job-card("date-fw");
-      color: job-card("date-tc");
-    }
-
-    &__details {
-      @include row--display;
-    }
-
-    &__remote {
-      @include text--display-no-overflow;
-      font-weight: job-card("remote-fw");
-      color: job-card("remote-tc");
-    }
-
-    &__location {
-      @include text--display-no-overflow;
-      font-weight: job-card("location-fw");
-      color: job-card("location-tc");
-    }
-
-    &__body {
-      @include row--display;
-    }
-
-    &__company {
-      @include text--display-no-overflow;
-      font-weight: job-card("company-fw");
-      color: job-card("company-tc");
-      flex: 1;
+      &:hover {
+        text-decoration: underline;
+        color: job-card("title-tc-hover");
+      }
     }
 
     &__salary {
-      @include text--display-no-overflow;
+      white-space: nowrap;
+      @extend %default-text;
 
       &--visible {
-        font-weight: job-card("salary-visible-fw");
         color: job-card("salary-visible-tc");
-      }
-
-      &--hidden {
-        font-weight: job-card("salary-hidden-fw");
-        color: job-card("salary-hidden-tc");
       }
     }
 
+    //---------------
+    &__body {
+      @extend %row;
+    }
+
+    &__company {
+      @extend %truncate;
+      @extend %default-text;
+    }
+
+    &__location {
+      @extend %truncate;
+      @extend %default-text;
+    }
+
+    //---------------
+    &__details {
+      @extend %row;
+      gap: 0.2rem;
+    }
+
+    &__remote {
+      @extend %truncate;
+      @extend %default-text;
+      @extend %tag;
+    }
+
+    //---------------
     &__footer {
-      @include row--display;
+      @extend %row;
       border-top: job-card("footer-border");
-      padding-top: 0.5rem;
+      padding-top: 0.25rem;
     }
 
     &__source {
@@ -135,9 +148,9 @@
     }
 
     &__source-link {
-      @include text--display-no-overflow;
-      color: job-card("link-tc");
-      font-size: job-card("link-fs");
+      @extend %truncate;
+      @extend %default-text;
+      align-self: center;
 
       text-decoration: none;
 
@@ -146,25 +159,9 @@
       }
     }
 
-    &__apply-button {
-      flex-shrink: 0;
-      border-radius: job-card("apply-btn-radius");
-      background: job-card("apply-btn-bg-c-normal");
-      color: job-card("apply-btn-tc-normal");
-      transition: $transition-global;
-      border-color: transparent;
-      cursor: pointer;
-
-      &:hover {
-        background: job-card("apply-btn-bg-c-hover");
-        color: job-card("apply-btn-tc-hover");
-      }
-
-      &:active {
-        background: job-card("apply-btn-bg-c-active");
-        color: job-card("apply-btn-tc-active");
-        transform: scale(0.9);
-      }
+    &__date {
+      white-space: nowrap;
+      @extend %default-text;
     }
   }
 }

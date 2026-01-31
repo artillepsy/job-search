@@ -1,29 +1,35 @@
 <div class="job-card">
   <div class="job-card__header">
-    <span class="job-card__title" [title]="jobInfo().title">{{ jobInfo().title }}</span>
-    <span class="job-card__date">{{ daysAgoText() }}</span>
+    <a
+      class="job-card__title"
+      [title]="jobInfo().title"
+      [href]="jobInfo().url"
+      target="_blank"
+      rel="noopener">
+      <i class="job-card__icon job-card__icon--in-title pi pi-external-link"></i>
+      {{ jobInfo().title }}
+    </a>
+    <span class="job-card__salary"
+          [class.job-card__salary--visible]="isSalaryVisible()"
+          [class.job-card__salary--hidden]="!isSalaryVisible()">
+      {{ formattedSalary() }}
+    </span>
   </div>
-
-  <div class="job-card__details">
-    @if (jobInfo().isRemote) {
-      <span class="job-card__remote">
-        <i class="job-card__icon pi pi-briefcase"></i>
-        Remote
-      </span>
-    }
+  <div class="job-card__body">
+    <span class="job-card__company" [title]="jobInfo().companyName">
+      <i class="job-card__icon pi pi-building-columns"></i>
+      {{ jobInfo().companyName }}
+    </span>
     <span class="job-card__location" [title]="jobInfo().location">
       <i class="job-card__icon pi pi-map-marker"></i>
       {{ jobInfo().location }}
     </span>
   </div>
 
-  <div class="job-card__body">
-    <span class="job-card__company" [title]="jobInfo().companyName">{{ jobInfo().companyName }}</span>
-    <span class="job-card__salary"
-          [class.job-card__salary--visible]="isSalaryVisible()"
-          [class.job-card__salary--hidden]="!isSalaryVisible()">
-      {{ formattedSalary() }}
-    </span>
+  <div class="job-card__details">
+    @if (jobInfo().isRemote) {
+      <span class="job-card__remote">Remote</span>
+    }
   </div>
 
   <div class="job-card__footer">
@@ -33,9 +39,6 @@
         {{ srcMetadata()?.displayName }}
       </a>
     </div>
-    <button class="job-card__apply-button" (click)="apply()">
-      <i class="job-card__icon job-card__icon--in-button pi pi-external-link"></i>
-      <span>Apply</span>
-    </button>
+    <span class="job-card__date">{{ daysAgoText() }}</span>
   </div>
 </div>
