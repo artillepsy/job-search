@@ -1,7 +1,13 @@
 <div class="job-board">
   <div class="job-board__scroll" #scrollTarget>
-    @for (job of jobs; track job.id) {
-      <app-job-card class="job-board__card" [jobInfo]="job"></app-job-card>
+    @if (loading()) {
+      @for (item of skeletonArray; track $index) {
+        <div class="job-board__skeleton"></div>
+      }
+    } @else {
+      @for (job of jobs; track job.id) {
+        <app-job-card class="job-board__card" [jobInfo]="job"></app-job-card>
+      }
     }
   </div>
   <p-paginator

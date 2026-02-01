@@ -1,4 +1,13 @@
-import { Component, effect, ElementRef, inject, input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { JobCardComponent } from '../card/job-card.component';
 import { JobResponse, JobService } from '../../services/job.service';
@@ -6,10 +15,12 @@ import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { JobInfo } from '../../models/job-info.model';
 import { JobSearchParams } from '../../models/job-search-params.model';
+import { finalize } from 'rxjs';
+import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-job-board',
-  imports: [ButtonModule, JobCardComponent, FormsModule, Paginator],
+  imports: [ButtonModule, JobCardComponent, FormsModule, Paginator, Skeleton],
   templateUrl: './job-board.component.html',
   styleUrl: './job-board.component.scss',
 })
@@ -19,6 +30,7 @@ export class JobBoardComponent implements OnInit {
 
   // input from parent
   searchParams = input<JobSearchParams | undefined>(undefined);
+  loading = signal<boolean>(false);
 
   @ViewChild('scrollTarget') scrollTarget!: ElementRef;
 
@@ -53,6 +65,10 @@ export class JobBoardComponent implements OnInit {
     this.loadJobs();
   }
 
+  get skeletonArray() {
+    return Array(this.pageSize).fill(0);
+  }
+
   scrollToTop() {
     if (this.scrollTarget) {
       this.scrollTarget.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
@@ -61,16 +77,23 @@ export class JobBoardComponent implements OnInit {
 
   // filters as params
   loadJobs() {
+    this.loading.set(true);
+
     const params: JobSearchParams = {
       ...this.searchParams(),
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
     };
 
-    this._jobsService.getJobs(params).subscribe((res: JobResponse) => {
-      this.jobs = res.jobs;
-      this.totalRecords = res.totalRecords;
-      this.totalPages = res.totalPages;
-    });
+    this._jobsService
+      .getJobs(params)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.jobs = res.jobs;
+          this.totalRecords = res.totalRecords;
+          this.totalPages = res.totalPages;
+        },
+      });
   }
 }

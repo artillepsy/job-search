@@ -2,7 +2,7 @@
 
 %row {
   width: 100%;
-  min-height: 1.5rem;
+  height: 1.5rem;
 
   display: flex;
   flex-direction: row;
@@ -34,8 +34,11 @@
 }
 
 :host {
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  border-radius: 1rem;
+  height: job-card("height");
+  flex-shrink: 0;
+
+  box-shadow: job-card("shadow");
+  border-radius: job-card("radius");
   background-color: job-card("bg-c");
 
   transition: $transition-global;
@@ -46,7 +49,7 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
 
     padding-top: 0.5rem;
     padding-right: 0.5rem;

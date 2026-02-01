@@ -36,7 +36,7 @@
       );
     }
 
-    &__card {
+    &__card, &__skeleton {
       min-width: $width-breakpoint-mobile;
       width: 30%;
 
@@ -46,11 +46,19 @@
       }
     }
 
+    &__skeleton {
+      border-radius: job-card("radius");
+      height: job-card("height");
+      background-color: job-card("bg-c");
+      box-shadow: job-card("shadow");
+      flex-shrink: 0;
+    }
+
     &__paginator {
       flex-shrink: 0;
       margin-top: -1rem;
       z-index: 10;
-      
+
       ::ng-deep .p-paginator-page {
         font-family: 'Inter', sans-serif;
         font-size: 0.8rem;

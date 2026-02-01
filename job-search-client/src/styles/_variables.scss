@@ -47,7 +47,6 @@ $job-search: (
   @return map-get($job-search, $key);
 }
 
-
 $job-card: (
   bg-c: #ffffff,
   icon-c: #000000,
@@ -60,7 +59,10 @@ $job-card: (
   title-tc-hover: #dc6326,
   salary-visible-tc: #2bb100,
   tag-radius: 1rem,
-  tag-remote-bg-c: #ededf3
+  tag-remote-bg-c: #ededf3,
+  height: 8rem,
+  radius: 1rem,
+  shadow: 0 10px 20px rgba(0, 0, 0, 0.15)
 );
 
 @function job-card($key) {
