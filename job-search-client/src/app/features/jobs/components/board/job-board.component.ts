@@ -10,17 +10,16 @@ import {
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { JobCardComponent } from '../card/job-card.component';
-import { JobResponse, JobService } from '../../services/job.service';
+import { JobService } from '../../services/job.service';
 import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { JobInfo } from '../../models/job-info.model';
 import { JobSearchParams } from '../../models/job-search-params.model';
 import { finalize } from 'rxjs';
-import { Skeleton } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-job-board',
-  imports: [ButtonModule, JobCardComponent, FormsModule, Paginator, Skeleton],
+  imports: [ButtonModule, JobCardComponent, FormsModule, Paginator],
   templateUrl: './job-board.component.html',
   styleUrl: './job-board.component.scss',
 })
@@ -28,7 +27,6 @@ import { Skeleton } from 'primeng/skeleton';
 export class JobBoardComponent implements OnInit {
   private _jobsService = inject(JobService);
 
-  // input from parent
   searchParams = input<JobSearchParams | undefined>(undefined);
   loading = signal<boolean>(false);
 
