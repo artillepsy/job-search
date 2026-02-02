@@ -58,7 +58,7 @@ public class JobsController : ControllerBase
 	{
 		int pageNumber = dto.PageNumber < 1 ? 1 : dto.PageNumber;
 		int pageSize = dto.PageSize > _jobSettings.PageSizeMax ? _jobSettings.PageSizeMax : dto.PageSize;
-		
+
 		IQueryable<JobEntity> query = _db.Jobs;
 		
 		if (!string.IsNullOrWhiteSpace(dto.Keywords)) // Title or Company name
@@ -68,7 +68,7 @@ public class JobsController : ControllerBase
 				j => EF.Functions.ILike(j.Title, search) || 
 				     EF.Functions.ILike(j.CompanyName, search));
 			
-			_logger.LogInformation($"Keywords: '{search}', query size: {query.Count()}");
+			//_logger.LogInformation($"Keywords: '{search}', query size: {query.Count()}");
 		}
 		
 		if (!string.IsNullOrWhiteSpace(dto.Location)) // Location
@@ -76,7 +76,7 @@ public class JobsController : ControllerBase
 			string search = $"%{dto.Location.Trim()}%";
 			query = query.Where(j => j.Location != null && EF.Functions.ILike(j.Location, search));
 			
-			_logger.LogInformation($"Location: '{search}', query size: {query.Count()}");
+			//_logger.LogInformation($"Location: '{search}', query size: {query.Count()}");
 		}
 		
 		if (dto.IsSalaryVisible.HasValue) // Is salary visible
@@ -93,6 +93,11 @@ public class JobsController : ControllerBase
 		
 		var totalRecords = await query.CountAsync();
 		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+		
+		if (pageNumber > totalPages && totalPages > 0) 
+		{
+			pageNumber = totalPages;
+		}
 
 		var jobs = await query
 			.OrderByDescending(j => j.CreatedAt)

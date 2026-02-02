@@ -15,7 +15,9 @@ import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
 import { JobInfo } from '../../models/job-info.model';
 import { JobSearchParams } from '../../models/job-search-params.model';
-import { finalize } from 'rxjs';
+import { finalize, map, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-job-board',
@@ -24,8 +26,13 @@ import { finalize } from 'rxjs';
   styleUrl: './job-board.component.scss',
 })
 // cache search results, page
-export class JobBoardComponent implements OnInit {
+export class JobBoardComponent {
+  private _router = inject(Router);
+  private _route = inject(ActivatedRoute);
   private _jobsService = inject(JobService);
+  private _pageFromUrl = toSignal(
+    this._route.queryParamMap.pipe(map(params => params.get('page')))
+  );
 
   searchParams = input<JobSearchParams | undefined>(undefined);
   loading = signal<boolean>(false);
@@ -41,36 +48,33 @@ export class JobBoardComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      if (!this.searchParams()) {
+      const urlPage = this._pageFromUrl();
+      const currentSearch = this.searchParams();
+
+      // Update local state from URL (prioritizes address bar over default)
+      this.pageNumber = urlPage ? Number(urlPage) : 1;
+
+      if (this.pageNumber < 1) {
+        this.updateUrl(1);
         return;
       }
 
-      this.pageNumber = 1;
-      this.scrollToTop();
+      // Only fetch if we have valid params or it's the initial load
       this.loadJobs();
     });
   }
 
-  ngOnInit() {
-    this.loadJobs();
-  }
-
   onPageChange(event: PaginatorState) {
-    this.pageNumber = event.page ? event.page + 1 : 1; // page + 1
-    this.pageSize = event.rows ?? this.pageSize;
+    const newPage = event.page ? event.page + 1 : 1;
+    //this.pageSize = event.rows ?? this.pageSize;
+
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: { page: newPage },
+      queryParamsHandling: 'merge',
+    });
 
     this.scrollToTop();
-    this.loadJobs();
-  }
-
-  get skeletonArray() {
-    return Array(this.pageSize).fill(0);
-  }
-
-  scrollToTop() {
-    if (this.scrollTarget) {
-      this.scrollTarget.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
-    }
   }
 
   // filters as params
@@ -91,7 +95,31 @@ export class JobBoardComponent implements OnInit {
           this.jobs = res.jobs;
           this.totalRecords = res.totalRecords;
           this.totalPages = res.totalPages;
+
+          if (res.pageNumber !== this.pageNumber) {
+            this.updateUrl(res.pageNumber);
+          }
         },
+        error: () => this.updateUrl(1)
       });
+  }
+
+  private updateUrl(page: number) {
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: { page: page },
+      queryParamsHandling: 'merge',
+      replaceUrl: true // Critical: Replaces the 'bad' URL so the 'Back' button works
+    });
+  }
+
+  get skeletonArray() {
+    return Array(this.pageSize).fill(0);
+  }
+
+  scrollToTop() {
+    if (this.scrollTarget) {
+      this.scrollTarget.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 }
