@@ -1,16 +1,16 @@
-import { Component, computed, ElementRef, inject, input, signal, ViewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { JobCardComponent } from '../card/job-card.component';
-import { JobService } from '../../services/job.service';
 import { FormsModule } from '@angular/forms';
 import { Paginator, PaginatorState } from 'primeng/paginator';
-import { JobSearchParams } from '../../models/job-search-params.model';
-import { catchError, combineLatest, finalize, map, of, startWith, switchMap, tap } from 'rxjs';
+import { combineLatest, filter, map, skip, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { JobBoardStateService } from '../../services/state/job-board-state.service';
+import { JobUrlService } from '../../services/url/job-url.service';
 
 @Component({
-  selector: 'app-job-board',
+  selector: 'app-job-state',
   imports: [ButtonModule, JobCardComponent, FormsModule, Paginator],
   templateUrl: './job-board.component.html',
   styleUrl: './job-board.component.scss',
@@ -19,48 +19,22 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 export class JobBoardComponent {
   private readonly _router = inject(Router);
   private readonly _route = inject(ActivatedRoute);
-  private readonly _jobService = inject(JobService);
-
-  readonly PAGE_SIZE = 19;
-  readonly skeletonArray = Array(this.PAGE_SIZE).fill(0);
+  private readonly _stateService = inject(JobBoardStateService);
+  private readonly _urlService = inject(JobUrlService);
 
   @ViewChild('scrollTarget') scrollTarget!: ElementRef;
 
-  searchParams = input<JobSearchParams | undefined>(undefined);
+  readonly state = this._stateService.state;
+  readonly pageSize = computed(() => this._urlService.params().pageSize);
+  readonly skeletonArray = Array(this.pageSize()).fill(0);
 
-  private _search$ = toObservable(this.searchParams);
-  private readonly _page$ = this._route.queryParamMap.pipe(
-    map(params => Number(params.get('page')) || 1)
-  );
-
-  private readonly _jobResource$ = combineLatest([this._search$, this._page$]).pipe(
-    switchMap(([search, page]) => {
-      const params = { ...search, pageNumber: page, pageSize: this.PAGE_SIZE };
-      return this._jobService.getJobs(params).pipe(
-        catchError(() => of({ jobs: [], totalRecords: 0, pageNumber: 1 }))
-      );
-    })
-  );
-
-  readonly jobsResponse = toSignal(this._jobResource$, {
-    initialValue: { jobs: [], totalRecords: 0, pageNumber: 1 }
-  });
-  private readonly _urlPage = toSignal(this._page$, { initialValue: 1 });
-
-  readonly jobs = computed(() => this.jobsResponse()?.jobs ?? []);
-  readonly totalRecords = computed(() => this.jobsResponse()?.totalRecords ?? 0);
-  readonly isLoading = computed(() => !this.jobsResponse());
-  readonly currentPage = computed(() => {
-    return this.jobsResponse()?.pageNumber ?? this._urlPage();
+  readonly currentPageIndex = computed(() => {
+    const page = this._urlService.params().pageNumber;
+    return page > 0 ? page - 1 : 0;
   });
 
   onPageChange(event: PaginatorState) {
-    const newPage = (event.page ?? 0) + 1;
-    this._router.navigate([], {
-      relativeTo: this._route,
-      queryParams: { page: newPage },
-      queryParamsHandling: 'merge',
-    });
+    this._urlService.updateSearch({ pageNumber: (event.page ?? 0) + 1 });
     this.scrollToTop();
   }
 

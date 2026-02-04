@@ -1,4 +1,4 @@
-export interface JobInfo {
+export interface JobCardData {
   id?: number;
   title: string;
   companyName: string;

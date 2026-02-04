@@ -1,7 +1,7 @@
 import { Component, computed, input, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { WEBSITE_SOURCE_CONFIG } from '../../../../core/constants/storage.constants';
-import { JobInfo } from '../../models/job-info.model';
+import { JobCardData } from '../../models/job-card-data.model';
 
 @Component({
   selector: 'app-job-card',
@@ -10,7 +10,7 @@ import { JobInfo } from '../../models/job-info.model';
   styleUrl: './job-card.component.scss',
 })
 export class JobCardComponent {
-  jobInfo = input.required<JobInfo>();
+  jobInfo = input.required<JobCardData>();
 
   isSalaryVisible = computed(() => this.jobInfo().salaryMin !== null);
 

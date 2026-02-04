@@ -1,20 +1,20 @@
 <div class="job-board">
   <div class="job-board__scroll" #scrollTarget>
-    @if (isLoading()) {
+    @if (state().isLoading) {
       @for (item of skeletonArray; track $index) {
         <div class="job-board__skeleton"></div>
       }
     } @else {
-      @for (job of jobs(); track job.id) {
+      @for (job of state().jobs; track job.id) {
         <app-job-card class="job-board__card" [jobInfo]="job"></app-job-card>
       }
     }
   </div>
   <p-paginator
     class="job-board__paginator"
-    [first]="(currentPage() - 1) * PAGE_SIZE"
-    [rows]="PAGE_SIZE"
-    [totalRecords]="totalRecords()"
+    [first]="currentPageIndex() * pageSize()"
+    [rows]="pageSize"
+    [totalRecords]="state().totalRecords"
     [pageLinkSize]="5"
     (onPageChange)="onPageChange($event)">
   </p-paginator>

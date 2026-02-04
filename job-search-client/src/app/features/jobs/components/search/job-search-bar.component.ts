@@ -1,6 +1,7 @@
-import { Component, input, output } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { JobSearchParams } from '../../models/job-search-params.model';
 import { FormsModule } from '@angular/forms';
+import { JobUrlService } from '../../services/url/job-url.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -9,19 +10,27 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './job-search-bar.component.scss',
 })
 export class JobSearchBarComponent {
+  private _urlService = inject(JobUrlService);
+
   filtersVisible = input<boolean>(false);
-  search = output<JobSearchParams>();
   toggleFilters = output();
 
-  inputKeywords: string | null = null;
-  inputLocation: string | null = null;
+  inputKeywords = signal<string>('');
+  inputLocation = signal<string>('');
+
+  constructor() {
+    effect(() => {
+      const params = this._urlService.params();
+      this.inputKeywords.set(params?.keywords || '');
+      this.inputLocation.set(params?.location || '');
+    });
+  }
 
   onClickSearch() {
-    const params: JobSearchParams = {
-      keywords: this.inputKeywords ?? undefined,
-      location: this.inputLocation ?? undefined,
-    };
-    this.search.emit(params);
+    this._urlService.updateSearch({
+      keywords: this.inputKeywords() || undefined,
+      location: this.inputLocation() || undefined,
+    });
   }
 
   onClickFilters() {
