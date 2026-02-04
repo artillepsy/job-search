@@ -1,7 +1,16 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { JobCardData } from '../../models/job-card-data.model';
 import { JobApiService } from '../api/job-api.service';
-import { catchError, distinctUntilChanged, EMPTY, finalize, of, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  distinctUntilChanged,
+  EMPTY,
+  filter,
+  finalize,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import {JobUrlService} from '../url/job-url.service';
 import {toObservable} from '@angular/core/rxjs-interop';
 
@@ -35,6 +44,7 @@ export class JobBoardStateService {
   constructor() {
     toObservable(this._urlService.params)
       .pipe(
+        filter(() => !this._urlService.shouldSkipFetch()),
         distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
         tap(() => this._state.update((s) => ({ ...s, isLoading: true }))),
         switchMap((params) =>
@@ -47,6 +57,16 @@ export class JobBoardStateService {
         ),
       )
       .subscribe((response) => {
+        const maxPage = response.totalPages || 1;
+        const requestedPage = this._urlService.params().pageNumber || 1;
+
+        console.log(`total pages: ${response.totalPages} of ${maxPage} loaded.`);
+
+        if (requestedPage < 1 || requestedPage > maxPage) {
+          // Pass 'true' to set the flag before the next signal emission
+          this._urlService.updateSearch({ pageNumber: response.pageNumber }, true);
+        }
+
         this._state.set({
           jobs: response.jobs,
           totalRecords: response.totalRecords,

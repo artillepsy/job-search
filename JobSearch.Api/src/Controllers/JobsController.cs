@@ -94,10 +94,7 @@ public class JobsController : ControllerBase
 		var totalRecords = await query.CountAsync();
 		var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 		
-		if (pageNumber > totalPages && totalPages > 0) 
-		{
-			pageNumber = totalPages;
-		}
+		pageNumber = Math.Clamp(pageNumber, 1, totalPages);
 
 		var jobs = await query
 			.OrderByDescending(j => j.CreatedAt)

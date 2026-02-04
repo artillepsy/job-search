@@ -9,6 +9,7 @@ import { JOB_SEARCH_KEYS, JobSearchParams } from '../../models/job-search-params
 export class JobUrlService {
   private _router = inject(Router);
   private _route = inject(ActivatedRoute);
+  private _skipNextFetch = false;
 
   readonly _rawParams = toSignal(this._route.queryParams, { initialValue: {} });
 
@@ -39,7 +40,8 @@ export class JobUrlService {
     return result as JobSearchParams;
   });
 
-  updateSearch(changes: Partial<JobSearchParams>) {
+  updateSearch(changes: Partial<JobSearchParams>, silent: boolean = false) {
+    this._skipNextFetch = silent;
     const cleanParams = Object.fromEntries(
       Object.entries(changes).filter(([_, value]) =>
         value !== null && value !== undefined && value !== ''
@@ -50,5 +52,11 @@ export class JobUrlService {
       queryParams: cleanParams, // Use the clean version
       queryParamsHandling: 'merge'
     });
+  }
+
+  shouldSkipFetch(): boolean {
+    const skip = this._skipNextFetch;
+    this._skipNextFetch = false; // Reset immediately so subsequent changes aren't blocked
+    return skip;
   }
 }
