@@ -30,6 +30,7 @@ export class JobSearchBarComponent {
     this._urlService.updateSearch({
       keywords: this.inputKeywords() || undefined,
       location: this.inputLocation() || undefined,
+      pageNumber: 1, // reset page number to 1 on search
     });
   }
 

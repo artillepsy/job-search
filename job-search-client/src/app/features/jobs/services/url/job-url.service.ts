@@ -40,14 +40,8 @@ export class JobUrlService {
   });
 
   updateSearch(changes: Partial<JobSearchParams>) {
-    const isFilterChange = Object.keys(changes).some(k => k !== 'pageNumber');
-    const newParams = {
-      ...changes,
-      pageNumber: isFilterChange ? 1 : (changes.pageNumber || 1)
-    };
-
     const cleanParams = Object.fromEntries(
-      Object.entries(newParams).filter(([_, value]) =>
+      Object.entries(changes).filter(([_, value]) =>
         value !== null && value !== undefined && value !== ''
       )
     );

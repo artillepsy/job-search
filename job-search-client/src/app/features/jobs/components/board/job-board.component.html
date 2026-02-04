@@ -13,7 +13,7 @@
   <p-paginator
     class="job-board__paginator"
     [first]="currentPageIndex() * pageSize()"
-    [rows]="pageSize"
+    [rows]="pageSize()"
     [totalRecords]="state().totalRecords"
     [pageLinkSize]="5"
     (onPageChange)="onPageChange($event)">

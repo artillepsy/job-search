@@ -24,6 +24,13 @@ export class JobBoardComponent {
 
   @ViewChild('scrollTarget') scrollTarget!: ElementRef;
 
+  constructor() {
+    effect(() => {
+      console.log(`Page size changed: ${this.pageSize()}`);
+      console.log(`Total records: ${this.state().totalRecords}`);
+    })
+  }
+
   readonly state = this._stateService.state;
   readonly pageSize = computed(() => this._urlService.params().pageSize);
   readonly skeletonArray = Array(this.pageSize()).fill(0);
