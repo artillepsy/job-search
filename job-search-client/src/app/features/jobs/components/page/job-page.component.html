@@ -6,7 +6,6 @@
   <app-search-bar
     class="top-panel__search"
     [filtersVisible]="filtersVisible()"
-    (search)="updateSearchParams($event)"
     (toggleFilters)="toggleFilters()">
   </app-search-bar>
   <div class="top-panel__actions"></div>
@@ -16,5 +15,5 @@
   @if (filtersVisible()) {
     <app-job-filters class="main-panel__filters"></app-job-filters>
   }
-  <app-job-board class="main-panel__jobs" [searchParams]="searchParams()"></app-job-board>
+  <app-job-board class="main-panel__jobs"></app-job-board>
 </main>

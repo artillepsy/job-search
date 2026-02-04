@@ -10,7 +10,7 @@ import { JobBoardStateService } from '../../services/state/job-board-state.servi
 import { JobUrlService } from '../../services/url/job-url.service';
 
 @Component({
-  selector: 'app-job-state',
+  selector: 'app-job-board',
   imports: [ButtonModule, JobCardComponent, FormsModule, Paginator],
   templateUrl: './job-board.component.html',
   styleUrl: './job-board.component.scss',

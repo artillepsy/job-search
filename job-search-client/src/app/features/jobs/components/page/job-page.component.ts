@@ -12,16 +12,11 @@ import { JobFiltersComponent } from '../filters/job-filters.component';
 })
 export class JobPageComponent {
   filtersVisible = signal(true);
-  searchParams = signal<JobSearchParams>({});
 
   constructor() {
     effect(() => {
       console.log(`Filters visibility changed: ${this.filtersVisible()}`);
     });
-  }
-
-  updateSearchParams(params: JobSearchParams) {
-    this.searchParams.set(params);
   }
 
   toggleFilters() {
