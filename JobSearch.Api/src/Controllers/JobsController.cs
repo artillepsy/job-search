@@ -26,7 +26,7 @@ public class JobsController : ControllerBase
 		bool? IsSalaryVisible,
 		bool? IsRemote,
 		
-		int PageNumber = 1,
+		int Page = 1,
 		int PageSize = 20
 		// add salary range and currency (?)
 	);
@@ -56,7 +56,7 @@ public class JobsController : ControllerBase
 	[HttpGet("get")]
 	public async Task<ActionResult<IEnumerable<JobEntity>>> GetJobs([FromQuery] JobSearchDto dto)
 	{
-		int pageNumber = dto.PageNumber < 1 ? 1 : dto.PageNumber;
+		int pageNumber = dto.Page < 1 ? 1 : dto.Page;
 		int pageSize = dto.PageSize > _jobSettings.PageSizeMax ? _jobSettings.PageSizeMax : dto.PageSize;
 
 		IQueryable<JobEntity> query = _db.Jobs;
@@ -116,7 +116,7 @@ public class JobsController : ControllerBase
 		
 		return Ok(new {
 			TotalPages = totalPages,
-			PageNumber = pageNumber,
+			Page = pageNumber,
 			PageSize = pageSize,
 			TotalRecords = totalRecords,
 			ReturnRecords = jobs.Count,

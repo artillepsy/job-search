@@ -1,7 +1,12 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, effect, inject, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { JOB_SEARCH_KEYS, JobSearchParams } from '../../models/job-search-params.model';
+import {
+  JOB_SEARCH_KEYS,
+  JOB_SEARCH_KEYS_EXCLUDED_FROM_URL,
+  JobSearchParams,
+  PAGE_STR_KEY,
+} from '../../models/job-search-params.model';
 
 @Injectable({
   providedIn: 'root',
@@ -40,23 +45,54 @@ export class JobUrlService {
     return result as JobSearchParams;
   });
 
+  constructor() {
+    effect(() => {
+      const raw = this._rawParams();
+      const validKeys = JOB_SEARCH_KEYS;
+      const rawKeys = Object.keys(raw);
+
+      const hasGarbage = rawKeys.some(key => !validKeys.includes(key as any));
+
+      if (hasGarbage) {
+        // Trigger a silent update to strip the garbage immediately
+        this.updateSearch({}, true);
+      }
+    });
+  }
+
   updateSearch(changes: Partial<JobSearchParams>, silent: boolean = false) {
     this._skipNextFetch = silent;
+
+    const currentState = this.params();
+
+    const nextState = {
+      ...currentState,
+      ...changes
+    };
+
+    const isFilterChange = Object.keys(changes).some(k => k !== PAGE_STR_KEY);
+    if (isFilterChange) {
+      nextState.page = 1;
+    }
+
     const cleanParams = Object.fromEntries(
-      Object.entries(changes).filter(([_, value]) =>
-        value !== null && value !== undefined && value !== ''
+      Object.entries(nextState).filter(([key, value]) => {
+        if (JOB_SEARCH_KEYS_EXCLUDED_FROM_URL.includes(key as any)) {
+          return false;
+        }
+        return value !== null && value !== undefined && value !== '';
+        }
       )
     );
 
     this._router.navigate([], {
-      queryParams: cleanParams, // Use the clean version
-      queryParamsHandling: 'merge'
+      queryParams: cleanParams,
     });
   }
 
   shouldSkipFetch(): boolean {
     const skip = this._skipNextFetch;
-    this._skipNextFetch = false; // Reset immediately so subsequent changes aren't blocked
+    this._skipNextFetch = false;
     return skip;
   }
 }

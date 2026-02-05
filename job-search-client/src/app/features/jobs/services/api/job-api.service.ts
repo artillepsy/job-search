@@ -7,7 +7,7 @@ import { JobCardData } from '../../models/job-card-data.model';
 
 export interface JobApiResponse {
   totalPages: number;
-  pageNumber: number;
+  page: number;
   pageSize: number;
   totalRecords: number;
   returnRecords: number;

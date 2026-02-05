@@ -6,8 +6,6 @@ import {
   distinctUntilChanged,
   EMPTY,
   filter,
-  finalize,
-  of,
   switchMap,
   tap,
 } from 'rxjs';
@@ -58,20 +56,20 @@ export class JobBoardStateService {
       )
       .subscribe((response) => {
         const maxPage = response.totalPages || 1;
-        const requestedPage = this._urlService.params().pageNumber || 1;
+        const requestedPage = this._urlService.params().page || 1;
 
         console.log(`total pages: ${response.totalPages} of ${maxPage} loaded.`);
 
         if (requestedPage < 1 || requestedPage > maxPage) {
           // Pass 'true' to set the flag before the next signal emission
-          this._urlService.updateSearch({ pageNumber: response.pageNumber }, true);
+          this._urlService.updateSearch({ page: response.page }, true);
         }
 
         this._state.set({
           jobs: response.jobs,
           totalRecords: response.totalRecords,
           totalPages: response.totalPages,
-          currentPage: response.pageNumber,
+          currentPage: response.page,
           isLoading: false,
           error: null,
         });
