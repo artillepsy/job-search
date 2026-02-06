@@ -1,13 +1,21 @@
 <div class="job-board">
   <div class="job-board__scroll" #scrollTarget>
-    @if (state().isLoading) {
-      @for (item of skeletonArray; track $index) {
-        <div class="job-board__skeleton"></div>
+    @if (filtersVisible()) {
+      <app-job-filters class="job-board__filters"></app-job-filters>
+    }
+    <div class="job-board__card-list">
+      @if (state().isLoading) {
+        @for (item of skeletonArray; track $index) {
+          <div class="job-board__skeleton"></div>
+        }
+      } @else {
+        @for (job of state().jobs; track job.id) {
+          <app-job-card class="job-board__card" [jobInfo]="job"></app-job-card>
+        }
       }
-    } @else {
-      @for (job of state().jobs; track job.id) {
-        <app-job-card class="job-board__card" [jobInfo]="job"></app-job-card>
-      }
+    </div>
+    @if (filtersVisible()) {
+      <div class="job-board__details"></div>
     }
   </div>
   <p-paginator

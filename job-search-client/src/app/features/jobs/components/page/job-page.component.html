@@ -12,8 +12,8 @@
 </header>
 
 <main class="main-panel">
-  @if (filtersVisible()) {
-    <app-job-filters class="main-panel__filters"></app-job-filters>
-  }
-  <app-job-board class="main-panel__jobs"></app-job-board>
+  <app-job-board
+    class="main-panel__jobs"
+    [filtersVisible]="filtersVisible()">
+  </app-job-board>
 </main>

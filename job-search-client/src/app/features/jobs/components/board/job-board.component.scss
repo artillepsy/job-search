@@ -14,13 +14,14 @@
     width: 100%;
 
     &__scroll {
-      flex: 1; // THIS IS KEY: It tells the scroll area to take all available space
+      flex: 1;
       overflow-y: auto; // Enable scrolling
       min-height: 0;
 
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-direction: row;
+      align-items: start;
+      justify-content: center;
 
       gap: 0.5rem;
       padding-left: 1rem;
@@ -36,14 +37,47 @@
       );
     }
 
-    &__card, &__skeleton {
-      min-width: $width-breakpoint-mobile;
+    &__filters {
+      border-radius: job-card("radius");
+      box-shadow: job-card("shadow");
+      background-color: job-card("bg-c");
+
+      overflow-y: auto;
+      height: 80rem;
+      flex-shrink: 0;
+      width: 20%;
+
+      max-width: 20%;
+
+      @media (max-width: $width-breakpoint-mobile) {
+        display: none;
+      }
+    }
+
+    &__card-list {
+      // Removed overflow-y: auto so it expands to its content height
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
       width: 30%;
+      max-width: 30%;
 
       @media (max-width: $width-breakpoint-mobile) {
         width: 100%;
         min-width: unset;
+        max-width: unset;
       }
+    }
+
+    &__details {
+
+    }
+
+    &__card, &__skeleton {
+      width: 100%;
+      overflow: visible;
     }
 
     &__skeleton {
@@ -61,7 +95,7 @@
           $page-bg-color 50%,
           job-card("bg-c") 90%
       );
-      
+
       @keyframes shimmer {
         0% {
           background-position: 200% 0;

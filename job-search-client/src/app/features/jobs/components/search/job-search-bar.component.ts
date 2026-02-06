@@ -12,7 +12,7 @@ import { JobUrlService } from '../../services/url/job-url.service';
 export class JobSearchBarComponent {
   private _urlService = inject(JobUrlService);
 
-  filtersVisible = input<boolean>(false);
+  filtersVisible = input<boolean>(true);
   toggleFilters = output();
 
   inputKeywords = signal<string>('');
