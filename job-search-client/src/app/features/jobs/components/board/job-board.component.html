@@ -1,9 +1,11 @@
 <div class="job-board">
   <div class="job-board__scroll" #scrollTarget>
-    @if (filtersVisible()) {
-      <app-job-filters class="job-board__filters"></app-job-filters>
-    }
-    <div class="job-board__card-list">
+    <div class="job-board__filters-container">
+      @if (filtersVisible()) {
+        <app-job-filters class="job-board__filters"></app-job-filters>
+      }
+    </div>
+    <div class="job-board__main-content">
       @if (state().isLoading) {
         @for (item of skeletonArray; track $index) {
           <div class="job-board__skeleton"></div>
@@ -14,9 +16,7 @@
         }
       }
     </div>
-    @if (filtersVisible()) {
-      <div class="job-board__details"></div>
-    }
+    <div class="job-board__details-container"></div>
   </div>
   <p-paginator
     class="job-board__paginator"

@@ -1,5 +1,5 @@
 // Color palette (shared)
-$primary-color: #ff0000;
+$primary-color: #06a8ff;
 
 // global
 $width-breakpoint-mobile: 700px;
@@ -16,7 +16,7 @@ $logo: (
   fs: 1.5rem,
   fw: 900,
   tc: #4b6781,
-  icon-h: 2rem,
+  icon-h: 3rem,
   icon-path: '/logo.svg',
   icon-c: $primary-color,
   shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2)),
@@ -47,6 +47,36 @@ $job-search: (
   @return map-get($job-search, $key);
 }
 
+
+$job-board: (
+  filters-radius: 0.5rem,
+  mask-image: linear-gradient(to bottom,
+    transparent 0%,
+    black 2%,
+    black 95%,
+    transparent 100%
+  )
+);
+
+@function job-board($key) {
+  @return map-get($job-board, $key);
+}
+
+
+$job-filters: (
+  bg-c: #ffffff,
+  radius: 0.5rem,
+  tc: #19252e,
+  fw: 400,
+  shadow: 0 10px 20px rgba(0, 0, 0, 0.15),
+  shadow-hover: 0 1px 3px rgba(0, 0, 0, 0.3),
+);
+
+@function job-filters($key) {
+  @return map-get($job-filters, $key);
+}
+
+
 $job-card: (
   bg-c: #ffffff,
   icon-c: #000000,
@@ -56,13 +86,13 @@ $job-card: (
   tc: #19252e,
   title-fw: 500,
   title-tc: #155681,
-  title-tc-hover: #dc6326,
   salary-visible-tc: #2bb100,
   tag-radius: 1rem,
   tag-remote-bg-c: #ededf3,
   height: 8rem,
-  radius: 1rem,
-  shadow: 0 10px 20px rgba(0, 0, 0, 0.15)
+  radius: 0.5rem,
+  shadow: 0 10px 20px rgba(0, 0, 0, 0.15),
+  shadow-hover: 0 1px 3px rgba(0, 0, 0, 0.3),
 );
 
 @function job-card($key) {

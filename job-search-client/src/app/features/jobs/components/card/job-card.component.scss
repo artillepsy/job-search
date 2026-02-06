@@ -40,8 +40,11 @@
   box-shadow: job-card("shadow");
   border-radius: job-card("radius");
   background-color: job-card("bg-c");
-
   transition: $transition-global;
+
+  &:hover {
+    box-shadow: job-card("shadow-hover");
+  }
 
   .job-card {
     width: 100%; // This is critical: the block must fill the host
@@ -80,7 +83,6 @@
 
       &:hover {
         text-decoration: underline;
-        color: job-card("title-tc-hover");
       }
     }
 

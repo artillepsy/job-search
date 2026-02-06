@@ -78,7 +78,7 @@
     cursor: pointer;
 
     &--panel-visible {
-      color: job-search("filter-btn-tc-active");
+      color: job-search("filter-btn-tc-visible");
     }
 
     &:active {
