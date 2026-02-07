@@ -55,17 +55,22 @@ public static class ServiceCollectionExtensions
 		foreach (var type in scraperTypes)
 		{
 			var attr = type.GetCustomAttribute<ScraperMetadataAttribute>();
-			if (attr == null) continue;
-
-			// Automatically register as Scoped using a factory delegate
-			services.AddScoped(type, sp =>
+			if (attr == null)
 			{
-				// Pull the specific section defined in the attribute
-				var section = configuration.GetSection($"Scrapers:{attr.SectionName}");
+				continue;
+			}
 
-				// Create the scraper, injecting the section manually
-				return ActivatorUtilities.CreateInstance(sp, type, section);
-			});
+			var sectionPath = $"Scrapers:{attr.SectionName}";
+			var section = configuration.GetSection(sectionPath);
+
+			// Check if the section exists or has any children/values
+			if (!section.Exists())
+			{
+				throw new InvalidOperationException(
+					$"Required configuration section '{sectionPath}' for scraper '{type.Name}' is missing.");
+			}
+
+			services.AddScoped(type, sp => ActivatorUtilities.CreateInstance(sp, type, section));
 		}
 	}
 }

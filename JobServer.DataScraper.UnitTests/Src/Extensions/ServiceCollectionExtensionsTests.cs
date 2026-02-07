@@ -10,15 +10,20 @@ namespace JobServer.DataScraper.UnitTests.Extensions;
 
 public class ServiceCollectionExtensionsTests
 {
+	private static void SetupMockDependencies(ServiceCollection services)
+	{
+		services.AddSingleton(new Mock<ILogger<ScraperBase>>().Object);
+		services.AddSingleton(new Mock<IHttpClientFactory>().Object);
+		services.AddSingleton(new Mock<IServiceScopeFactory>().Object);
+	}
+
 	[Fact]
 	public void AddScrapers_ShouldRegisterScrapersWithCorrectConfigSection()
 	{
 		var services = new ServiceCollection();
    
-		services.AddSingleton(new Mock<ILogger<ScraperBase>>().Object);
-		services.AddSingleton(new Mock<IHttpClientFactory>().Object);
-		services.AddSingleton(new Mock<IServiceScopeFactory>().Object);
-		
+		SetupMockDependencies(services);
+
 		var configValues = new Dictionary<string, string?>
 		{
 			{ "Scrapers:MockSection:BaseUrl", "https://test.api.com/" },
@@ -39,15 +44,36 @@ public class ServiceCollectionExtensionsTests
 		Assert.NotNull(scraper);
 		Assert.True(scraper is MockScraper);
 	}
-	
+
 	[Fact]
 	public void AddScrapers_ShouldIgnoreClasses_WithoutMetadataAttribute()
 	{
 		var services = new ServiceCollection();
-		var configuration = new ConfigurationBuilder().Build();
+		var configValues = new Dictionary<string, string?>
+		{
+			{ "Scrapers:MockSection:BaseUrl", "https://test.api.com/" },
+			{ "Scrapers:MockSection:HttpClientName", "TestClient" }
+		};
+		var configuration = new ConfigurationBuilder()
+			.AddInMemoryCollection(configValues)
+			.Build();
 
 		services.AddScrapers(configuration, typeof(NoMetadataAttributeMockScraper).Assembly);
     
 		Assert.DoesNotContain(services, d => d.ServiceType == typeof(NoMetadataAttributeMockScraper));
+	}
+	
+	[Fact]
+	public void AddScrapers_ShouldThrowException_WhenSectionIsMissing()
+	{
+		var services = new ServiceCollection();
+		SetupMockDependencies(services);
+		
+		var configuration = new ConfigurationBuilder()
+			.AddInMemoryCollection(new Dictionary<string, string?>()) 
+			.Build();
+
+		Assert.Throws<InvalidOperationException>(() => 
+			services.AddScrapers(configuration, typeof(MockScraper).Assembly));
 	}
 }
