@@ -33,6 +33,10 @@ public class CareersInPolandScraper : ScraperBase
 	{
 		_config = new Config();
 		section.Bind(_config);
+		if (string.IsNullOrWhiteSpace(_config.BaseUrl))
+		{
+			throw new ArgumentException($"Configuration for {nameof(CareersInPolandScraper)} is missing or invalid.");
+		}
 		_httpClient = _httpClient = httpClientFactory.CreateClient(_config.HttpClientName);
 	}
 

@@ -30,7 +30,13 @@ public class ArbeitnowScraper : ScraperBase
 		IServiceScopeFactory scopeFactory) : base(logger, httpClientFactory, scopeFactory)
 	{
 		_config = new Config();
+		
 		section.Bind(_config);
+		
+		if (string.IsNullOrWhiteSpace(_config.BaseUrl))
+		{
+			throw new ArgumentException($"Configuration for {nameof(ArbeitnowScraper)} is missing or invalid.");
+		}
 		_httpClient = _httpClient = httpClientFactory.CreateClient(_config.HttpClientName);
 	}
 
