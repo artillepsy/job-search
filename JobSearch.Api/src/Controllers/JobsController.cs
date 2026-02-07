@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobSearch.Api.Controllers;
 
-//[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class JobsController : ControllerBase
@@ -14,7 +13,6 @@ public class JobsController : ControllerBase
 	private readonly JobSettings _jobSettings;
 	private readonly ILogger<JobsController> _logger;
 	
-	private int i = 10;
 	public class JobSettings
 	{
 		public int PageSizeMax { get; set; }
@@ -67,16 +65,12 @@ public class JobsController : ControllerBase
 			query = query.Where(
 				j => EF.Functions.ILike(j.Title, search) || 
 				     EF.Functions.ILike(j.CompanyName, search));
-			
-			//_logger.LogInformation($"Keywords: '{search}', query size: {query.Count()}");
 		}
 		
 		if (!string.IsNullOrWhiteSpace(dto.Location)) // Location
 		{
 			string search = $"%{dto.Location.Trim()}%";
 			query = query.Where(j => j.Location != null && EF.Functions.ILike(j.Location, search));
-			
-			//_logger.LogInformation($"Location: '{search}', query size: {query.Count()}");
 		}
 		
 		if (dto.IsSalaryVisible.HasValue) // Is salary visible
