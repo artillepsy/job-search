@@ -36,7 +36,7 @@ public class ScraperFactory : IScraperFactory
             
 			if (attribute != null)
 			{
-				_scraperTypes[attribute.SectionName] = type;
+				_scraperTypes[attribute.SectionName.ToLowerInvariant()] = type;
 				_logger.LogInformation($"Registered scraper '{attribute.SectionName}' from type {type.Name}");
 			}
 		}
