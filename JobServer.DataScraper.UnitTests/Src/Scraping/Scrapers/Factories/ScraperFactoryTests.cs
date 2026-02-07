@@ -1,6 +1,7 @@
 using JobSearch.DataScraper.Scraping.Scrapers;
 using JobSearch.DataScraper.Scraping.Scrapers.Factories;
 using JobServer.DataScraper.UnitTests.Scraping.Scrapers.Mocks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -13,6 +14,7 @@ public class ScraperFactoryTests
     private readonly Mock<IServiceScope> _serviceScopeMock;
     private readonly Mock<IServiceProvider> _serviceProviderMock;
     private readonly ILogger<ScraperFactory> _logger;
+    private readonly IConfigurationRoot _section;
 
     public ScraperFactoryTests()
     {
@@ -22,6 +24,7 @@ public class ScraperFactoryTests
         _serviceScopeMock = new Mock<IServiceScope>();
         _serviceProviderMock = new Mock<IServiceProvider>();
         _logger = loggerFactory.CreateLogger<ScraperFactory>();
+        _section = new ConfigurationBuilder().Build();
 
         _scopeFactoryMock.Setup(x => x.CreateScope()).Returns(_serviceScopeMock.Object);
         _serviceScopeMock.Setup(x => x.ServiceProvider).Returns(_serviceProviderMock.Object);
@@ -36,11 +39,12 @@ public class ScraperFactoryTests
         var scraperLoggerMock = new Mock<ILogger<ScraperBase>>();
         var httpClientFactoryMock = new Mock<IHttpClientFactory>();
         var testAssembly = typeof(MockScraper).Assembly;
-    
+
         var expectedScraper = new MockScraper(
             scraperLoggerMock.Object, 
             httpClientFactoryMock.Object, 
-            _scopeFactoryMock.Object
+            _scopeFactoryMock.Object,
+            _section
         );
     
         _serviceProviderMock
@@ -71,7 +75,8 @@ public class ScraperFactoryTests
         var expectedScraper = new MockScraper(
             scraperLoggerMock.Object, 
             httpClientFactoryMock.Object, 
-            _scopeFactoryMock.Object
+            _scopeFactoryMock.Object,
+            _section
         );
         
         _serviceProviderMock

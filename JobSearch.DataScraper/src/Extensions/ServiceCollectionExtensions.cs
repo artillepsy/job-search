@@ -45,9 +45,10 @@ public static class ServiceCollectionExtensions
 		});
 	}
 
-	public static void AddScrapers(this IServiceCollection services, IConfiguration configuration)
+	public static void AddScrapers(this IServiceCollection services, IConfiguration configuration, Assembly? assembly = null)
 	{
-		var assembly = typeof(ScraperBase).Assembly;
+		assembly ??= typeof(ScraperBase).Assembly;
+		
 		var scraperTypes = assembly.GetTypes()
 			.Where(t => t is { IsClass: true, IsAbstract: false } && t.IsSubclassOf(typeof(ScraperBase)));
 
