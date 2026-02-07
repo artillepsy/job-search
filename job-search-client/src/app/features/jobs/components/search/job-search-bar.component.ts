@@ -1,5 +1,4 @@
 import { Component, effect, inject, input, output, signal } from '@angular/core';
-import { JobSearchParams } from '../../models/job-search-params.model';
 import { FormsModule } from '@angular/forms';
 import { JobUrlService } from '../../services/url/job-url.service';
 

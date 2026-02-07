@@ -1,5 +1,11 @@
 :host {
-  @import 'variables';
+  @import 'job-variables';
+
+  border-radius: $filters--radius;
+  box-shadow: $filters--shadow;
+  background-color: $filters--bg-c;
+
+  overflow-y: auto;
 
   flex: 1 1 auto;
   display: flex;

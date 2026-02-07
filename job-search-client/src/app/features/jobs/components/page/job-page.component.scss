@@ -1,7 +1,7 @@
-@import 'variables';
+@import 'job-variables';
 
 :host {
-  background-color: $page-bg-color;
+  background-color: $page--bg-color;
 
   width: 100%;
   height: 100%;
@@ -12,15 +12,14 @@
 }
 
 .top-panel {
-  border-bottom: $top-panel--border-bottom;
-  height: $top-panel--height;
+  border-bottom: $page--top-panel-bottom-border;
+  height: $page--top-panel-height;
   flex-shrink: 0;
 
   display: flex;
   justify-content: space-between;
 
   &__logo {
-    /* flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
     flex: 1 1 0;
     display: flex;
     align-items: center;
@@ -37,23 +36,22 @@
   }
 
   &__logo-icon {
-    height: logo("icon-h");
+    height: $logo--icon-h;
     aspect-ratio: 1 / 1;
 
-    background-color: logo("icon-c");
-    mask: url(logo("icon-path")) no-repeat center;
+    background-color: $logo--icon-c;
+    mask: url($logo--icon-path) no-repeat center;
     mask-size: contain;
   }
 
   &__logo-text {
-    font-size: logo("fs");
-    font-weight: logo("fw");
-    color: logo("tc");
-    filter: logo("shadow");
+    font-size: $logo--fs;
+    font-weight: $logo--fw;
+    color: $logo--tc;
+    filter: $logo--shadow;
   }
 
   &__search {
-    /* Stay fixed at 25%, do not grow, do not shrink */
     flex: 0 0 35%;
 
     min-width: $width-breakpoint-mobile;
@@ -66,7 +64,6 @@
   }
 
   &__actions {
-    /* Match the logo: flex-grow: 1, flex-shrink: 1, flex-basis: 0 */
     flex: 1 1 0;
     display: flex;
     justify-content: flex-end;

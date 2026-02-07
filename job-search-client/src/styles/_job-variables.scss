@@ -1,0 +1,66 @@
+// Color palette (shared)
+$primary-color: #06a8ff;
+
+// global
+$width-breakpoint-mobile: 700px;
+$transition-global: all 0.3s ease;
+
+// page
+$page--bg-color: #edf2f8;
+$page--top-panel-height: 4rem;
+$page--top-panel-bottom-border: 0px solid #c5c6cd;
+
+// job logo
+$logo--fs: 1.5rem;
+$logo--fw: 900;
+$logo--tc: #4b6781;
+$logo--icon-h: 3rem;
+$logo--icon-path: '/logo.svg';
+$logo--icon-c: $primary-color;
+$logo--shadow: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+
+// job search
+$search--bg-c: #ffffff;
+$search--height: 2.5rem;
+$search--border: 0px solid #c5c6cd;
+$search--radius: 2rem;
+$search--shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+$search--icon-c: #657581;
+$search--input-bg-c-focus: #e8eaf1;
+$search--search-btn-bg-c-normal: $primary-color;
+$search--search-btn-bg-c-active: darken($primary-color, 10%);
+$search--search-btn-tc: #ffffff;
+$search--search-btn-radius: 2rem;
+$search--filter-btn-tc-normal: #657581;
+$search--filter-btn-tc-visible: $primary-color;
+
+// job board
+$board--mask-image: linear-gradient(to bottom,
+  transparent 0%,
+  black 2%,
+  black 95%,
+  transparent 100%
+);
+
+// job filters
+$filters--bg-c: #ffffff;
+$filters--radius: 0.5rem;
+$filters--shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+
+// job card
+$card--bg-c: #ffffff;
+$card--icon-c: #000000;
+$card--footer-border: 1px solid #e7e8ed;
+$card--fw: 400;
+$card--fs: 0.8rem;
+$card--tc: #19252e;
+$card--title-fw: 500;
+$card--title-tc: #155681;
+$card--salary-visible-tc: #2bb100;
+$card--tag-radius: 1rem;
+$card--tag-remote-bg-c: #ededf3;
+$card--height: 8rem;
+$card--radius: 0.5rem;
+$card--shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+$card--shadow-hover: 0 1px 3px rgba(0, 0, 0, 0.3);
+

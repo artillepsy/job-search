@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'job-variables';
 
 :host {
   flex: 1 1 auto;
@@ -9,12 +9,12 @@
 
 .search-form {
   width: 100%;
-  background-color: job-search("bg-c");
-  border: job-search("border");
-  border-radius: job-search("radius");
-  box-shadow: job-search("shadow");
+  background-color: $search--bg-c;
+  border: $search--border;
+  border-radius: $search--radius;
+  box-shadow: $search--shadow;
 
-  height: 2.5rem;
+  height: $search--height;
   overflow: hidden;
 
   display: flex;
@@ -38,7 +38,7 @@
     transition: $transition-global;
 
     &:focus-within, &:hover {
-      background-color: job-search("input-bg-c-focus");
+      background-color: $search--input-bg-c-focus;
     }
   }
 
@@ -51,7 +51,7 @@
   }
 
   &__input-icon {
-    color: job-search("icon-c");
+    color: $search--icon-c;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -70,7 +70,7 @@
 
   &__button--filters {
     background-color: transparent;
-    color: job-search("filter-btn-tc-normal");
+    color: $search--filter-btn-tc-normal;
     transition: $transition-global;
 
     border-width: 0;
@@ -78,7 +78,7 @@
     cursor: pointer;
 
     &--panel-visible {
-      color: job-search("filter-btn-tc-visible");
+      color: $search--filter-btn-tc-visible;
     }
 
     &:active {
@@ -87,9 +87,9 @@
   }
 
   &__button--search {
-    background-color: job-search("search-btn-bg-c-normal");
-    color: job-search("search-btn-tc");
-    border-radius: job-search("search-btn-radius");
+    background-color: $search--search-btn-bg-c-normal;
+    color: $search--search-btn-tc;
+    border-radius: $search--search-btn-radius;
     transition: $transition-global;
     width: 2rem;
     height: 2rem;
@@ -98,7 +98,7 @@
     padding: 0.25rem 0.25rem;
 
     &:active {
-      background-color: job-search("search-btn-bg-c-active");
+      background-color: $search--search-btn-bg-c-active;
       transform: scale(0.8);
     }
   }

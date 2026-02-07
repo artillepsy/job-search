@@ -1,16 +1,16 @@
-@import 'variables';
+@import 'job-variables';
 
 :host {
-  display: flex; // Make the component itself flex
+  display: flex;
   flex-direction: column;
-  height: 100%; // Force it to take up available height
+  height: 100%;
   width: 100%;
   overflow: hidden;
 
   .job-board {
     display: flex;
     flex-direction: column;
-    height: 100%; // Fill the host
+    height: 100%;
     width: 100%;
 
     &__scroll {
@@ -25,13 +25,10 @@
 
       gap: 1rem;
 
-      /*padding-left: 1rem;
-      padding-right: 1rem;
-      */
       padding-top: 0.75rem;
       padding-bottom: 1.5rem;
 
-      mask-image: job-board("mask-image");
+      mask-image: $board--mask-image;
     }
 
     &__filters-container {
@@ -46,27 +43,18 @@
     }
 
     &__filters {
-      border-radius: job-card("radius");
-      box-shadow: job-card("shadow");
-      background-color: job-card("bg-c");
-
       overflow-y: auto;
 
       height: 80rem;
       max-width: 20rem;
-
-      //flex-shrink: 0;
     }
 
     &__main-content {
-      // Removed overflow-y: auto so it expands to its content height
-      //flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
       width: 40%;
-      //max-width: 40%;
 
       @media (max-width: $width-breakpoint-mobile) {
         width: 100%;
@@ -93,9 +81,9 @@
     }
 
     &__skeleton {
-      border-radius: job-card("radius");
-      height: job-card("height");
-      box-shadow: job-card("shadow");
+      border-radius: $card--radius;
+      height: $card--height;
+      box-shadow: $card--shadow;
       flex-shrink: 0;
 
       background-size: 200% 100%;
@@ -103,9 +91,9 @@
 
       background-image: linear-gradient(
           90deg,
-          job-card("bg-c") 10%,
-          $page-bg-color 50%,
-          job-card("bg-c") 90%
+          $card--bg-c 10%,
+          $page--bg-color 50%,
+          $card--bg-c 90%
       );
 
       @keyframes shimmer {
