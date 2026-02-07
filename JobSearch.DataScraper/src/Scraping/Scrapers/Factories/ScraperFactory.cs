@@ -7,19 +7,27 @@ public class ScraperFactory : IScraperFactory
 {
 	private readonly IServiceScopeFactory _scopeFactory;
 	private readonly ILogger<ScraperFactory> _logger;
+	private readonly Assembly _assembly;
 	private readonly Dictionary<string, Type> _scraperTypes = new();
 	
-	public ScraperFactory(IServiceScopeFactory scopeFactory, ILogger<ScraperFactory> logger)
+	public ScraperFactory(
+		IServiceScopeFactory scopeFactory, 
+		ILogger<ScraperFactory> logger,
+		Assembly? assembly = null)
 	{
 		_scopeFactory = scopeFactory;
 		_logger = logger;
+		_assembly = assembly ?? Assembly.GetExecutingAssembly();
+		_logger.LogInformation($"ScraperFactory");
+		
 		RegisterScrapers();
 	}
 	
 	private void RegisterScrapers()
 	{
-		var assembly = Assembly.GetExecutingAssembly();
-		var types = assembly.GetTypes()
+		_logger.LogInformation($"RegisterScrapers");
+		
+		var types = _assembly.GetTypes()
 			.Where(t => t is { IsClass: true, IsAbstract: false } && t.IsSubclassOf(typeof(ScraperBase)));
 
 		foreach (var type in types)
@@ -36,6 +44,7 @@ public class ScraperFactory : IScraperFactory
 
 	public IScraper CreateScraper(string scraperName)
 	{
+		scraperName = scraperName.ToLowerInvariant();
 		if (!_scraperTypes.TryGetValue(scraperName, out var scraperType))
 		{
 			throw new ArgumentException($"Scraper '{scraperName}' not found");
