@@ -2,25 +2,55 @@
   <header class="filters__header">Filters</header>
     <span class="filters__title"><i class="pi pi-wallet filters__icon"></i>Salary</span>
     <div class="filters__checkbox-container">
-      <p-checkbox class="filters__checkbox" [(ngModel)]="isSalaryVisible" [binary]="true" size="small"></p-checkbox>
+      <p-checkbox
+        class="filters__checkbox"
+        [(ngModel)]="withSalaryOnly"
+        (ngModelChange)="onFilterChange('withSalaryOnly', $event)"
+        [binary]="true"
+        size="small">
+      </p-checkbox>
       <label class="filters__label"> With Salary Only </label>
     </div>
     <span class="filters__title"><i class="pi pi-megaphone filters__icon"></i>Work Type</span>
     <div class="filters__checkbox-container">
-      <p-checkbox class="filters__checkbox" [(ngModel)]="isRemote" [binary]="true" size="small"></p-checkbox>
+      <p-checkbox
+        class="filters__checkbox"
+        [(ngModel)]="isRemoteOnly"
+        (ngModelChange)="onFilterChange('isRemoteOnly', $event)"
+        [binary]="true"
+        size="small">
+      </p-checkbox>
       <label class="filters__label"> Is Remote Only </label>
     </div>
     <span class="filters__title"><i class="pi pi-globe filters__icon"></i>Platforms</span>
   <div class="filters__checkbox-container">
-    <p-checkbox class="filters__checkbox" [(ngModel)]="isCareersInPoland" [binary]="true" size="small"></p-checkbox>
+    <p-checkbox
+      class="filters__checkbox"
+      [(ngModel)]="isCareersInPoland"
+      (ngModelChange)="onFilterChange('isCareersInPoland', $event)"
+      [binary]="true"
+      size="small">
+    </p-checkbox>
     <label class="filters__label"> CareersInPoland </label>
   </div>
   <div class="filters__checkbox-container">
-    <p-checkbox class="filters__checkbox" [(ngModel)]="isUsaJobs" [binary]="true" size="small"></p-checkbox>
+    <p-checkbox
+      class="filters__checkbox"
+      [(ngModel)]="isUsaJobs"
+      (ngModelChange)="onFilterChange('isUsaJobs', $event)"
+      [binary]="true"
+      size="small">
+    </p-checkbox>
     <label class="filters__label"> UsaJobs </label>
   </div>
   <div class="filters__checkbox-container">
-    <p-checkbox class="filters__checkbox" [(ngModel)]="isArbeitnow" [binary]="true" size="small"></p-checkbox>
+    <p-checkbox
+      class="filters__checkbox"
+      [(ngModel)]="isArbeitnow"
+      (ngModelChange)="onFilterChange('isArbeitnow', $event)"
+      [binary]="true"
+      size="small">
+    </p-checkbox>
     <label class="filters__label"> Arbeitnow </label>
   </div>
 </div>

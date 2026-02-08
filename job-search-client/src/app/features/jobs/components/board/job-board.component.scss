@@ -36,6 +36,10 @@
       display: flex;
       align-items: flex-start;
       justify-content: flex-end;
+      height: 100%;
+      flex: 1;
+      position: sticky;
+      top: 0;
 
       @media (max-width: $width-breakpoint-mobile) {
         display: none;
@@ -44,9 +48,6 @@
 
     &__filters {
       overflow-y: auto;
-      position: sticky;
-      top: 0;
-
       height: fit-content;
       max-width: fit-content;
     }

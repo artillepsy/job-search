@@ -21,8 +21,13 @@ public class JobsController : ControllerBase
 	public record JobSearchDto(
 		string? Keywords, 
 		string? Location, 
-		bool? IsSalaryVisible,
-		bool? IsRemote,
+		
+		bool WithSalaryOnly,
+		bool IsRemoteOnly,
+		
+		bool IsCareersInPoland,
+		bool IsUsaJobs,
+		bool IsArbeitnow,
 		
 		int Page = 1,
 		int PageSize = 20
@@ -73,16 +78,40 @@ public class JobsController : ControllerBase
 			query = query.Where(j => j.Location != null && EF.Functions.ILike(j.Location, search));
 		}
 		
-		if (dto.IsSalaryVisible.HasValue) // Is salary visible
+		if (dto.WithSalaryOnly) // Is salary visible
 		{
-			query = dto.IsSalaryVisible.Value 
-				? query.Where(j => j.SalaryMin != null) 
-				: query.Where(j => j.SalaryMin == null);
+			query = query.Where(j => j.SalaryMin != null);
 		}
 		
-		if (dto.IsRemote.HasValue) // Is remote
+		if (dto.IsRemoteOnly) // Is remote
 		{
-			query = query.Where(j => j.IsRemote == dto.IsRemote.Value); 
+			query = query.Where(j => j.IsRemote == true); 
+		}
+		
+		// Filter platforms (Websites)
+		var selectedPlatforms = new List<string>();
+
+		if (dto.IsCareersInPoland)
+		{
+			selectedPlatforms.Add("CareersInPoland");
+		}
+		if (dto.IsUsaJobs)
+		{
+			selectedPlatforms.Add("UsaJobs");
+		}
+		if (dto.IsArbeitnow)
+		{
+			selectedPlatforms.Add("Arbeitnow");
+		}
+		
+		if (selectedPlatforms.Any())
+		{
+			var lowerPlatforms = selectedPlatforms.Select(p => p.ToLower()).ToList();
+			query = query.Where(j => lowerPlatforms.Contains(j.Website.ToLower()));
+		}
+		else 
+		{
+			query = query.Where(j => false); 
 		}
 		
 		var totalRecords = await query.CountAsync();

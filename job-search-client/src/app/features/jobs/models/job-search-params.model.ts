@@ -1,12 +1,13 @@
 export class JobSearchParams {
   keywords?: string = '';
   location?: string = '';
-  isRemote?: boolean;
-  isSalaryVisible?: boolean;
 
-  isCareersInPoland? = true;
-  isUsaJobs? = true;
-  isArbeitnow? = true;
+  isRemoteOnly = false;
+  withSalaryOnly = false;
+
+  isCareersInPoland = true;
+  isUsaJobs = true;
+  isArbeitnow = true;
 
   page: number = 1;
   pageSize: number = 20; // is excluded from the result url

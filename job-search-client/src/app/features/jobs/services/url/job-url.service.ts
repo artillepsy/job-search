@@ -67,10 +67,10 @@ export class JobUrlService {
 
     const nextState = {
       ...currentState,
-      ...changes,
+      ...changes
     };
 
-    const isFilterChange = Object.keys(changes).some((k) => k !== PAGE_STR_KEY);
+    const isFilterChange = Object.keys(changes).some(k => k !== PAGE_STR_KEY);
     if (isFilterChange) {
       nextState.page = 1;
     }
@@ -80,14 +80,9 @@ export class JobUrlService {
         if (JOB_SEARCH_KEYS_EXCLUDED_FROM_URL.includes(key as any)) {
           return false;
         }
-        if (value === null || value === undefined || value === '') {
-          return false;
+        return value !== null && value !== undefined && value !== '';
         }
-        if (value === false) {
-          return false;
-        }
-        return true;
-      }),
+      )
     );
 
     this._router.navigate([], {
