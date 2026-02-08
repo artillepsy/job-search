@@ -44,9 +44,11 @@
 
     &__filters {
       overflow-y: auto;
+      position: sticky;
+      top: 0;
 
-      height: 80rem;
-      max-width: 20rem;
+      height: fit-content;
+      max-width: fit-content;
     }
 
     &__main-content {

@@ -4,9 +4,51 @@
   border-radius: $filters--radius;
   box-shadow: $filters--shadow;
   background-color: $filters--bg-c;
+  transition: $transition-global;
 
   overflow-y: auto;
 
   flex: 1 1 auto;
   display: flex;
+
+  padding: 1rem;
+
+  &:hover {
+    box-shadow: $filters--shadow-hover;
+  }
+
+  .filters {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    &__header {
+      font-weight: $filters--title-fw;
+      color: $filters--title-tc;
+      align-self: center;
+    }
+
+    &__title {
+      padding-top: 1rem;
+      padding-bottom: 0.3rem;
+      font-weight: $filters--fw;
+      color: $filters--tc;
+    }
+
+    &__label {
+      font-weight: $filters--fw;
+      font-size: $card--fs;
+      color: $filters--tc;
+    }
+
+    &__icon {
+      padding-right: 0.3rem;
+
+      ::ng-deep {
+        color: $filters--icon-c;
+        font-size: 0.8rem;
+      }
+    }
+  }
 }

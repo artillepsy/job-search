@@ -3,6 +3,11 @@ export class JobSearchParams {
   location?: string = '';
   isRemote?: boolean;
   isSalaryVisible?: boolean;
+
+  isCareersInPoland? = true;
+  isUsaJobs? = true;
+  isArbeitnow? = true;
+
   page: number = 1;
   pageSize: number = 20; // is excluded from the result url
 }
