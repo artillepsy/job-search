@@ -1,4 +1,3 @@
-using JobSearch.Api.Services;
 using JobSearch.Data;
 using JobSearch.Data.Entities;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -42,7 +41,6 @@ builder.Services.AddOpenApi();
 // misc
 builder.Services.AddRouting(o => o.LowercaseUrls = true);
 builder.Services.AddScoped<IPasswordHasher<UserEntity>, PasswordHasher<UserEntity>>();
-builder.Services.AddSingleton<ITokenService, DevTokenService>();
 
 var app = builder.Build();
 app.UseForwardedHeaders(); // Always first when behind a proxy (Azure Container Apps)
