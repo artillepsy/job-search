@@ -6,9 +6,9 @@ This repository contains a small personal project -- centralized platform with j
 
 ### Source Code
 Here you can find the source code for backend, frontend, data scrapers and infrastructure.
-1. Frontend -- represents a static website;
-2. API -- utilized by frontend to retrieve available jobs;
-3. Data scrapers -- job units, needed to retrieve data from 3 websites: CareersInPoland, Arbeitnow, USAJobs;
+1. Frontend – represents a static website;
+2. API – utilized by frontend to retrieve available jobs;
+3. Data scrapers – job units, needed to retrieve data from 3 websites: CareersInPoland, Arbeitnow, USAJobs;
 4. Unit tests for API and data scrapers;
 5. Infrastructure.
 
